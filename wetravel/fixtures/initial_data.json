@@ -1,0 +1,31 @@
+[
+  {
+    "model": "wetravel.region",
+    "id": 1,
+    "fields": {
+      "country": "United States",
+      "state": "Texas",
+      "city": "Houston"
+    }
+  },
+
+  {
+    "model": "wetravel.region",
+    "id": 1,
+    "fields": {
+      "country": "United States",
+      "state": "Texas",
+      "city": "Dallas"
+    }
+  },
+
+  {
+    "model": "wetravel.region",
+    "id": 1,
+    "fields": {
+      "country": "United States",
+      "state": "Texas",
+      "city": "Austin"
+    }
+  }
+]
