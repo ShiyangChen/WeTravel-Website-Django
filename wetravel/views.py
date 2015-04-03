@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from wetravel.form import UserForm, UserProfileForm
 
 # Create your views here.
@@ -57,3 +58,8 @@ def user_login(request):
 
     else:
         return render(request, 'wetravel/login.html', {})
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/wetravel/')
