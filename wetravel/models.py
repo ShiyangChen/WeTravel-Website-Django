@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -12,31 +13,41 @@ class Place(models.Model):
     function = models.CharField(max_length=30)
     region   = models.ForeignKey(Region, null=True)
 
-class User(models.Model):
-    email      = models.EmailField(max_length=30)
-    first_name = models.CharField(max_length=20)
-    last_name  = models.CharField(max_length=20)
-    password   = models.CharField(max_length=15) # password field?
-    region     = models.ForeignKey(Region, null=True)
-    friends    = models.ManyToManyField('self')
-    to_visit   = models.ManyToManyField(Place, related_name='places_to_visit')
-    visited    = models.ManyToManyField(Place, related_name='places_visited')
+class UserProfile(models.Model):
+    user     = models.OneToOneField(User)
+    region   = models.ForeignKey(Region, null=True)
+    friends  = models.ManyToManyField('self')
+    to_visit = models.ManyToManyField(Place, related_name='places_to_visit')
+    visited  = models.ManyToManyField(Place, related_name='places_visited')
+
+    def __unicode__(self):
+        return self.user.username
+
+# class User(models.Model):
+#     email      = models.EmailField(max_length=30)
+#     first_name = models.CharField(max_length=20)
+#     last_name  = models.CharField(max_length=20)
+#     password   = models.CharField(max_length=15) # password field?
+#     region     = models.ForeignKey(Region, null=True)
+#     friends    = models.ManyToManyField('self')
+#     to_visit   = models.ManyToManyField(Place, related_name='places_to_visit')
+#     visited    = models.ManyToManyField(Place, related_name='places_visited')
 
 class Post(models.Model):
     text         = models.TextField()
-    publisher    = models.ForeignKey(User, related_name='publisher', null=True)
-    invisible_to = models.ManyToManyField(User, related_name='invisivle_to')
+    publisher    = models.ForeignKey(UserProfile, related_name='publisher', null=True)
+    invisible_to = models.ManyToManyField(UserProfile, related_name='invisivle_to')
     link         = models.URLField(max_length=500)
 
 class Group(models.Model):
     name    = models.CharField(max_length=15)
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(UserProfile)
 
 class Travel(models.Model):
     start_time  = models.DateTimeField()
     end_time    = models.DateTimeField()
     destination = models.ForeignKey(Region, null=True)
-    members     = models.ManyToManyField(User)
+    members     = models.ManyToManyField(UserProfile)
 
 class Hotel(models.Model):
     name    = models.CharField(max_length=50)
@@ -58,6 +69,6 @@ class Accommodation(models.Model):
 class Request(models.Model):
     time      = models.DateTimeField()
     status    = models.CharField(max_length=10) # ?
-    sent_from = models.ManyToManyField(User, related_name='sent_from')
-    sent_to   = models.ManyToManyField(User, related_name='sent_to')
-    sent_for  = models.ManyToManyField(User, related_name='sent_for')
+    sent_from = models.ManyToManyField(UserProfile, related_name='sent_from')
+    sent_to   = models.ManyToManyField(UserProfile, related_name='sent_to')
+    sent_for  = models.ManyToManyField(UserProfile, related_name='sent_for')

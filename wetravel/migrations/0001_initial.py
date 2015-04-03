@@ -2,19 +2,66 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Accommodation',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('check_in_time', models.DateTimeField()),
+                ('check_out_time', models.DateTimeField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Event',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('time', models.DateTimeField()),
+                ('note', models.TextField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
         migrations.CreateModel(
             name='Group',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=15)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Hotel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=50)),
+                ('address', models.CharField(max_length=100)),
+                ('phone', models.CharField(max_length=30)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Place',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('address', models.CharField(max_length=200)),
+                ('function', models.CharField(max_length=30)),
             ],
             options={
             },
@@ -32,28 +79,124 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='User',
+            name='Region',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('email', models.EmailField(max_length=30)),
-                ('first_name', models.CharField(max_length=20)),
-                ('last_name', models.CharField(max_length=20)),
-                ('password', models.CharField(max_length=15)),
+                ('country', models.CharField(max_length=50)),
+                ('state', models.CharField(max_length=50)),
+                ('city', models.CharField(max_length=50)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Request',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('time', models.DateTimeField()),
+                ('status', models.CharField(max_length=10)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Travel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('start_time', models.DateTimeField()),
+                ('end_time', models.DateTimeField()),
+                ('destination', models.ForeignKey(to='wetravel.Region', null=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='UserProfile',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('friends', models.ManyToManyField(related_name='friends_rel_+', to='wetravel.UserProfile')),
+                ('region', models.ForeignKey(to='wetravel.Region', null=True)),
+                ('to_visit', models.ManyToManyField(related_name=b'places_to_visit', to='wetravel.Place')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('visited', models.ManyToManyField(related_name=b'places_visited', to='wetravel.Place')),
             ],
             options={
             },
             bases=(models.Model,),
         ),
         migrations.AddField(
+            model_name='travel',
+            name='members',
+            field=models.ManyToManyField(to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='request',
+            name='sent_for',
+            field=models.ManyToManyField(related_name=b'sent_for', to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='request',
+            name='sent_from',
+            field=models.ManyToManyField(related_name=b'sent_from', to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='request',
+            name='sent_to',
+            field=models.ManyToManyField(related_name=b'sent_to', to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='post',
+            name='invisible_to',
+            field=models.ManyToManyField(related_name=b'invisivle_to', to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
             model_name='post',
             name='publisher',
-            field=models.ForeignKey(to='wetravel.User'),
+            field=models.ForeignKey(related_name=b'publisher', to='wetravel.UserProfile', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='place',
+            name='region',
+            field=models.ForeignKey(to='wetravel.Region', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='hotel',
+            name='region',
+            field=models.ForeignKey(to='wetravel.Region', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='group',
-            name='member',
-            field=models.ManyToManyField(to='wetravel.User'),
+            name='members',
+            field=models.ManyToManyField(to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='event',
+            name='place',
+            field=models.ForeignKey(to='wetravel.Place', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='accommodation',
+            name='hotel',
+            field=models.ForeignKey(to='wetravel.Hotel', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='accommodation',
+            name='travel',
+            field=models.ForeignKey(to='wetravel.Travel', null=True),
             preserve_default=True,
         ),
     ]

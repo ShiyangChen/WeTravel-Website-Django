@@ -1,6 +1,6 @@
 from django.contrib import admin
-from wetravel.models import User, Group
+from wetravel.models import UserProfile, Group
 
 # Register your models here.
 
-admin.site.register([User, Group])
+admin.site.register([UserProfile, Group])
