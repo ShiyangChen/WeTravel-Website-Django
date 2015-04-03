@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponse
+from django.contrib.auth import authenticate, login
 from wetravel.form import UserForm, UserProfileForm
 
 # Create your views here.
@@ -35,3 +36,24 @@ def signup(request):
     return render(request,
             'wetravel/signup.html',
             {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
+
+def user_login(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/wetravel/')
+            else:
+                return HttpResponse("Your account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        return render(request, 'wetravel/login.html', {})

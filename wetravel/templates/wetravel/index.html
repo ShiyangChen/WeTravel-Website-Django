@@ -3,7 +3,12 @@
 {% block body_block %}
     <div class="row">
         <div class="col-md-10 col-md-offset-1 center jumbotron">
-            <h1>WeTravel: the King of SNS</h1>        
+            <h1>WeTravel: the King of SNS</h1>
+            {% if user.is_authenticated %}
+            <p>Hello {{user.username}}!</p>
+            {% else %}
+            <p>Hello World!</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
