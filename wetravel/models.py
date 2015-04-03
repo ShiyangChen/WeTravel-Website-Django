@@ -8,6 +8,9 @@ class Region(models.Model):
     state   = models.CharField(max_length=50)
     city    = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.country + '/' + self.state + '/' + self.city
+
 class Place(models.Model):
     address  = models.CharField(max_length=200)
     function = models.CharField(max_length=30)
