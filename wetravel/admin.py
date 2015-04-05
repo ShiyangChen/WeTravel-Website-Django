@@ -1,5 +1,5 @@
 from django.contrib import admin
-from wetravel.models import UserProfile, Group
+from wetravel.models import *
 
 # Register your models here.
 
