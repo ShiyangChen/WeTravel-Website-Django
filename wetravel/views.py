@@ -9,6 +9,9 @@ from wetravel.form import UserForm, UserProfileForm
 def index(request):
     return render(request, 'wetravel/index.html')
 
+def about(request):
+    return render(request, 'wetravel/about.html')
+
 def signup(request):
     signed_up = False
 
