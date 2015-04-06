@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
-                ('address', models.CharField(max_length=100)),
+                ('address', models.CharField(max_length=200)),
                 ('phone', models.CharField(max_length=30)),
             ],
             options={
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('address', models.CharField(max_length=200)),
-                ('function', models.CharField(max_length=30)),
+                ('place_type', models.CharField(max_length=30)),
             ],
             options={
             },
@@ -72,6 +72,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.TextField()),
+                ('is_visible', models.BooleanField(default=False)),
                 ('link', models.URLField(max_length=500)),
             ],
             options={
@@ -95,7 +96,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('time', models.DateTimeField()),
-                ('status', models.CharField(max_length=10)),
+                ('status', models.BooleanField(default=False)),
             ],
             options={
             },
@@ -119,9 +120,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('friends', models.ManyToManyField(related_name='friends_rel_+', to='wetravel.UserProfile')),
                 ('region', models.ForeignKey(to='wetravel.Region', null=True)),
-                ('to_visit', models.ManyToManyField(related_name=b'places_to_visit', to='wetravel.Place')),
+                ('to_visit', models.ManyToManyField(related_name='places_to_visit', to='wetravel.Place')),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-                ('visited', models.ManyToManyField(related_name=b'places_visited', to='wetravel.Place')),
+                ('visited', models.ManyToManyField(related_name='places_visited', to='wetravel.Place')),
             ],
             options={
             },
@@ -136,31 +137,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='request',
             name='sent_for',
-            field=models.ManyToManyField(related_name=b'sent_for', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_for', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='request',
             name='sent_from',
-            field=models.ManyToManyField(related_name=b'sent_from', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_from', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='request',
             name='sent_to',
-            field=models.ManyToManyField(related_name=b'sent_to', to='wetravel.UserProfile'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='invisible_to',
-            field=models.ManyToManyField(related_name=b'invisivle_to', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_to', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='post',
             name='publisher',
-            field=models.ForeignKey(related_name=b'publisher', to='wetravel.UserProfile', null=True),
+            field=models.ForeignKey(related_name='publisher', to='wetravel.UserProfile', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='post',
+            name='restricted_members',
+            field=models.ManyToManyField(related_name='restricted_members', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
