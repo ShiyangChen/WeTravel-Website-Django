@@ -1,4 +1,5 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from wetravel import views
 
@@ -9,3 +10,5 @@ urlpatterns = patterns('',
     url(r'^login/', views.user_login, name='login'),
     url(r'^logout/', views.user_logout, name='logout'),
 )
+
+urlpatterns += staticfiles_urlpatterns()

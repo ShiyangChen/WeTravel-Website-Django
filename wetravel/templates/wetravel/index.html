@@ -1,13 +1,16 @@
 {% extends 'wetravel/base.html' %}
 {% block title %}Index{% endblock %}
-{% block body_block %}
-<div class="row">
-  <div class="col-md-10 col-md-offset-1 center jumbotron">
-    <h1>WeTravel: the King of SNS</h1>
+{% block content %}
+<div class="jumbotron">
+  <div class="container center">
+    <h1>Welcome to WeTravel</h1>
     {% if user.is_authenticated %}
       <p>Hello {{user.username}}!</p>
     {% else %}
-      <p>Hello World!</p>
+    <div class="col-md-4 col-md-offset-4">
+      <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/signup" role="button">Sign up</a></p>
+      <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/login" role="button">Log in</a></p>
+    </div>
     {% endif %}
   </div>
 </div>
