@@ -13,7 +13,7 @@ class Region(models.Model):
 
 class Place(models.Model):
     address  = models.CharField(max_length=200)
-    function = models.CharField(max_length=30)
+    type = models.CharField(max_length=30)
     region   = models.ForeignKey(Region, null=True)
 
 class UserProfile(models.Model):
@@ -26,20 +26,11 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
-# class User(models.Model):
-#     email      = models.EmailField(max_length=30)
-#     first_name = models.CharField(max_length=20)
-#     last_name  = models.CharField(max_length=20)
-#     password   = models.CharField(max_length=15) # password field?
-#     region     = models.ForeignKey(Region, null=True)
-#     friends    = models.ManyToManyField('self')
-#     to_visit   = models.ManyToManyField(Place, related_name='places_to_visit')
-#     visited    = models.ManyToManyField(Place, related_name='places_visited')
-
 class Post(models.Model):
     text         = models.TextField()
     publisher    = models.ForeignKey(UserProfile, related_name='publisher', null=True)
-    invisible_to = models.ManyToManyField(UserProfile, related_name='invisivle_to')
+    restricted_members = models.ManyToManyField(UserProfile, related_name='restricted_members')
+    is_visible = models.BooleanField(default=False)
     link         = models.URLField(max_length=500)
 
 class Group(models.Model):
@@ -54,8 +45,8 @@ class Travel(models.Model):
 
 class Hotel(models.Model):
     name    = models.CharField(max_length=50)
-    address = models.CharField(max_length=100)
-    phone   = models.CharField(max_length=30) # ?
+    address = models.CharField(max_length=200)
+    phone   = models.CharField(max_length=30)
     region  = models.ForeignKey(Region, null=True)
 
 class Event(models.Model):
@@ -71,7 +62,7 @@ class Accommodation(models.Model):
 
 class Request(models.Model):
     time      = models.DateTimeField()
-    status    = models.CharField(max_length=10) # ?
+    status    = models.BooleanField(default=False)
     sent_from = models.ManyToManyField(UserProfile, related_name='sent_from')
     sent_to   = models.ManyToManyField(UserProfile, related_name='sent_to')
     sent_for  = models.ManyToManyField(UserProfile, related_name='sent_for')
