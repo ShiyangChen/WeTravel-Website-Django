@@ -9,6 +9,11 @@ urlpatterns = patterns('',
     url(r'^signup/', views.signup, name='signup'),
     url(r'^login/', views.user_login, name='login'),
     url(r'^logout/', views.user_logout, name='logout'),
+    url(r'^create-post/$', views.create_post),
+    url(r'^createpost/$', views.createpost),
+    url(r'^profile/$',views.profile),
+    url(r'^delete_confirm/(\d+)/$',views.delete_confirm),
+    url(r'^delete/(\d+)/$',views.delete),
 )
 
 urlpatterns += staticfiles_urlpatterns()

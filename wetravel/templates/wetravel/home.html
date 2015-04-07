@@ -1,0 +1,12 @@
+
+
+{% if posts %}
+    <p>Found .</p>
+    <ul>
+        {% for post in posts %}
+        <li>{{post.publisher.user.username}}  post :  {{ post.text }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}

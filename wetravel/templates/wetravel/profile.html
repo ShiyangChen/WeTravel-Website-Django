@@ -1,0 +1,59 @@
+{% extends 'wetravel/base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container center">
+
+
+<body>
+<h2>My Profile </h2>
+  
+  {% for my_post in my_posts %}
+  <h2><li>{{ my_post.text }}</li> <h2>
+   <small><a  href="../delete_confirm/{{my_post.id}}/" role="button">Delete</a></small>
+     <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />-->
+  {% endfor %}
+
+</body>
+
+{% endblock %}
+
+
+
+
+
+<!--<html>
+<head>
+<script type="text/javascript">
+function show_confirm(my_post)
+{
+var r=confirm("Press a button!");
+if (r==true)
+  {
+  	alert("You pressed {{my_post.id}}");
+  	//window.location.href='../delete/{{my_post.id}}/';
+
+  }
+else
+  {
+  alert("You pressed Cancel!");
+  }
+}
+</script>
+</head>
+<body>
+<h1>My Profile </h1>
+	
+	{% for my_post in my_posts %}
+	<li>{{ my_post.text }}</li>
+	<input type="button" onclick="window.location.href='../delete/{{my_post.id}}/'"  value="Delete" />
+	{% endfor %}
+
+</body>
+</html>-->
+
+
+
+
+
+<!--"window.location.href='/home/'"-->

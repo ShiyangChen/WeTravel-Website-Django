@@ -1,0 +1,30 @@
+<html>
+<body>
+
+	<h1>My Profile </h1>
+  
+  {% for my_post in my_posts %}
+  <li>{{ my_post.text }}</li>
+  <input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />
+  {% endfor %}
+
+	<script type="text/javascript">
+	var r=confirm("Press a button!");
+	//var a={{param}};
+	if (r==true)
+  {
+  	//alert("You pressed {{param}}");
+  	window.location.href='/../wetravel/delete/{{param}}/';
+   //document.getElementById("demo").innerHTML=a;
+  }
+   else
+  {
+   alert("You pressed Cancel!");
+   window.location.href='/../wetravel/profile/';
+  }
+
+</script>
+
+
+</body>
+</html>
