@@ -15,10 +15,4 @@
     {% endif %}
   </div>
 </div>
-<div>
-  {% if user.is_authenticated %}
-    {% cur_user = user %}
-    {% recommend cur_user %}
-  {% endif %}
-</div>
 {% endblock %}

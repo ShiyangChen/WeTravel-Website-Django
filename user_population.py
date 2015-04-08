@@ -28,13 +28,13 @@ def populate():
     profile4 = add_profile(user4)
     profile5 = add_profile(user5)
     profile6 = add_profile(user6)
-   
+
     profile1.friends.add(profile2, profile3, profile4)
     profile1.to_visit.add(place1)
     profile1.visited.add(place2)
     profile1.save()
 
-    
+
     profile2.friends.add(profile5, profile6)
     profile2.to_visit.add(place1)
     profile2.visited.add(place2)

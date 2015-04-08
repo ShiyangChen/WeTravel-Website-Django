@@ -67,3 +67,22 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/wetravel/')
+
+def send_friend_request(request):
+    if request.method == 'POST':
+        target_username = request.POST.get('username')
+        try:
+            target_user = User.objects.get(username=target_username)
+        except User.DoesNotExist:
+            print "User {0} does not exist".format(target_username)
+            return HttpResponse("User not found.")
+        target_user.userprofile.requests.add(request.user.userprofile)
+        return HttpResponseRedirect('/wetravel/')
+    else:
+        return HttpResponseRedirect('/wetravel/friends/')
+
+def friends(request):
+    return render(request, 'wetravel/friends.html', {})
+
+def requests(request):
+    return render(request, 'wetravel/requests.html', {})

@@ -24,12 +24,13 @@ class Place(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     region = models.ForeignKey(Region, null=True)
-    friends = models.ManyToManyField('self')
+    friends = models.ManyToManyField('self', related_name='friends')
     to_visit = models.ManyToManyField(Place, related_name='places_to_visit')
     visited = models.ManyToManyField(Place, related_name='places_visited')
+    requests = models.ManyToManyField('self', related_name='requests')
 
     def __unicode__(self):
-        return self.user.username + '/' + self.region.__unicode__() 
+        return self.user.username
 
 class Post(models.Model):
     text = models.TextField()
