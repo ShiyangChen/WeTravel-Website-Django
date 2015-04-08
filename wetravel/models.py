@@ -15,7 +15,7 @@ class Place(models.Model):
     address = models.CharField(max_length=200)
     place_type = models.CharField(max_length=30)
     region = models.ForeignKey(Region, null=True)
-    
+
     def __unicode__(self):
         return self.address + '/' + self.type + '/' + self.region.__unicode__()
 
@@ -28,8 +28,6 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username + '/' + self.region.__unicode__() 
-    #+ '/' + "/".join([friend.__unicode__() for friend in self.friends.all()]) 
-        
 
 class Post(models.Model):
     text = models.TextField()
