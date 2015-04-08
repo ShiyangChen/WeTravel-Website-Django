@@ -8,14 +8,7 @@ register= template.Library()
 @register.inclusion_tag('wetravel/recommend.html')
 #recommend to you among your friends who share the same to_visit places
 def recommend(user):
-	for future_place in user.userprofile.to_visit.all:
-		if future_place:
-			for friend in user.userprofile.friends.all:
-				if friend:
-					for friend_future_place in friend.to_visit.all:
-						if friend_future_place:
-							if friend_future_place == future_place:
-								candidates.append(friend)
-
-
+  for friend in user.userprofile.fiends.all:
+    if friend.to_visit.all & user.userprofile.to_visit.all:
+      candidates.append(friend)
 	return {'candidates': candidates}
