@@ -1,0 +1,56 @@
+[
+{
+  "fields": {
+    "country": "United States",
+    "state": "Texas",
+    "city": "Houston"
+  },
+  "model": "wetravel.region",
+  "pk": 1
+},
+{
+  "fields": {
+    "country": "United States",
+    "state": "Texas",
+    "city": "Dallas"
+  },
+  "model": "wetravel.region",
+  "pk": 2
+},
+{
+  "fields": {
+    "country": "United States",
+    "state": "Texas",
+    "city": "Austin"
+  },
+  "model": "wetravel.region",
+  "pk": 3
+},
+{
+  "fields": {
+    "country": "United States",
+    "state": "California",
+    "city": "San Francisco"
+  },
+  "model": "wetravel.region",
+  "pk": 4
+},
+{
+  "fields": {
+    "country": "United States",
+    "state": "California",
+    "city": "San Diego"
+  },
+  "model": "wetravel.region",
+  "pk": 5
+},
+{
+  "fields": {
+    "country": "United States",
+    "state": "California",
+    "city": "Los Angeles"
+  },
+  "model": "wetravel.region",
+  "pk": 6
+}
+]

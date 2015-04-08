@@ -1,0 +1,14 @@
+[
+{
+  "fields": {
+    "region": 3,
+    "to_visit": [],
+    "user": 1,
+    "visited": [],
+    "requests": [],
+    "friends": []
+  },
+  "model": "wetravel.userprofile",
+  "pk": 1
+}
+]

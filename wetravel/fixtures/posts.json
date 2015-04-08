@@ -1,0 +1,68 @@
+[
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 1
+},
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 2
+},
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 3
+},
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 4
+},
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 5
+},
+{
+  "fields": {
+    "link": "www.example.org",
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "is_visible": false,
+    "restricted_members": [],
+    "publisher": 1
+  },
+  "model": "wetravel.post",
+  "pk": 6
+}
+]
