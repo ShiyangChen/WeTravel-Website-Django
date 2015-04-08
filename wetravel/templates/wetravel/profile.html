@@ -1,0 +1,32 @@
+{% extends 'wetravel/base.html' %}
+{% load wetravel_extras %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <h3 class="center">Information</h3>
+    <dl class="dl-horizontal">
+      <dt>Username:</dt>
+      <dd>{{ user.username }}</dd>
+      <dt>Email:</dt>
+      <dd>{{ user.email }}</dd>
+      <dt>Country:</dt>
+      <dd>{{ user.userprofile.region.country }}</dd>
+      <dt>State:</dt>
+      <dd>{{ user.userprofile.region.state }}</dd>
+      <dt>City:</dt>
+      <dd>{{ user.userprofile.region.city }}</dd>
+    </dl>
+  </div>
+  <div class="col-md-6">
+    <h3 class="center">Posts</h3>
+    {% if not posts %}
+    <p>Currently no post.</p>
+    {% else %}
+      {% for post in posts %}
+      <p>post.text</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

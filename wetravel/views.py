@@ -89,3 +89,7 @@ def requests(request):
 
 def add_place(request):
     return render(request, 'wetravel/addplace.html', {})
+
+def show_profile(request):
+    posts = Post.objects.filter(publisher=request.user.userprofile)
+    return render(request, 'wetravel/profile.html', {'posts': posts})
