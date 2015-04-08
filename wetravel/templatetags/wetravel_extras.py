@@ -11,4 +11,4 @@ def recommend(user):
   for friend in user.userprofile.fiends.all:
     if friend.to_visit.all & user.userprofile.to_visit.all:
       candidates.append(friend)
-	return {'candidates': candidates}
+  return {'candidates': candidates}
