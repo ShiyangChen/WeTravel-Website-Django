@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     url(r'^logout/', views.user_logout, name='logout'),
     url(r'^friends/', views.friends, name='friends'),
     url(r'^send_friend_request/', views.send_friend_request, name='send_friend_request'),
-    url(r'^requests/', views.requests, name='requests')
+    url(r'^requests/', views.requests, name='requests'),
+    url(r'^addplace/', views.add_place, name='addplace')
 )
 
 urlpatterns += staticfiles_urlpatterns()

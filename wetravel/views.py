@@ -86,3 +86,6 @@ def friends(request):
 
 def requests(request):
     return render(request, 'wetravel/requests.html', {})
+
+def add_place(request):
+    return render(request, 'wetravel/addplace.html', {})
