@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from wetravel.form import UserForm, UserProfileForm
+from wetravel.models import *
 
 # Create your views here.
 

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -12,12 +14,12 @@ class Region(models.Model):
         return self.country + '/' + self.state + '/' + self.city
 
 class Place(models.Model):
-    address = models.CharField(max_length=200)
+    address  = models.CharField(max_length=200)
     place_type = models.CharField(max_length=30)
-    region = models.ForeignKey(Region, null=True)
+    region   = models.ForeignKey(Region, null=True)
 
     def __unicode__(self):
-        return self.address + '/' + self.type + '/' + self.region.__unicode__()
+        return self.address
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
