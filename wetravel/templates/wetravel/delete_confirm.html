@@ -1,11 +1,17 @@
-<html>
+{% extends 'wetravel/base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container center">
+
 <body>
 
-	<h1>My Profile </h1>
+	<h2>My Profile </h2>
   
   {% for my_post in my_posts %}
-  <li>{{ my_post.text }}</li>
-  <input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />
+  <p><li><b style="font-size:160%">{{ my_post.text }}</b>
+    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a></li></p>
+  <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" /></li></p>-->
   {% endfor %}
 
 	<script type="text/javascript">
@@ -27,4 +33,7 @@
 
 
 </body>
-</html>
+</div>
+</div>
+
+{% endblock %}

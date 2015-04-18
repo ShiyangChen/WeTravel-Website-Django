@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^profile/$',views.profile),
     url(r'^delete_confirm/(\d+)/$',views.delete_confirm),
     url(r'^delete/(\d+)/$',views.delete),
+    url(r'^privacy_choose/(\d+)/$',views.privacy_choose),
+    url(r'^privacy/(\d+)/$',views.privacy),
 )
 
 urlpatterns += staticfiles_urlpatterns()

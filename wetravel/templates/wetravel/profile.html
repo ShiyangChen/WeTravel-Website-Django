@@ -1,20 +1,33 @@
 {% extends 'wetravel/base.html' %}
 {% block title %}My Profile{% endblock %}
 {% block content %}
+    <head>
+      <script type='text/javascript'>
+      function setting()
+      {
+        window.open('../privacy_choose/{{my_post.id}}/', 'newwindow', 'height=400, width=400, top=400,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no') 
+      }
+      </script>
+    </head>
 <div class="jumbotron">
   <div class="container center">
+
 
 
 <body>
 <h2>My Profile </h2>
   
   {% for my_post in my_posts %}
-  <h2><li>{{ my_post.text }}</li> <h2>
-   <small><a  href="../delete_confirm/{{my_post.id}}/" role="button">Delete</a></small>
+  <p><li><b style="font-size:160%">{{ my_post.text }}</b>
+    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
+    <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+  </li></p>
      <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />-->
   {% endfor %}
 
 </body>
+</div>
+</div>
 
 {% endblock %}
 
