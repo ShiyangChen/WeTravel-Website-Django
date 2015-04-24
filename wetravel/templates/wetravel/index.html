@@ -2,17 +2,40 @@
 {% load wetravel_extras %}
 {% block title %}Index{% endblock %}
 {% block content %}
-<div class="jumbotron">
-  <div class="container center">
-    <h1>Welcome to WeTravel</h1>
-    {% if user.is_authenticated %}
-      <p>Hello {{user.username}}!</p>
-    {% else %}
-    <div class="col-md-4 col-md-offset-4">
-      <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/signup" role="button">Sign up</a></p>
-      <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/login" role="button">Log in</a></p>
-    </div>
-    {% endif %}
-  </div>
+
+<div>
+  {% if user.is_authenticated %}
+    <div class="row">
+          
+            <!-- Content -->
+              <div id="content" class="4u">
+                {% if posts %}
+                 <ul>
+                {% for post in posts %}
+
+                <!-- Post -->
+                
+                  <article class="box excerpt"> 
+                    <header>
+                      <span><a class="date" href="/wetravel/profile/" role="button">{{post.publisher.user.username}}</a></span>
+                      <h3><a href="#">post :</a></h3>
+                    </header>
+                            <p>{{ post.text }}</p>
+                  </article>
+                
+                  {% endfor %}
+                 </ul>
+                 {% else %}
+               <p>No post on your homepage.</p>
+                {% endif %}
+              </div>
+              <!--add recomendation here-->
+
+          </div>
+
+  {% else %}
+          <h1 id="logo"><a href="index.html">We Travel</a></h1>
+          <p>Let's go for travelling</p>
+  {% endif %}
 </div>
 {% endblock %}
