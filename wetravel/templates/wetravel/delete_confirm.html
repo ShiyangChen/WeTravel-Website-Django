@@ -10,7 +10,9 @@
   
   {% for my_post in my_posts %}
   <p><li><b style="font-size:160%">{{ my_post.text }}</b>
-    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a></li></p>
+    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
+    <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+  </li></p>
   <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" /></li></p>-->
   {% endfor %}
 
