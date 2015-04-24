@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'wetravel/base.html' %}
 {% load wetravel_extras %}
 {% block title %}Index{% endblock %}
@@ -6,6 +7,51 @@
 <div>
   {% if user.is_authenticated %}
     <div class="row">
+=======
+<!DOCTYPE html>
+<!--{% extends 'wetravel/base.html' %}
+{% block title %}Wetravel{% endblock %}-->
+{% block content %}
+<!--<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+<noscript>
+      <link rel="stylesheet" href="/static/css/skel.css" />
+      <link rel="stylesheet" href="/static/css/style.css" />
+      <link rel="stylesheet" href="/static/css/style-desktop.css" />
+    </noscript>
+</head>-->
+<body class="homepage">
+   {% if user.is_authenticated %}
+    <!-- Header -->
+     <div id="header-wrapper">
+        <div id="header" class="container center">
+          <!-- Logo -->
+            <h1 id="logo">Welcome to WeTravel</h1>
+            <p>Hello {{user.username}}!</p>
+       </div>
+     </div>
+   
+
+
+     <div id="features-wrapper">
+        <section id="features" class="container">
+          <header>
+            <h2> <strong>See what our friends do recently</strong>!</h2>
+          </header>
+         
+        </section>
+      </div>
+
+
+    <!--main-->
+
+      <!--post-->
+      <div id="main-wrapper">
+        <div id="main" class="container">
+          <div class="row">
+>>>>>>> 66d712b92ed9ecebe10ec5b39e1c0189c4c45a7f
           
             <!-- Content -->
               <div id="content" class="4u">
@@ -29,6 +75,7 @@
                <p>No post on your homepage.</p>
                 {% endif %}
               </div>
+<<<<<<< HEAD
               <!--add recomendation here-->
 
           </div>
@@ -37,5 +84,52 @@
           <h1 id="logo"><a href="index.html">We Travel</a></h1>
           <p>Let's go for travelling</p>
   {% endif %}
+=======
+
+
+
+
+              <!--add recomendation here-->
+
+          </div>
+        </div>
+      </div>
+
+
+
+  
+    
+
+  
+
+    {% else %}
+     <div id="header-wrapper">
+        <div id="header" class="container center">
+          <!-- Logo -->
+            <h1 id="logo">Welcome to WeTravel</h1>
+
+       </div>
+
+>>>>>>> 66d712b92ed9ecebe10ec5b39e1c0189c4c45a7f
 </div>
+    <div id="features-wrapper">
+        <section id="features" class="container">
+          <header>
+            <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/signup" role="button">Sign up</a></p>
+           <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/login" role="button">Log in</a></p
+          </header>
+        </section>
+      </div>
+    
+    {% endif %}
+
+
+
+
+  
+
+  
+</body>
+
 {% endblock %}
+

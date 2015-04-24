@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'wetravel/base.html' %}
 {% load wetravel_extras %}
 {% block title %}Profile{% endblock %}
@@ -30,3 +31,77 @@
   </div>
 </div>
 {% endblock %}
+=======
+<!--{% extends 'wetravel/base.html' %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+    <head>
+      <script type='text/javascript'>
+      function setting()
+      {
+        window.open('../privacy_choose/{{my_post.id}}/', 'newwindow', 'height=400, width=400, top=400,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no') 
+      }
+      </script>
+    </head>
+<div class="jumbotron">
+  <div class="container center">-->
+
+
+
+<body>
+<h2>My Profile </h2>
+  
+  {% for my_post in my_posts %}
+  <p><li><b style="font-size:160%">{{ my_post.text }}</b>
+    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
+    <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+  </li></p>
+     <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />-->
+  {% endfor %}
+
+</body>
+</div>
+</div>
+
+<!--{% endblock %}-->
+
+
+
+
+
+<!--<html>
+<head>
+<script type="text/javascript">
+function show_confirm(my_post)
+{
+var r=confirm("Press a button!");
+if (r==true)
+  {
+  	alert("You pressed {{my_post.id}}");
+  	//window.location.href='../delete/{{my_post.id}}/';
+
+  }
+else
+  {
+  alert("You pressed Cancel!");
+  }
+}
+</script>
+</head>
+<body>
+<h1>My Profile </h1>
+	
+	{% for my_post in my_posts %}
+	<li>{{ my_post.text }}</li>
+	<input type="button" onclick="window.location.href='../delete/{{my_post.id}}/'"  value="Delete" />
+	{% endfor %}
+
+</body>
+</html>-->
+
+
+
+
+
+<!--"window.location.href='/home/'"-->
+>>>>>>> 66d712b92ed9ecebe10ec5b39e1c0189c4c45a7f

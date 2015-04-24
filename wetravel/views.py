@@ -8,7 +8,19 @@ from wetravel.models import *
 # Create your views here.
 
 def index(request):
-    return render(request, 'wetravel/index.html')
+    user=request.user
+    posts=Post.objects.order_by("-id")
+    invi_posts=posts.filter(is_visible=True)
+    posts_list=list(posts)
+    for invi_post in invi_posts:
+
+        for invi_friend in invi_post.restricted_members.all():
+            if invi_friend.user.username==user.username:
+                posts_list.remove(invi_post)
+            else:
+                continue
+
+    return render(request, 'wetravel/index.html',{'posts':posts_list})
 
 def about(request):
     return render(request, 'wetravel/about.html')
@@ -68,6 +80,7 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/wetravel/')
 
+
 def send_friend_request(request):
     if request.method == 'POST':
         target_username = request.POST.get('username')
@@ -93,3 +106,88 @@ def add_place(request):
 def show_profile(request):
     posts = Post.objects.filter(publisher=request.user.userprofile)
     return render(request, 'wetravel/profile.html', {'posts': posts})
+
+
+def create_post(request):
+    return render(request, 'wetravel/create_post.html')
+
+@login_required
+def createpost(request):
+    if 'text_message'in request.GET:
+        text_message=request.GET['text_message']
+        cur_user=request.user.userprofile
+
+        #login_user=UserProfile.objects.get(user=cur_user)
+    
+        b=Post(text=text_message,publisher=cur_user)#login_user)
+        b.save()
+        return HttpResponseRedirect('/wetravel/')
+        #posts=Post.objects.order_by("-id")
+        #return render(request,'wetravel/index.html',{'posts':posts})
+        
+    else:
+        return HttpResponse('submitted a empty form')
+
+@login_required
+def profile(request):
+    user=request.user   #???
+    cur_user=request.user.userprofile
+    my_posts=Post.objects.filter(publisher=cur_user)
+    my_posts=my_posts.order_by("-id")
+    return render(request,'wetravel/profile.html',{'my_posts':my_posts,'user':user})
+
+@login_required
+def delete_confirm(request,param1):
+    cur_user=request.user.userprofile
+    my_posts=Post.objects.filter(publisher=cur_user)
+    my_posts=my_posts.order_by("-id")
+    return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts})
+
+
+
+
+@login_required
+def delete(request,param1):
+    cur_user=request.user.userprofile
+    my_posts=Post.objects.filter(publisher=cur_user)
+    my_posts=my_posts.order_by("-id")
+    del_post=my_posts.get(id=param1)
+    del_post.delete()
+    return HttpResponseRedirect('/wetravel/profile/')
+    #my_posts=Post.objects.filter(publisher=cur_user)
+    #my_posts=my_posts.order_by("-id")
+    #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
+  
+@login_required
+def privacy_choose(request,param1):
+    cur_user=request.user.userprofile
+    my_posts=Post.objects.filter(publisher=cur_user)
+    set_post=my_posts.get(id=param1)
+    my_friends=cur_user.friends.all()
+    namelists=[]
+    for friend in my_friends:
+        namelists.append(friend.user.username)
+
+    return render(request,'wetravel/privacy_choose.html',{'namelists':namelists,'set_post':set_post})
+
+@login_required
+def privacy(request,param1):
+    user=request.user
+    invi_friends_username=request.POST.getlist("invi_friends")
+    cur_user=request.user.userprofile
+    my_posts=Post.objects.filter(publisher=cur_user)
+    set_post=my_posts.get(id=param1)
+    my_friends=cur_user.friends.all()
+    for friend_username in invi_friends_username:
+        for friend in my_friends:
+            if friend.user.username == friend_username :
+                set_post.restricted_members.add(friend)
+                set_post.is_visible=True
+                set_post.save()
+            else:
+                continue
+    return HttpResponseRedirect('/wetravel/profile/')
+   # my_posts=Post.objects.filter(publisher=cur_user)
+   # my_posts=my_posts.order_by("-id")
+    #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
+
