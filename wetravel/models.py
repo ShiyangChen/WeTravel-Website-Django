@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.dispatch import receiver 
+from django.conf import settings
 
 # Create your models here.
 
@@ -11,7 +12,7 @@ class Region(models.Model):
     city = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.country + '/' + self.state + '/' + self.city
+        return self.city  + '/' + self.state + '/' + self.country
 
 class Place(models.Model):
     address  = models.CharField(max_length=200)
@@ -28,6 +29,13 @@ class UserProfile(models.Model):
     to_visit = models.ManyToManyField(Place, related_name='places_to_visit')
     visited = models.ManyToManyField(Place, related_name='places_visited')
     requests = models.ManyToManyField('self', related_name='requests')
+    avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
+
+    def avatar_image(self):
+        if self.avatar:
+            return (settings.MEDIA_URL + self.avatar.name) 
+        else:
+            return "/static/images/default_image.png"
 
     def __unicode__(self):
         return self.user.username

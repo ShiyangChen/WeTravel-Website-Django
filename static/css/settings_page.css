@@ -1,0 +1,74 @@
+.settings {
+	width: 80%;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+}
+.info-section {
+	width: 100%;
+	margin: 10px;
+	overflow: hidden;
+	padding: 20px;
+	border: 1px solid #dedede;
+	box-shadow: 0 1px 0 #dedede;
+	border-radius: 3px;
+	box-sizing: border-box;
+}
+
+.info-section-head {
+	position: relative;
+  	padding-bottom: 50px;
+  	box-sizing: border-box;
+}
+
+.info-section-head h3{
+	float: left;
+	display: block;
+	position: relative;
+	z-index: 2;
+  	line-height: 18px;
+}
+
+a.edit {
+	-webkit-appearance: none;
+			position: absolute;
+			right: 0;
+			top: -5px;
+			background: #ed786a;
+			color: #fff !important;
+			border-radius: 4px;
+			border: 0;
+			outline: 0;
+			font-size: 1em;
+			font-weight: 600;
+			text-align: center;
+			padding-left: 5px;
+			padding-right: 5px;
+			-moz-transition: all 0.25s ease-in-out;
+			-webkit-transition: all 0.25s ease-in-out;
+			-o-transition: all 0.25s ease-in-out;
+			-ms-transition: all 0.25s ease-in-out;
+			transition: all 0.25s ease-in-out;
+			
+}
+
+dl {
+  width: 100%;
+  border-bottom: 1px solid #EEE;
+  overflow: hidden;
+}
+
+dt {
+	float: left;
+	width: 25%;
+	text-align: left;
+}
+
+dd {
+	float: left;
+	width: 75%;
+	text-align: left;
+	color: rgb(237, 120, 106);
+}
+

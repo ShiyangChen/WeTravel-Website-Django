@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from wetravel.form import UserForm, UserProfileForm
 from wetravel.models import *
+from PIL import Image as PImage
 
 # Create your views here.
 
@@ -54,6 +55,8 @@ def signup(request):
             'wetravel/signup.html',
             {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
 
+
+
 def user_login(request):
 
     if request.method == 'POST':
@@ -79,6 +82,11 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/wetravel/')
+
+@login_required
+def settings(request):
+    return render(request, 'wetravel/settings.html')
+
 
 
 def send_friend_request(request):

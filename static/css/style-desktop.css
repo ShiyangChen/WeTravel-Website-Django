@@ -12,6 +12,7 @@
 	{
 		line-height: 1.65em;
 		font-size: 13pt;
+		text-align: center;
 	}
 
 	h2
@@ -133,7 +134,7 @@
 	
 	#main-wrapper
 	{
-		padding: 6em 0 6em 0;
+		padding: 3em 0 3em 0;
 	}
 	
 	/*#footer-wrapper
@@ -147,7 +148,7 @@
 
 	#header
 	{
-		padding: 5em 0 5em 0;
+		padding: 2em 0 5em 0;
 
 
 	}
@@ -172,7 +173,7 @@
 	#nav
 	{
 		position: absolute;
-		top: 3em;
+		top: 5em;
 		left: 0;
 		width: 100%;
 	}
