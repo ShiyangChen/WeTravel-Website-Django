@@ -10,7 +10,7 @@
 	width: 47%;
 	height: 300px;
 	margin: 10px;
-	overflow: hidden;
+	overflow: scroll;
 	padding: 20px;
 	border: 1px solid #dedede;
 	box-shadow: 0 1px 0 #dedede;
