@@ -55,6 +55,23 @@ def signup(request):
             'wetravel/signup.html',
             {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
 
+@login_required
+def change_accountinfo(request):
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+        else:
+            print user_form.errors
+    else:
+        user_form = UserForm()
+
+    return render(request, 'wetravel/settings.html', {'user_form': user_form})
+
 
 
 def user_login(request):
