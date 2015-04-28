@@ -30,6 +30,13 @@
 		margin: 0 0 1.25em 0;
 	}
 
+	p{
+		font-size: 1em;
+		letter-spacing: 2px;
+		margin: 0 1em 1.25em 0;
+
+	}
+
 	/* Table */
 	
 		table
@@ -89,10 +96,17 @@
 
 		.box
 		{
+			
 		}
 
 			.box.post
 			{
+				/*border-bottom
+				:solid 0.1em gray;*/
+				
+
+				text-align: center;
+
 			}
 			
 				.no-sidebar .box.post > header
@@ -133,7 +147,7 @@
 	
 	#main-wrapper
 	{
-		padding: 6em 0 6em 0;
+		padding: 1em 0 6em 0;
 	}
 	
 	/*#footer-wrapper
@@ -335,6 +349,10 @@
 	
 	#content
 	{
+		/*border-top
+				:solid 2px gray;*/
+
+	
 	}
 
 		#content > section,
@@ -342,6 +360,7 @@
 		{
 			margin: 5em 0 0 0;
 			padding: 5em 0 0 0;
+			
 		}
 		
 		#content > section:first-child,

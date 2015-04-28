@@ -173,20 +173,42 @@ def privacy_choose(request,param1):
 @login_required
 def privacy(request,param1):
     user=request.user
-    invi_friends_username=request.POST.getlist("invi_friends")
+    exc_inc=request.POST.get('ex_in')
+
+    set_friends_username=request.POST.getlist("set_friends")
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
     set_post=my_posts.get(id=param1)
     my_friends=cur_user.friends.all()
-    for friend_username in invi_friends_username:
+    if exc_inc=="exclude":
+        
+        for friend_username in set_friends_username:
+            for friend in my_friends:
+                if friend.user.username == friend_username :
+                    set_post.restricted_members.add(friend)
+                    set_post.is_visible=True
+                    set_post.save()
+                else:
+                    continue
+    else:
+        restricted_members=my_friends
+        restrict_list=list(restricted_members)
         for friend in my_friends:
-            if friend.user.username == friend_username :
-                set_post.restricted_members.add(friend)
-                set_post.is_visible=True
-                set_post.save()
-            else:
-                continue
+            for friend_username in set_friends_username:
+                if friend.user.username == friend_username :
+                    restrict_list.remove(friend)
+                else:
+                    continue;
+        for restrict_friend in restrict_list:
+
+            set_post.restricted_members.add(restrict_friend)
+            set_post.is_visible=True
+            set_post.save()
     return HttpResponseRedirect('/wetravel/profile/')
+
+
+
+
    # my_posts=Post.objects.filter(publisher=cur_user)
    # my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
