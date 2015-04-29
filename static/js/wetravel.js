@@ -19,40 +19,12 @@ $(document).ready(function(){
       },
       close: function() {
         profile_image_form[0].reset();
-        allFields.removeClass("ui-state-error");
       },
       
     });
 
     profile_image_form = profile_image_dialog.find("form");
     
-    profile_image_form.submit(function() {
-      event.preventDefault();
-      var file = $('#id_image').get(0);
-      var formData = new FormData();
-      formData.append('profile-image', file, file.name);
-
-      $.ajax({
-          type: profile_image_form.attr('method'),
-          url: profile_image_form.attr('action'),
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(json) {
-            console.log(json); // log the returned json to the console
-            console.log("success")
-          }, 
-          error: function(json) {
-            console.log(json); // log the returned json to the console
-            console.log("faile")
-          }
-          //error: function(xhr,errmsg,err) {
-            //console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-          //}
-      });
-      return false;
-    });
-
     $("#change-profile-image").click(function(){
       profile_image_dialog.dialog('open');
       return false;

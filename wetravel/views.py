@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from wetravel.form import UserForm, UserProfileForm
+from wetravel.form import *
 from wetravel.models import *
 from PIL import Image as PImage
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 import json
 
@@ -233,14 +234,25 @@ def change_address(request):
 @login_required
 def change_profile_image(request):
     user = request.user
-    p = user.userprofile;
-    image = request.FILES.get('image')
-    p.avatar = image
-    p.save()
-    user.save()
-    response_data = {}
-    response_data['result'] = 'Information updated successfully!'
-    return HttpResponse(json.dumps(response_data),content_type="application/json")
+    p = user.userprofile
+    if request.method == 'POST':
+        form = ProfileImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            old = p.avatar
+            if old:
+                old.delete()
+            p.avatar = form.cleaned_data['image']
+            p.save()
+            user.save()
+
+            if p.avatar:
+                img = PImage.open(p.avatar.path)
+                img.thumbnail((250,250), PImage.ANTIALIAS)
+                img.save(img.filename)
+        else:
+            print form.errors
+
+    return HttpResponseRedirect('/wetravel/settings/')
 
 
 
