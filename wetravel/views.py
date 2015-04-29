@@ -202,6 +202,47 @@ def privacy(request,param1):
    # my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
 
+
+@login_required
+def change_profile_image(request):
+    user = request.user
+    p = user.userprofile
+    if request.method == 'POST':
+        form = ProfileImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            old = p.avatar
+            if old:
+                old.delete()
+            p.avatar = form.cleaned_data['image']
+            p.save()
+            user.save()
+
+            if p.avatar:
+                img = PImage.open(p.avatar.path)
+                img.thumbnail((250,250), PImage.ANTIALIAS)
+                img.save(img.filename)
+        else:
+            print form.errors
+
+    return HttpResponseRedirect('/wetravel/settings/')
+
+
+@login_required
+def change_password(request):
+    user = request.user
+    response_data = {}
+    if request.method == 'POST':
+        password = request.POST['password']
+        user.set_password(password);
+        user.save();
+        response_data['result'] = 'Information updated successfully!'
+    
+    else:
+        response_data['result'] = 'Update failed'
+
+    return HttpResponse(json.dumps(response_data),content_type="application/json")
+
+
 @login_required
 def change_address(request): 
     user = request.user
@@ -229,30 +270,4 @@ def change_address(request):
         response_data['result'] = 'Update failed'
 
     return HttpResponse(json.dumps(response_data),content_type="application/json")
-
-
-@login_required
-def change_profile_image(request):
-    user = request.user
-    p = user.userprofile
-    if request.method == 'POST':
-        form = ProfileImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            old = p.avatar
-            if old:
-                old.delete()
-            p.avatar = form.cleaned_data['image']
-            p.save()
-            user.save()
-
-            if p.avatar:
-                img = PImage.open(p.avatar.path)
-                img.thumbnail((250,250), PImage.ANTIALIAS)
-                img.save(img.filename)
-        else:
-            print form.errors
-
-    return HttpResponseRedirect('/wetravel/settings/')
-
-
 

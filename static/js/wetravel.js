@@ -1,5 +1,5 @@
 $(document).ready(function(){
-		var profile_image_dialog, profile_image_form, address_dialog, address_form;
+		var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
 
     //Change Profile Image
     //---------------------------------------------------------------------
@@ -30,6 +30,52 @@ $(document).ready(function(){
       return false;
     });
 
+    //Change Account Information
+    //---------------------------------------------------------------------
+    account_dialog = $('#dialog-account-form').dialog({
+      autoOpen: false,
+      width: '500px',
+      resize: "auto",
+      modal: true,
+      buttons: {
+        "Change": function() {
+          account_form.submit();
+          account_dialog.dialog("close");
+        },
+        Cancel: function() {
+          account_dialog.dialog("close");
+        }
+      },
+      close: function() {
+        account_form[0].reset();
+      },
+      
+    });
+
+    account_form = account_dialog.find("form");
+    account_form.submit(function() {
+      event.preventDefault();
+
+      $.ajax({
+          type: account_form.attr('method'),
+          url: account_form.attr('action'),
+          data: account_form.serialize(),
+          success: function(json) {
+            console.log(json); // log the returned json to the console
+            console.log("success")
+          }, 
+          error: function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+          }
+      });
+      return false;
+    });
+
+    $("#change-account").click(function(){
+      account_dialog.dialog('open');
+      return false;
+    });
+
 
     //Change Address Information
     //---------------------------------------------------------------------------
@@ -49,7 +95,6 @@ $(document).ready(function(){
       },
       close: function() {
       	address_form[0].reset();
-      	allFields.removeClass("ui-state-error");
       },
       
     });

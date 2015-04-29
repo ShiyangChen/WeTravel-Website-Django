@@ -37,11 +37,25 @@
               <dd>{{ user.email }}</dd>
             </dl>
             <dl class="info">
-              <dt>Password:</dt>
-              <dd>{{ user.password }}</dd>
+                <dt>Passwork:</dt>
+                <dd>********</dd>
             </dl>
         </div>
     </section>
+
+    <div id="dialog-account-form" title="Change Password">
+        <p>Please enter your new password:</p>
+        <form  method="post" action="/wetravel/change_password/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <label for="password">New Password:</label>
+                <input type="password" name="password" id="password" />
+                <label for="password2">Confirm Password:</label>
+                <input type="password" name="password2" id="password2" />
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>   
+        </form>
+    </div>
 
     <section class="info-section">
         <div class="info-section-head">
@@ -110,11 +124,6 @@
         </div>
     </section>
 
-    <div id="test">
-    </div>
-
-</div>
-        
-		
+</div>	
 
 {% endblock %}
