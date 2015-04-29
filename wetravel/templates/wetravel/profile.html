@@ -1,107 +1,34 @@
-<<<<<<< HEAD
+
 {% extends 'wetravel/base.html' %}
 {% load wetravel_extras %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-<div class="row">
-  <div class="col-md-6">
-    <h3 class="center">Information</h3>
-    <dl class="dl-horizontal">
-      <dt>Username:</dt>
-      <dd>{{ user.username }}</dd>
-      <dt>Email:</dt>
-      <dd>{{ user.email }}</dd>
-      <dt>Country:</dt>
-      <dd>{{ user.userprofile.region.country }}</dd>
-      <dt>State:</dt>
-      <dd>{{ user.userprofile.region.state }}</dd>
-      <dt>City:</dt>
-      <dd>{{ user.userprofile.region.city }}</dd>
-    </dl>
-  </div>
-  <div class="col-md-6">
-    <h3 class="center">Posts</h3>
-    {% if not posts %}
-    <p>Currently no post.</p>
-    {% else %}
-      {% for post in posts %}
-      <p>{{ post.text }}</p>
-      {% endfor %}
-    {% endif %}
-  </div>
-</div>
+<!-- Main -->
+      <div id="main-wrapper">
+        <div id="main" class="container">
+          <div class="row">
+          
+            <!-- Content -->
+              <div id="content" class="8u">
+                <h2>See what our friends do recently</h2>
+                <ul class="actions">
+                      <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
+                </ul>
+                {% for my_post in my_posts %}
+                <article class="box post">
+               
+                 <h3><li>{{ my_post.text }}</li></h3>
+          <ul><a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
+            <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+                 </ul>
+
+                </article>
+               {% endfor %}
+              </div>
+            </div>
+       </div>
+      </div>
 {% endblock %}
-=======
-<!--{% extends 'wetravel/base.html' %}
-{% block title %}My Profile{% endblock %}
-{% block content %}
-    <head>
-      <script type='text/javascript'>
-      function setting()
-      {
-        window.open('../privacy_choose/{{my_post.id}}/', 'newwindow', 'height=400, width=400, top=400,left=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no') 
-      }
-      </script>
-    </head>
-<div class="jumbotron">
-  <div class="container center">-->
 
 
 
-<body>
-<h2>My Profile </h2>
-  
-  {% for my_post in my_posts %}
-  <p><li><b style="font-size:160%">{{ my_post.text }}</b>
-    <a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
-    <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
-  </li></p>
-     <!--<input type="button" onclick="window.location.href='../delete_confirm/{{my_post.id}}/'"  value="Delete" />-->
-  {% endfor %}
-
-</body>
-</div>
-</div>
-
-<!--{% endblock %}-->
-
-
-
-
-
-<!--<html>
-<head>
-<script type="text/javascript">
-function show_confirm(my_post)
-{
-var r=confirm("Press a button!");
-if (r==true)
-  {
-  	alert("You pressed {{my_post.id}}");
-  	//window.location.href='../delete/{{my_post.id}}/';
-
-  }
-else
-  {
-  alert("You pressed Cancel!");
-  }
-}
-</script>
-</head>
-<body>
-<h1>My Profile </h1>
-	
-	{% for my_post in my_posts %}
-	<li>{{ my_post.text }}</li>
-	<input type="button" onclick="window.location.href='../delete/{{my_post.id}}/'"  value="Delete" />
-	{% endfor %}
-
-</body>
-</html>-->
-
-
-
-
-
-<!--"window.location.href='/home/'"-->
->>>>>>> 66d712b92ed9ecebe10ec5b39e1c0189c4c45a7f

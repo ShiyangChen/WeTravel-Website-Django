@@ -3,10 +3,58 @@
 {% block title %}Index{% endblock %}
 {% block content %}
 
-<div>
+  {% if user.is_authenticated %}
+<!-- Main -->
+      <div id="main-wrapper">
+        <div id="main" class="container">
+          <div class="row">
 
-  
-</div>
+            <!-- Content -->
+              <div id="content" class="8u">
+                <h2>See what our friends do recently</h2>
+                <ul class="actions">
+                      <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
+                </ul>
+
+                <!-- Post -->
+                {% if posts %}
+
+              {% for post in posts %}
+                <article class="box post">
+
+                  <h3><a  href="/wetravel/profile/" role="button">{{post.publisher.user.username}}</a></h3>
+                   <h2>{{ post.text }}</h2>
+
+                </article>
+               {% endfor %}
+
+            {% else %}
+             <p>No post on your homepage.</p>
+              {% endif %}
+
+             </div>
+           </div>
+         </div>
+       </div>
+
+
+
+  {% else %}
+          <h1 id="logo"><a href="index.html">We Travel</a></h1>
+          <p>Let's go for travelling</p>
+
+
+    <div id="features-wrapper">
+        <section id="features" class="container">
+          <header>
+            <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/signup" role="button">Sign up</a></p>
+           <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/login" role="button">Log in</a></p
+          </header>
+        </section>
+      </div>
+
+
+{% endif %}
 
 {% endblock %}
 
