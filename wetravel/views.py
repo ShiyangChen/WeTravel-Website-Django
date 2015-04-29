@@ -6,6 +6,8 @@ from wetravel.form import UserForm, UserProfileForm
 from wetravel.models import *
 from PIL import Image as PImage
 
+import json
+
 # Create your views here.
 
 def index(request):
@@ -54,23 +56,6 @@ def signup(request):
     return render(request,
             'wetravel/signup.html',
             {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
-
-@login_required
-def change_accountinfo(request):
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-        else:
-            print user_form.errors
-    else:
-        user_form = UserForm()
-
-    return render(request, 'wetravel/settings.html', {'user_form': user_form})
 
 
 
@@ -215,4 +200,47 @@ def privacy(request,param1):
    # my_posts=Post.objects.filter(publisher=cur_user)
    # my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
+
+@login_required
+def change_address(request): 
+    user = request.user
+    response_data = {}
+    if request.method == 'POST':
+        p = user.userprofile
+        r = p.region
+        r.country = request.POST['country']
+        r.state = request.POST['state']
+        r.city = request.POST['city']
+        r.save()
+        p.save()
+        user.save()
+
+        country = user.userprofile.region.country;
+        state = user.userprofile.region.state;
+        city = user.userprofile.region.city;
+
+        response_data['country'] = country;
+        response_data['state'] = state;
+        response_data['city'] = city;
+        response_data['result'] = 'Information updated successfully!'
+    
+    else:
+        response_data['result'] = 'Update failed'
+
+    return HttpResponse(json.dumps(response_data),content_type="application/json")
+
+
+@login_required
+def change_profile_image(request):
+    user = request.user
+    p = user.userprofile;
+    image = request.FILES.get('image')
+    p.avatar = image
+    p.save()
+    user.save()
+    response_data = {}
+    response_data['result'] = 'Information updated successfully!'
+    return HttpResponse(json.dumps(response_data),content_type="application/json")
+
+
 

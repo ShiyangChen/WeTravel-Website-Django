@@ -13,3 +13,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('region',)
+
+class ProfileImageForm(forms.Form):
+    """Image upload form"""
+    image = forms.ImageField()

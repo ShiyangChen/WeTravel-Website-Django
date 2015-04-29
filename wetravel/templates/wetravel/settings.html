@@ -7,12 +7,21 @@
     <section class="info-section">
         <div class="info-section-head">
             <h3>Profile Image</h3>
-            <a class="edit" href="#">Edit</a>
+            <a id = "change-profile-image" class="edit" href="#">Edit</a>
         </div>
         {% if user.userprofile.avatar_image %}
             <p><img border="0" alt="Profile Pics" src="{{ user.userprofile.avatar_image }}" /></p>
         {% endif %}
     </section>
+
+    <div id="dialog-profile-image-form" title="Upload Profile Image">
+        <form id = 'haha' action="/wetravel/change_profile_image/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <p>
+                    <input id="id_image" type="file" class="" name="image" />
+                </p>
+        </form>
+    </div>
     <section class="info-section">
         <div class="info-section-head">
             <h3>Account Information</h3>
@@ -37,34 +46,35 @@
     <section class="info-section">
         <div class="info-section-head">
             <h3>Address</h3>
-            <a class="edit" href="#">Edit</a>
+            <a id="change-address" class="edit" href="#">Edit</a>
         </div>
         <div class="info-section-info address">
             <dl class="info">
               <dt>Country:</dt>
-              <dd>{{ user.userprofile.region.country }}</dd>
+              <dd id="dd-country">{{ user.userprofile.region.country }}</dd>
             </dl>
             <dl class="info">
               <dt>State:</dt>
-              <dd>{{ user.userprofile.region.state }}</dd>
+              <dd id="dd-state">{{ user.userprofile.region.state }}</dd>
             </dl>
             <dl class="info">
               <dt>City:</dt>
-              <dd>{{ user.userprofile.region.city }}</dd>
+              <dd id="dd-city">{{ user.userprofile.region.city }}</dd>
             </dl>
         </div>
     </section>
 
-    <div id="dialog-form" title="Change Address Information">
+    <div id="dialog-address-form" title="Change Address Information">
         <p>All fields are required:</p>
-        <form>
+        <form  method="post" action="/wetravel/change_address/" enctype="multipart/form-data">
+            {% csrf_token %}
             <fieldset>
                 <label for="country">Country</label>
-                <input type="text" name="country" id="country" value={{ user.userprofile.region.country }} />
+                <input type="text" name="country" id="country" value="{{ user.userprofile.region.country }}" />
                 <label for="state">State</label>
-                <input type="text" name="state" id="state" value= {{ user.userprofile.region.state }} />
+                <input type="text" name="state" id="state" value= "{{ user.userprofile.region.state }}" />
                 <label for="city">City</label>
-                <input type="text" name="city" id="city" value= {{ user.userprofile.region.city }} />
+                <input type="text" name="city" id="city" value= "{{ user.userprofile.region.city }}" />
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>   
@@ -99,6 +109,9 @@
             </dl>
         </div>
     </section>
+
+    <div id="test">
+    </div>
 
 </div>
         

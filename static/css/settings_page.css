@@ -10,7 +10,7 @@
 	width: 47%;
 	height: 300px;
 	margin: 10px;
-	overflow: scroll;
+	overflow: hidden;
 	padding: 20px;
 	border: 1px solid #dedede;
 	box-shadow: 0 1px 0 #dedede;
@@ -74,86 +74,7 @@ dd {
 	color: rgb(237, 120, 106);
 }
 
-/*.ui-dialog {
-	background-color: rgb(246, 247, 248);
-	width: 500px;
-	border: solid black 1px;
-}*/
 
-/* UI dialog 
-.ui-dialog {
-	overflow: hidden;
-	position: relative;
-	margin-right: 15%;
-	margin-left: 15%;
-
-	padding: 1em 3em 1em 3em;
-	outline: 0;
-	
-	border: 1px solid #dddddd;
-  	background: #eeeeee;
-  	color: #333333;
-
-}
-.ui-dialog .ui-dialog-titlebar {
-	padding: 0.5em 0 0.5em 1em;
-	border: 1px solid #e78f08;
-  	background-color: #ED786A;
-  	color: #ffffff;
-  	font-weight: bold;
-  	display: flex;
-  	flex-wrap: wrap;
-}
-.ui-dialog .ui-dialog-title {
-	width: 80%;
-	overflow: hidden;
-	text-align: left;
-	font-size: 20px;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	width: 20%;
-	color: #ffffff;
-	border: none;
-}
-
-.ui-dialog .ui-dialog-content {
-	position: relative;
-	border: 0;
-	padding: .5em 1em;
-	background: none;
-}
-.ui-dialog .ui-dialog-buttonpane {
-	text-align: left;
-	border-width: 1px 0 0 0;
-	background-image: none;
-	margin-top: .5em;
-	padding: .3em 1em .5em .4em;
-}
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-	float: right;
-}
-.ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em 0;
-	cursor: pointer;
-}
-.ui-dialog .ui-resizable-se {
-	width: 12px;
-	height: 12px;
-	right: -5px;
-	bottom: -5px;
-	background-position: 16px 16px;
-}
-
-.ui-draggable .ui-dialog-titlebar {
-	cursor: move;
-}
-
-.ui-corner-all {
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-top-left-radius: 10px;
-}
 
 
 

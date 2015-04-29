@@ -21,7 +21,8 @@ urlpatterns = patterns('',
     url(r'^delete/(\d+)/$',views.delete),
     url(r'^privacy_choose/(\d+)/$',views.privacy_choose),
     url(r'^privacy/(\d+)/$',views.privacy),
-    url(r'^change_accountinfo/', views.change_accountinfo, name='change_accountinfo'),
+    url(r'^change_address/$', views.change_address, name='change_address'),
+    url(r'^change_profile_image/$', views.change_profile_image, name='change_profile_image'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

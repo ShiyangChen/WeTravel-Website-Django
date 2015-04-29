@@ -2,43 +2,18 @@
     <head>
      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-    // <---- VENTAÑAS DE PARAMETERES---->
-    $(document).ready(function() { 
-    var regex,v,l,c,b;
-    $( "#sortparam").dialog({
-                autoOpen: false,
-                height: 'auto',
-                width: 350,
-                modal: true,
-                resizable:false,
-                buttons: {
-                    "Add": function() {
-                                   $( this ).dialog( "close" ); 
-                                       },
-                    Cancel: function() {
-                        $( this ).dialog( "close" );
-                    }
-                },
-                close: function() {
-                    $( this ).dialog( "close" );
-                }
-            });
-
-            $( "#btn_Addpar" ).click(function() {
-                    $( "#sortparam" ).dialog( "open" );
-                });
-
-    });
-    </script>
     </head>
     <!--<form method="POST" id="iformp" name="nformp">-->
     <body>
     <h3>List of parameters</h3>
-    <div id="sortparam" >
-        <p>This is good!</p>
+    <div>
+        <form action="/wetravel/change_address/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <p>
+                    <input id="id_image" type="file" class="" name="image" />
+                </p>
+        </form>
     </div>
-     <input type="button" id="btn_Addpar" value="Add"/>
 
     <!--<form>-->
 
