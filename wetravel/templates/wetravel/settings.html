@@ -102,13 +102,10 @@
         </div>
         <div class="info-section-info">
             <dl class="info">
-              <dt>Places to go:</dt>
+              <dt>Place to go:</dt>
               <dd>
-                {% for place in user.userprofile.to_visit.all %}
-                {{ place }}
-                {{ place.region}}
+                {{ user.userprofile.to_visit }}
                 <br>
-                {% endfor %}
               </dd>
             </dl>
             <dl class="info">
