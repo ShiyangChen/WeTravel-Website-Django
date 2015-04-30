@@ -46,6 +46,8 @@ class Post(models.Model):
     restricted_members = models.ManyToManyField(UserProfile, related_name='restricted_members')
     is_visible = models.BooleanField(default=False)
     link = models.URLField(max_length=500)
+    def __unicode__(self):
+        return self.text
 
 class Group(models.Model):
     name = models.CharField(max_length=15)
