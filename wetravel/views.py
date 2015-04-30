@@ -12,19 +12,71 @@ import json
 # Create your views here.
 
 def index(request):
-    user=request.user
-    posts=Post.objects.order_by("-id")
-    invi_posts=posts.filter(is_visible=True)
-    posts_list=list(posts)
-    for invi_post in invi_posts:
+    if request.user.is_authenticated():
+        #user=request.user
 
-        for invi_friend in invi_post.restricted_members.all():
-            if invi_friend.user.username==user.username:
-                posts_list.remove(invi_post)
-            else:
-                continue
+        #recommendation part
+        candidates1 = friends_goto_same_place(request.user)
+        candidates2 = friends_been_there_before(request.user)
+        candidates3 = recommend_new_friend(request.user)
 
-    return render(request, 'wetravel/index.html',{'posts':posts_list})
+        #posts part
+        posts=Post.objects.order_by("-id")
+        invi_posts=posts.filter(is_visible=True)
+        posts_list=list(posts)
+        for invi_post in invi_posts:
+
+            for invi_friend in invi_post.restricted_members.all():
+                if invi_friend.user.username==request.user.username:
+                    posts_list.remove(invi_post)
+                else:
+                    continue
+
+        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 'posts':posts_list}
+
+    else:
+        context_dict = {}
+    return render(request, 'wetravel/index.html', context_dict)
+
+
+
+# recommend friends who share the same travelling wish:
+def friends_goto_same_place(user):
+    candidates = []
+    if user.userprofile:
+        for friend in user.userprofile.friends.all():
+            if friend.to_visit:
+                if friend.to_visit.region == user.userprofile.to_visit.region:
+                    candidates.append(friend)
+    return tuple(candidates)
+
+# recommend friends who have been to the place you want to go:
+def friends_been_there_before(user):
+    candidates = []
+    if user.userprofile:
+        for friend in user.userprofile.friends.all():
+            if friend.visited:
+                for visited_place in friend.visited.all():
+                    if visited_place.region == user.userprofile.to_visit.region:
+                        candidates.append(friend)
+                        break
+    return tuple(candidates)
+
+# recommend new friends for you:
+def recommend_new_friend(user):
+    candidates = []
+    if user.userprofile:
+        for friend in user.userprofile.friends.all():
+            if friend:
+                for slfriend in friend.friends.all():
+                    if slfriend and slfriend != user.userprofile:
+                        for visited_place in slfriend.visited.all():
+                            if visited_place.region == user.userprofile.to_visit.region:
+
+                        if (slfriend.visited.all() & user.userprofile.to_visit.all()) or (slfriend.to_visit.all() & user.userprofile.to_visit.all()):
+                            candidates.append(slfriend)
+    return tuple(candidates)
+
 
 def about(request):
     return render(request, 'wetravel/about.html')

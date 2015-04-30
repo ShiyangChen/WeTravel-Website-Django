@@ -26,8 +26,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     region = models.ForeignKey(Region, null=True)
     friends = models.ManyToManyField('self', related_name='friends')
-    to_visit = models.ManyToManyField(Place, related_name='places_to_visit')
-    visited = models.ManyToManyField(Place, related_name='places_visited')
+    to_visit = models.ForeignKey(Place, related_name='places_to_visit', null=True)
+    visited = models.ManyToManyField(Place, related_name='places_visited', null=True)
     requests = models.ManyToManyField('self', related_name='requests')
     avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
 

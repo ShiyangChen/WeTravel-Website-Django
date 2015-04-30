@@ -56,19 +56,19 @@ def populate():
     user_profiles[15].friends.add(user_profiles[20])
 
     #add to_visit
-    user_profiles[1].to_visit.add(place1)
+    user_profiles[1].to_visit = place1
 
     #friends
-    user_profiles[2].to_visit.add(place1)
-    user_profiles[5].to_visit.add(place2)
-    user_profiles[13].to_visit.add(place3)
-    user_profiles[15].to_visit.add(place1)
+    user_profiles[2].to_visit = place1
+    user_profiles[5].to_visit = place2
+    user_profiles[13].to_visit = place3
+    user_profiles[15].to_visit = place1
 
     #second-level friends
-    user_profiles[8].to_visit.add(place1)
-    user_profiles[11].to_visit.add(place2)
-    user_profiles[17].to_visit.add(place3)
-    user_profiles[20].to_visit.add(place1)
+    user_profiles[8].to_visit = place1
+    user_profiles[11].to_visit = place2
+    user_profiles[17].to_visit = place3
+    user_profiles[20].to_visit = place1
     
     #add visit
     user_profiles[1].visited.add(place4, place6)

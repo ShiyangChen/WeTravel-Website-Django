@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wetravel', '0002_userprofile_avatar'),
+        ('wetravel', '0002_auto_20150430_0531'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='userprofile',
-            name='avatar',
-            field=models.ImageField(default=b'static/images/default_image.png', upload_to=b'images/', null=True, verbose_name=b'Profile Pic', blank=True),
+            name='to_visit',
+            field=models.ForeignKey(related_name='places_to_visit', to='wetravel.Place', null=True),
             preserve_default=True,
         ),
     ]

@@ -28,15 +28,56 @@
                 </article>
                {% endfor %}
 
-            {% else %}
-             <p>No post on your homepage.</p>
-              {% endif %}
-
+              {% else %}
+               <p>No post on your homepage.</p>
+                {% endif %}
              </div>
-           </div>
-         </div>
 
-         <div id="sidebar" class="4u">
+
+             <div id="sidebar" class="4u">
+              <section>
+                <p>Friends who also want to go to the same place:</p>
+                {% if candidates1 %}
+                  {% for candidate1 in candidates1 %}
+                    {% if candidate1 %}
+                      <ul>
+                        <li>{{  candidate1.user.username }}</li>
+                      </ul>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </section>
+
+              <section>
+                <p>Ask them for future travelling advice:</p>
+                {% if candidates2 %}
+                  {% for candidate2 in candidates2 %}
+                    {% if candidate2 %}
+                      <ul>
+                        <li>{{  candidate2.user.username }}</li>
+                      </ul>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </section>
+
+              <section>
+                <p>Friends recommended for you:</p>
+                {% if candidates3 %}
+                  {% for candidate3 in candidates3 %}
+                    {% if candidate3 %}
+                      <ul>
+                        <li>{{  candidate3.user.username }}</li>
+                      </ul>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </section>
+            </div>
+
+
+
+           </div>
          </div>
       </div>
 
