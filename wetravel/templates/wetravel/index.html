@@ -34,52 +34,122 @@
              </div>
 
 
-             <div id="sidebar" class="4u">
-              <section>
-                <p>Friends who also want to go to the same place:</p>
-                {% if candidates1 %}
-                  {% for candidate1 in candidates1 %}
-                    {% if candidate1 %}
-                      <ul>
-                        <li>{{  candidate1.user.username }}</li>
-                      </ul>
+            <div id="sidebar" class="4u">
+              <div class="panel">
+
+                <div class="panel-head">
+                  <h3>Friends Activities</h3>
+                </div>
+
+                <div class="panel-content">
+
+                  <div>
+                    {% if candidates1 %}
+                      <div class="recommend-friend-header">
+                        <h4>Your friends who also want to go to {{ user.userprofile.to_visit.region.city }}</h4>
+                      </div>
+
+                      <div class="recommend-friend-area">
+                        <ul class="recommend-friend-list">
+                          <div class="group">
+                            {% for candidate1 in candidates1 %}
+                            {% if candidate1 %}
+                              <li>
+                                <p class="user-head">
+                                  <a href="#">
+                                    <img border="0" alt="{{candidate1.user.username}}" 
+                                    src="{{ candidate1.avatar_image }}" height="100" weight="100"/>
+                                  </a>
+                                  <span class="username">{{candidate1.user.username}}</span>
+                                </p>
+                              </li>
+                              {% endif %}
+                              {% endfor %}
+                          </div>
+                        </ul>
+                      </div>
+                      
                     {% endif %}
-                  {% endfor %}
-                {% endif %}
-              </section>
+                  </div>
 
-              <section>
-                <p>Ask them for future travelling advice:</p>
-                {% if candidates2 %}
-                  {% for candidate2 in candidates2 %}
-                    {% if candidate2 %}
-                      <ul>
-                        <li>{{  candidate2.user.username }}</li>
-                      </ul>
+
+                  <div>
+                    {% if candidates2 %}
+                      <div class="recommend-friend-header">
+                        <h4>Your friends have been to {{ user.userprofile.to_visit.region.city }}</h4>
+                      </div>
+
+                      <div class="recommend-friend-area">
+                        <ul class="recommend-friend-list">
+                          <div class="group">
+                            {% for candidate2 in candidates2 %}
+                            {% if candidate2 %}
+                              <li>
+                                <p class="user-head">
+                                  <a href="#">
+                                    <img border="0" alt="{{candidate1.user.username}}" 
+                                    src="{{ candidate2.avatar_image }}" height="100" weight="100"/>
+                                  </a>
+                                  <span class="username">{{candidate2.user.username}}</span>
+                                </p>
+                              </li>
+                              {% endif %}
+                              {% endfor %}
+                          </div>
+                        </ul>
+                      </div>
+                      
                     {% endif %}
-                  {% endfor %}
-                {% endif %}
-              </section>
+                  </div>
 
-              <section>
-                <p>Friends recommended for you:</p>
-                {% if candidates3 %}
-                  {% for candidate3 in candidates3 %}
-                    {% if candidate3 %}
-                      <ul>
-                        <li>{{  candidate3.user.username }}</li>
-                      </ul>
+                  
+
+                </div>
+              </div>
+
+              <div class="panel">
+
+                <div class="panel-head">
+                  <h3>Friends Recommended</h3>
+                </div>
+
+                <div class="panel-content">
+                  <div>
+                    {% if candidates3 %}
+                      <div class="recommend-friend-header">
+                        <h4>Add new friends!!!</h4>
+                      </div>
+
+                      <div class="recommend-friend-area">
+                        <ul class="recommend-friend-list">
+                          <div class="group">
+                            {% for candidate3 in candidates3 %}
+                            {% if candidate3 %}
+                              <li>
+                                <p class="user-head">
+                                  <a href="#">
+                                    <img border="0" alt="{{candidate3.user.username}}" 
+                                    src="{{ candidate3.avatar_image }}" height="100" weight="100"/>
+                                  </a>
+                                  <span class="username">{{candidate3.user.username}}</span>
+                                </p>
+                              </li>
+                              {% endif %}
+                              {% endfor %}
+                          </div>
+                        </ul>
+                      </div>
+                      
                     {% endif %}
-                  {% endfor %}
-                {% endif %}
-              </section>
-            </div>
+                  </div>
+              </div>
 
+    
+          </div>
 
-
-           </div>
-         </div>
+        </div>
       </div>
+    </div>
 
 
 

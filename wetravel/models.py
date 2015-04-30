@@ -14,13 +14,14 @@ class Region(models.Model):
     def __unicode__(self):
         return self.city  + '/' + self.state + '/' + self.country
 
+
 class Place(models.Model):
     address  = models.CharField(max_length=200)
     place_type = models.CharField(max_length=30)
     region   = models.ForeignKey(Region, null=True)
 
     def __unicode__(self):
-        return self.address
+        return self.address + '' + unicode(self.region)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

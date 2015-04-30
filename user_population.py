@@ -94,6 +94,28 @@ def populate():
     user_profiles[20].visited.add(place7)
 
 
+    user_profiles[0].avatar = "/images/fry.jpg"
+    user_profiles[1].avatar = "/images/1.jpg"
+    user_profiles[2].avatar = "/images/2.jpg"
+    user_profiles[3].avatar = "/images/3.jpg"
+    user_profiles[4].avatar = "/images/4.jpg"
+    user_profiles[5].avatar = "/images/5.jpg"
+    user_profiles[6].avatar = "/images/6.jpg"
+    user_profiles[7].avatar = "/images/7.png"
+    user_profiles[8].avatar = "/images/8.jpg"
+    user_profiles[9].avatar = "/images/9.jpeg"
+    user_profiles[10].avatar = "/images/10.png"
+    user_profiles[11].avatar = "/images/11.jpg"
+    user_profiles[12].avatar = "/images/12.jpg"
+    user_profiles[13].avatar = "/images/13.jpg"
+    user_profiles[14].avatar = "/images/14.jpg"
+    user_profiles[15].avatar = "/images/15.jpeg"
+    user_profiles[16].avatar = "/images/16.jpg"
+    user_profiles[17].avatar = "/images/17.jpg"
+    user_profiles[18].avatar = "/images/18.jpg"
+    user_profiles[19].avatar = "/images/19.jpg"
+    user_profiles[20].avatar = "/images/20.jpg"
+    
     for user_profile in user_profiles:
         user_profile.save()
 

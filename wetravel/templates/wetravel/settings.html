@@ -105,6 +105,7 @@
               <dt>Place to go:</dt>
               <dd>
                 {{ user.userprofile.to_visit }}
+
                 <br>
               </dd>
             </dl>
@@ -113,7 +114,6 @@
               <dd>
                 {% for place in user.userprofile.visited.all %}
                 {{ place }}
-                {{ place.region }}
                 <br>
                 {% endfor %}
               </dd>
