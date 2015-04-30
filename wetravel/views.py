@@ -69,12 +69,15 @@ def recommend_new_friend(user):
         for friend in user.userprofile.friends.all():
             if friend:
                 for slfriend in friend.friends.all():
-                    if slfriend and slfriend != user.userprofile:
+                    if slfriend and slfriend not in candidates and slfriend != user.userprofile:
                         for visited_place in slfriend.visited.all():
                             if visited_place.region == user.userprofile.to_visit.region:
-
-                        if (slfriend.visited.all() & user.userprofile.to_visit.all()) or (slfriend.to_visit.all() & user.userprofile.to_visit.all()):
-                            candidates.append(slfriend)
+                                candidates.append(slfriend)
+                                break
+                        if slfriend not in candidates:
+                            if slfriend.to_visit:
+                                if slfriend.to_visit.region == user.userprofile.to_visit.region:
+                                    candidates.append(slfriend)
     return tuple(candidates)
 
 

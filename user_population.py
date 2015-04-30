@@ -73,9 +73,8 @@ def populate():
     #add visit
     user_profiles[1].visited.add(place4, place6)
 
-    #friends
     user_profiles[2].visited.add(place4, place6)
-    user_profiles[3].visited.add(place4, place5)
+    user_profiles[3].visited.add(place4, place5, place3)
     user_profiles[4].visited.add(place1, place2)
     user_profiles[5].visited.add(place6, place7)
     user_profiles[6].visited.add(place1, place4)
