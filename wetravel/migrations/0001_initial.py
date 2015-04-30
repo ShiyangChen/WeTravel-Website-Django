@@ -24,6 +24,16 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Comment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('text', models.TextField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Event',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -124,7 +134,7 @@ class Migration(migrations.Migration):
                 ('requests', models.ManyToManyField(related_name='requests_rel_+', to='wetravel.UserProfile')),
                 ('to_visit', models.ForeignKey(related_name='places_to_visit', to='wetravel.Place', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-                ('visited', models.ManyToManyField(related_name='places_visited', to='wetravel.Place')),
+                ('visited', models.ManyToManyField(related_name='places_visited', null=True, to='wetravel.Place')),
             ],
             options={
             },
@@ -188,6 +198,18 @@ class Migration(migrations.Migration):
             model_name='event',
             name='place',
             field=models.ForeignKey(to='wetravel.Place', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='login_user',
+            field=models.OneToOneField(to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='to_post',
+            field=models.ForeignKey(to='wetravel.Post', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

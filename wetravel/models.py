@@ -82,3 +82,9 @@ class Request(models.Model):
     sent_from = models.ManyToManyField(UserProfile, related_name='sent_from')
     sent_to = models.ManyToManyField(UserProfile, related_name='sent_to')
     sent_for = models.ManyToManyField(UserProfile, related_name='sent_for')
+
+
+class Comment(models.Model):
+    login_user = models.OneToOneField(UserProfile)
+    text=models.TextField()
+    to_post=models.ForeignKey(Post, null=True)

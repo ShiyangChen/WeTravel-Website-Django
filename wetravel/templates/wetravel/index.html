@@ -22,7 +22,7 @@
               {% for post in posts %}
                 <article class="box post">
 
-                  <h3><a  href="/wetravel/profile/" role="button">{{post.publisher.user.username}}</a></h3>
+                  <h3><a  href="/wetravel/profile/{{post.publisher.id}}" role="button">{{post.publisher.user.username}}</a></h3>
                    <h2>{{ post.text }}</h2>
 
                 </article>

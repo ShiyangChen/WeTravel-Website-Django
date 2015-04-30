@@ -21,9 +21,25 @@ def index(request):
         candidates3 = recommend_new_friend(request.user)
 
         #posts part
+        cur_user=request.user.userprofile
+        user_friends=cur_user.friends.all()
+      
+
         posts=Post.objects.order_by("-id")
+        posts_list=[]
+        userprofile_id=[]
+        for post in posts:
+            if (post.publisher==cur_user):
+                posts_list.append(post)
+               # userprofile_id.append(cur_user.id)
+            for friend in user_friends:
+
+                if (post.publisher==friend):
+                    posts_list.append(post)
+                    #userprofile_id.append(friend.id)
+
         invi_posts=posts.filter(is_visible=True)
-        posts_list=list(posts)
+        #posts_list=list(posts)
         for invi_post in invi_posts:
 
             for invi_friend in invi_post.restricted_members.all():
@@ -195,10 +211,11 @@ def createpost(request):
         return HttpResponse('submitted a empty form')
 
 @login_required
-def profile(request):
+def profile(request,param1):
     user=request.user   #???
     cur_user=request.user.userprofile
-    my_posts=Post.objects.filter(publisher=cur_user)
+    check_user=UserProfile.objects.get(id=param1)
+    my_posts=Post.objects.filter(publisher=check_user)
     my_posts=my_posts.order_by("-id")
     return render(request,'wetravel/profile.html',{'my_posts':my_posts,'user':user})
 
