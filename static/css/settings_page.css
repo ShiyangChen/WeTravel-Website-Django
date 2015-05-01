@@ -74,6 +74,52 @@ dd {
 	color: rgb(237, 120, 106);
 }
 
+.panel {
+	border: 1px solid #dedede;
+	box-shadow: 0 1px 0 #dedede;
+	border-radius: 5px;
+	background-color: rgba(222, 222, 222, 0.12);
+	box-sizing: border-box;
+}
+
+.panel-head h3 {
+	margin: 10px 5px 5px 5px;
+}
+
+.recommend-friend-header {
+	margin: 0px 0px 10px 5px;
+	letter-spacing: 0.1px;
+	color: rgb(59, 96, 39);
+}
+
+.recommend-friend-area {
+	display: flex;
+	flex-wrap: wrap;
+	padding-bottom: 5px;
+}
+
+.group {
+	width: 33%;
+}
+
+.user-head {
+	border-bottom: none;
+}
+.user-name {
+	font-size: 14px;
+	font-weight: 700;
+}
+
+#link-to-all-friends {
+	text-align: right;
+	padding: 5px;
+}
+
+#link-to-all-friends a {
+	font-weight: 500;
+	
+
+}
 
 
 

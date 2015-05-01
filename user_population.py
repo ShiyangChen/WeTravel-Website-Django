@@ -94,6 +94,7 @@ def populate():
     user_profiles[20].visited.add(place7)
 
 
+    #add profile image
     user_profiles[0].avatar = "/images/fry.jpg"
     user_profiles[1].avatar = "/images/1.jpg"
     user_profiles[2].avatar = "/images/2.jpg"
