@@ -1,6 +1,12 @@
 $(document).ready(function(){
 		var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
 
+    //-------------------------------------------------------------------------------
+    /*$(".recommend").mouseover(function(){
+      $('#user-head-popup').append("<p>Haha</p>");
+    });
+
+    */
     //Change Profile Image
     //---------------------------------------------------------------------
      profile_image_dialog = $('#dialog-profile-image-form').dialog({
@@ -77,6 +83,7 @@ $(document).ready(function(){
     });
 
 
+
     //Change Address Information
     //---------------------------------------------------------------------------
     address_dialog = $('#dialog-address-form').dialog({
@@ -128,7 +135,7 @@ $(document).ready(function(){
     });
 
    
-
+    //----------------------------------------------------------------------------------------------
     // This function gets cookie with a given name
     function getCookie(name) {
         var cookieValue = null;

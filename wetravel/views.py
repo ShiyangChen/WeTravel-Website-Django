@@ -8,6 +8,7 @@ from PIL import Image as PImage
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 import json
+import random
 
 # Create your views here.
 
@@ -19,6 +20,16 @@ def index(request):
         candidates1 = friends_goto_same_place(request.user)
         candidates2 = friends_been_there_before(request.user)
         candidates3 = recommend_new_friend(request.user)
+
+        common_friends_all = []
+        num_common_friends_all = []
+
+        for recommended_friend in candidates3:
+            common_friends = get_common_friends(recommended_friend, request.user.userprofile)
+            num_common_friends = len(common_friends)
+            common_friends_all.append(common_friends)
+            num_common_friends_all.append(num_common_friends)
+
 
         #posts part
         posts=Post.objects.order_by("-id")
@@ -32,7 +43,10 @@ def index(request):
                 else:
                     continue
 
-        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 'posts':posts_list}
+        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
+        'common_friends_1' : common_friends_all[0], 'common_friends_2' : common_friends_all[1], 'common_friends_3' : common_friends_all[2], 
+        'num_common_friends_1' : num_common_friends_all[0], 'num_common_friends_2' : num_common_friends_all[1], 'num_common_friends_3' : num_common_friends_all[2], 
+        'posts':posts_list}
 
     else:
         context_dict = {}
@@ -48,7 +62,8 @@ def friends_goto_same_place(user):
             if friend and friend.to_visit and user.userprofile.to_visit:
                 if friend.to_visit.region == user.userprofile.to_visit.region:
                     candidates.append(friend)
-    return tuple(candidates)[:3]
+    random.shuffle(candidates)
+    return candidates[:3]
 
 # recommend friends who have been to the place you want to go:
 def friends_been_there_before(user):
@@ -60,16 +75,18 @@ def friends_been_there_before(user):
                     if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
                         candidates.append(friend)
                         break
-    return tuple(candidates)[:3]
+    random.shuffle(candidates)
+    return candidates[:3]
 
 # recommend new friends for you:
 def recommend_new_friend(user):
     candidates = []
     if user.userprofile:
-        for friend in user.userprofile.friends.all():
+        friends = user.userprofile.friends.all();
+        for friend in friends:
             if friend:
                 for slfriend in friend.friends.all():
-                    if slfriend and slfriend not in candidates and slfriend != user.userprofile:
+                    if slfriend and slfriend not in candidates and slfriend != user.userprofile and slfriend not in friends:
                         for visited_place in slfriend.visited.all():
                             if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
                                 candidates.append(slfriend)
@@ -78,7 +95,15 @@ def recommend_new_friend(user):
                             if slfriend.to_visit:
                                 if user.userprofile.to_visit and slfriend.to_visit.region == user.userprofile.to_visit.region:
                                     candidates.append(slfriend)
-    return tuple(candidates)[:3]
+    random.shuffle(candidates)
+    return candidates[:3]
+
+def get_common_friends(user1, user2):
+    friends_user1 = user1.friends.all()
+    friends_user2 = user2.friends.all()
+    common_friends = list(friends_user1 & friends_user2)
+    random.shuffle(common_friends)
+    return common_friends
 
 
 def about(request):
