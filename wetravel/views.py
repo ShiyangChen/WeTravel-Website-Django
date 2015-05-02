@@ -8,6 +8,7 @@ from PIL import Image as PImage
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 import json
+import random
 
 # Create your views here.
 
@@ -19,6 +20,16 @@ def index(request):
         candidates1 = friends_goto_same_place(request.user)
         candidates2 = friends_been_there_before(request.user)
         candidates3 = recommend_new_friend(request.user)
+
+        common_friends_all = []
+        num_common_friends_all = []
+
+        for recommended_friend in candidates3:
+            common_friends = get_common_friends(recommended_friend, request.user.userprofile)
+            num_common_friends = len(common_friends)
+            common_friends_all.append(common_friends)
+            num_common_friends_all.append(num_common_friends)
+
 
         #posts part
         posts=Post.objects.order_by("-id")
@@ -32,7 +43,10 @@ def index(request):
                 else:
                     continue
 
-        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 'posts':posts_list}
+        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
+        'common_friends_1' : common_friends_all[0], 'common_friends_2' : common_friends_all[1], 'common_friends_3' : common_friends_all[2], 
+        'num_common_friends_1' : num_common_friends_all[0], 'num_common_friends_2' : num_common_friends_all[1], 'num_common_friends_3' : num_common_friends_all[2], 
+        'posts':posts_list}
 
     else:
         context_dict = {}
@@ -45,10 +59,11 @@ def friends_goto_same_place(user):
     candidates = []
     if user.userprofile:
         for friend in user.userprofile.friends.all():
-            if friend.to_visit:
+            if friend and friend.to_visit and user.userprofile.to_visit:
                 if friend.to_visit.region == user.userprofile.to_visit.region:
                     candidates.append(friend)
-    return tuple(candidates)
+    random.shuffle(candidates)
+    return candidates[:3]
 
 # recommend friends who have been to the place you want to go:
 def friends_been_there_before(user):
@@ -57,28 +72,38 @@ def friends_been_there_before(user):
         for friend in user.userprofile.friends.all():
             if friend.visited:
                 for visited_place in friend.visited.all():
-                    if visited_place.region == user.userprofile.to_visit.region:
+                    if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
                         candidates.append(friend)
                         break
-    return tuple(candidates)
+    random.shuffle(candidates)
+    return candidates[:3]
 
 # recommend new friends for you:
 def recommend_new_friend(user):
     candidates = []
     if user.userprofile:
-        for friend in user.userprofile.friends.all():
+        friends = user.userprofile.friends.all();
+        for friend in friends:
             if friend:
                 for slfriend in friend.friends.all():
-                    if slfriend and slfriend not in candidates and slfriend != user.userprofile:
+                    if slfriend and slfriend not in candidates and slfriend != user.userprofile and slfriend not in friends:
                         for visited_place in slfriend.visited.all():
-                            if visited_place.region == user.userprofile.to_visit.region:
+                            if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
                                 candidates.append(slfriend)
                                 break
                         if slfriend not in candidates:
                             if slfriend.to_visit:
-                                if slfriend.to_visit.region == user.userprofile.to_visit.region:
+                                if user.userprofile.to_visit and slfriend.to_visit.region == user.userprofile.to_visit.region:
                                     candidates.append(slfriend)
-    return tuple(candidates)
+    random.shuffle(candidates)
+    return candidates[:3]
+
+def get_common_friends(user1, user2):
+    friends_user1 = user1.friends.all()
+    friends_user2 = user2.friends.all()
+    common_friends = list(friends_user1 & friends_user2)
+    random.shuffle(common_friends)
+    return common_friends
 
 
 def about(request):
@@ -286,14 +311,61 @@ def privacy(request,param1):
             set_post.save()
     return HttpResponseRedirect('/wetravel/profile/')
 
+def resize_and_crop(img_path, size, crop_type='middle'):
+    """
+    Resize and crop an image to fit the specified size.
 
-
-
-   # my_posts=Post.objects.filter(publisher=cur_user)
-   # my_posts=my_posts.order_by("-id")
-    #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
-
-
+    args:
+    img_path: path for the image to resize.
+    modified_path: path to store the modified image.
+    size: `(width, height)` tuple.
+    crop_type: can be 'top', 'middle' or 'bottom', depending on this
+    value, the image will cropped getting the 'top/left', 'middle' or
+    'bottom/right' of the image to fit the size.
+    raises:
+    Exception: if can not open the file in img_path of there is problems
+    to save the image.
+    ValueError: if an invalid `crop_type` is provided.
+    """
+    # If height is higher we resize vertically, if not we resize horizontally
+    img = PImage.open(img_path)
+    # Get current and desired ratio for the images
+    img_ratio = img.size[0] / float(img.size[1])
+    ratio = size[0] / float(size[1])
+    #The image is scaled/cropped vertically or horizontally depending on the ratio
+    if ratio > img_ratio:
+        img = img.resize((size[0], int(round(size[0] * img.size[1] / img.size[0]))),
+            PImage.ANTIALIAS)
+        # Crop in the top, middle or bottom
+        if crop_type == 'top':
+            box = (0, 0, img.size[0], size[1])
+        elif crop_type == 'middle':
+            box = (0, int(round((img.size[1] - size[1]) / 2)), img.size[0],
+                int(round((img.size[1] + size[1]) / 2)))
+        elif crop_type == 'bottom':
+            box = (0, img.size[1] - size[1], img.size[0], img.size[1])
+        else :
+            raise ValueError('ERROR: invalid value for crop_type')
+        img = img.crop(box)
+    elif ratio < img_ratio:
+        img = img.resize((int(round(size[1] * img.size[0] / img.size[1])), size[1]),
+            PImage.ANTIALIAS)
+        # Crop in the top, middle or bottom
+        if crop_type == 'top':
+            box = (0, 0, size[0], img.size[1])
+        elif crop_type == 'middle':
+            box = (int(round((img.size[0] - size[0]) / 2)), 0,
+                int(round((img.size[0] + size[0]) / 2)), img.size[1])
+        elif crop_type == 'bottom':
+            box = (img.size[0] - size[0], 0, img.size[0], img.size[1])
+        else :
+            raise ValueError('ERROR: invalid value for crop_type')
+        img = img.crop(box)
+    else :
+        img = img.resize((size[0], size[1]),
+            PImage.ANTIALIAS)
+    # If the scale is the same, we do not need to crop
+    img.save(img_path)
 @login_required
 def change_profile_image(request):
     user = request.user
@@ -309,9 +381,8 @@ def change_profile_image(request):
             user.save()
 
             if p.avatar:
-                img = PImage.open(p.avatar.path)
-                img.thumbnail((250,250), PImage.ANTIALIAS)
-                img.save(img.filename)
+                resize_and_crop(p.avatar.path, (250, 250))
+
         else:
             print form.errors
 

@@ -1,7 +1,41 @@
 $(document).ready(function(){
 		var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
 
-    //Change Profile Image
+    //for the purpose of showing common-friends for recommended friends
+    //modal when hover
+
+  
+
+    var recommended = $('.recommend');
+    var overlay = $('.overlay');
+
+    recommended.each(function(index,rec){
+       // console.log(index);
+       // console.log(rec.src);
+      var mouseIn = function (i) {
+          return function() {
+            overlay[i].style.visibility = "visible";
+          };
+        }(index);
+      var mouseOut = function (i) {
+          return function() {
+            overlay[i].style.visibility = "hidden";
+          };
+        }(index);
+      $(rec).hover(mouseIn, mouseOut);
+    });
+    //var i = 0;
+    //for(var i = 0; i < recommended.length; i++) {
+      // recommended.get(i).on('hover',
+      //   function() {
+      //     overlay.get(i).style.visibility = "visible";
+
+      //   },
+      //   function() {
+      //     overlay.get(i).style.visibility = "hidden";
+      //   });
+   // }
+
     //---------------------------------------------------------------------
      profile_image_dialog = $('#dialog-profile-image-form').dialog({
       autoOpen: false,
@@ -77,6 +111,7 @@ $(document).ready(function(){
     });
 
 
+
     //Change Address Information
     //---------------------------------------------------------------------------
     address_dialog = $('#dialog-address-form').dialog({
@@ -128,7 +163,7 @@ $(document).ready(function(){
     });
 
    
-
+    //----------------------------------------------------------------------------------------------
     // This function gets cookie with a given name
     function getCookie(name) {
         var cookieValue = null;
