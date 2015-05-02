@@ -47,8 +47,8 @@ def index(request):
         var1 = "common_friends_"
         var2 = "num_common_friends_"
         for i in range (len(common_friends_all)):
-            new_var1 = var1 + str(i)
-            new_var2 = var2 + str(i)
+            new_var1 = var1 + str(i+1)
+            new_var2 = var2 + str(i+1)
             context_dict[new_var1] = common_friends_all[i]
             context_dict[new_var2] = num_common_friends_all[i]
 
