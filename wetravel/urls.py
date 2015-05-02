@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^change_address/$', views.change_address, name='change_address'),
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^change_profile_image/$', views.change_profile_image, name='change_profile_image'),
+    url(r'^comment_upload/(\d+)/$',views.comment_upload,name='comment_upload'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

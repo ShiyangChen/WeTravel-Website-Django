@@ -3,6 +3,12 @@
 {% block title %}Index{% endblock %}
 {% block content %}
 
+
+
+<head>
+   <script src="/static/js/main.js"></script>
+ </head>
+
   {% if user.is_authenticated %}
 <!-- Main -->
       <div id="main-wrapper">
@@ -12,6 +18,12 @@
             <!-- Content -->
               <div id="content" class="8u">
                 <h2>See what our friends do recently</h2>
+                <div id="accordion">
+                  <h3>Section 1</h3>
+                    <div>
+                  <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                    </div>
+                  </div>
                 <ul class="actions">
                       <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
                 </ul>
@@ -24,6 +36,42 @@
 
                   <h3><a  href="/wetravel/profile/{{post.publisher.id}}" role="button">{{post.publisher.user.username}}</a></h3>
                    <h2>{{ post.text }}</h2>
+
+                   <form action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
+                    {% csrf_token %}
+                    <p><b>Write your own comment!</b></p>
+                    <textarea row=4 col=20 type="text" name="comment" id="comment-text"></textarea>
+
+                    <!--<textarea type="text" name="comment" id="comment-text">
+                    </textarea>-->
+
+                    <input type="submit" value="Submit"/>
+                   </form>
+                   
+
+                   {% if comment_lists %}
+                   <p><strong><b>See friends comments:</b></strong></p>
+                   
+                   {% for comment in comment_lists %}
+
+                   {% ifequal post.id  comment.to_post.id %}
+
+                 
+                   <p>{{comment.login_user.username}}:{{comment.text}}</p>
+
+                   {%endifequal%}
+
+                   {% endfor %}
+
+                 
+                    
+
+               
+
+                   {%else %}
+                   <p>No comment on your post.</p>
+
+                   {%endif%}
 
                 </article>
                {% endfor %}

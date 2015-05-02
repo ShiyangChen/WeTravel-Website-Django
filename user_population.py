@@ -45,15 +45,15 @@ def populate():
         users[i].save()
     # add friends relationship
     user_profiles[1].friends.add(user_profiles[2],user_profiles[3],user_profiles[4],user_profiles[5],user_profiles[6],user_profiles[7],user_profiles[13],user_profiles[14],user_profiles[15])
-    user_profiles[2].friends.add(user_profiles[8],user_profiles[9])
-    user_profiles[3].friends.add(user_profiles[9],user_profiles[10])
-    user_profiles[4].friends.add(user_profiles[9],user_profiles[11])
-    user_profiles[5].friends.add(user_profiles[10],user_profiles[18])
-    user_profiles[6].friends.add(user_profiles[12])
-    user_profiles[7].friends.add(user_profiles[12],user_profiles[17],user_profiles[19])
-    user_profiles[13].friends.add(user_profiles[17],user_profiles[18],user_profiles[19])
-    user_profiles[14].friends.add(user_profiles[19])
-    user_profiles[15].friends.add(user_profiles[20])
+    user_profiles[2].friends.add(user_profiles[8],user_profiles[11],user_profiles[19],user_profiles[20])
+    user_profiles[3].friends.add(user_profiles[9],user_profiles[10],user_profiles[12],user_profiles[17])
+    user_profiles[4].friends.add(user_profiles[9],user_profiles[11],user_profiles[17],user_profiles[20])
+    user_profiles[5].friends.add(user_profiles[3],user_profiles[11],user_profiles[10],user_profiles[18])
+    user_profiles[6].friends.add(user_profiles[8],user_profiles[11],user_profiles[12],user_profiles[18])
+    user_profiles[7].friends.add(user_profiles[12],user_profiles[17],user_profiles[19],user_profiles[20])
+    user_profiles[13].friends.add(user_profiles[9],user_profiles[18],user_profiles[19])
+    user_profiles[14].friends.add(user_profiles[8],user_profiles[11],user_profiles[19])
+    user_profiles[15].friends.add(user_profiles[8],user_profiles[11],user_profiles[20])
 
     #add to_visit
     user_profiles[1].to_visit = place1
@@ -94,6 +94,29 @@ def populate():
     user_profiles[20].visited.add(place7)
 
 
+    #add profile image
+    user_profiles[0].avatar = "/images/fry.jpg"
+    user_profiles[1].avatar = "/images/1.jpg"
+    user_profiles[2].avatar = "/images/2.jpg"
+    user_profiles[3].avatar = "/images/3.jpg"
+    user_profiles[4].avatar = "/images/4.jpg"
+    user_profiles[5].avatar = "/images/5.jpg"
+    user_profiles[6].avatar = "/images/6.jpg"
+    user_profiles[7].avatar = "/images/7.png"
+    user_profiles[8].avatar = "/images/8.jpg"
+    user_profiles[9].avatar = "/images/9.jpeg"
+    user_profiles[10].avatar = "/images/10.png"
+    user_profiles[11].avatar = "/images/11.jpg"
+    user_profiles[12].avatar = "/images/12.jpg"
+    user_profiles[13].avatar = "/images/13.jpg"
+    user_profiles[14].avatar = "/images/14.jpg"
+    user_profiles[15].avatar = "/images/15.jpeg"
+    user_profiles[16].avatar = "/images/16.jpg"
+    user_profiles[17].avatar = "/images/17.jpg"
+    user_profiles[18].avatar = "/images/18.jpg"
+    user_profiles[19].avatar = "/images/19.jpg"
+    user_profiles[20].avatar = "/images/20.jpg"
+    
     for user_profile in user_profiles:
         user_profile.save()
 

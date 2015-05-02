@@ -85,6 +85,6 @@ class Request(models.Model):
 
 
 class Comment(models.Model):
-    login_user = models.OneToOneField(UserProfile)
+    login_user = models.ForeignKey(User)
     text=models.TextField()
     to_post=models.ForeignKey(Post, null=True)

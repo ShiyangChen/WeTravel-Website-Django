@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -48,7 +49,10 @@ def index(request):
                 else:
                     continue
 
-        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 'posts':posts_list}
+        comment_lists=Comment.objects.order_by("-id")
+
+        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 
+        'candidates3' : candidates3, 'posts':posts_list,'comment_lists':comment_lists}
 
     else:
         context_dict = {}
@@ -287,7 +291,7 @@ def privacy(request,param1):
             set_post.restricted_members.add(restrict_friend)
             set_post.is_visible=True
             set_post.save()
-    return HttpResponseRedirect('/wetravel/profile/')
+    return HttpResponseRedirect("/wetravel/profile/{}/".format(cur_user.id))
 
 
 
@@ -364,4 +368,28 @@ def change_address(request):
         response_data['result'] = 'Update failed'
 
     return HttpResponse(json.dumps(response_data),content_type="application/json")
+
+
+def comment_upload(request,param1):
+    user=request.user
+    cur_user=user.userprofile
+
+    if request.method == 'POST':
+
+        comment_info=request.POST['comment']
+        #response_data = {}
+        #response_data['comment_value']=comment_info
+        #return HttpResponse(json.dumps(response_data),content_type="application/json")
+        comment_post=Post.objects.get(id=param1)
+        c=Comment(login_user=user,text=comment_info,to_post=comment_post)
+        c.save()
+        return HttpResponseRedirect('/wetravel/')
+        
+
+           # print "it's a test"                            #用于测试  
+        #print request.POST['comment']
+        #return HttpResponse("successfully")
+
+    else:  
+        return HttpResponse("<h1>test</h1>") 
 

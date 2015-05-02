@@ -38,6 +38,7 @@
     <script src="/static/js/skel.min.js"></script>
     <script src="/static/js/skel-layers.min.js"></script>
     <script src="/static/js/init.js"></script>
+    <script src="/static/js/main.js"></script>
 
 
     <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
@@ -53,7 +54,7 @@
                 <li><a class="icon fa-home" href="/wetravel"><span>Homepage</span></a></li>
                 <li><a class="icon fa-info" href="/wetravel/about"><span>About</span></a></li>
                 {% if user.is_authenticated %}
-                <li><a class="icon fa-user" href="/wetravel/profile" ><span>Profile</span></a></li>
+                <li><a class="icon fa-user" href="/wetravel/profile/{{user.userprofile.id}}" ><span>Profile</span></a></li>
                 <li><a class="icon fa-users" href="/wetravel/friends"><span>Friends</span></a></li>
                 <li><a class="icon fa-envelope" href="/wetravel/requests" ><span>Requests</span></a></li>
                 <li>

@@ -4,4 +4,4 @@ from wetravel.models import *
 # Register your models here.
 
 admin.site.register([UserProfile, Group])
-admin.site.register([Region, Place, Post])
+admin.site.register([Region, Place, Post,Comment])
