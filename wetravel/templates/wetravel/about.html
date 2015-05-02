@@ -3,15 +3,14 @@
 {% block title %}About{% endblock %}
 {% block content %}
 
-<div>
-  <div>
-    <h1>About WeTravel</h1>
-    <p>WeTravel helps you share travel information and plan new travels with your close friends.</p>
+<div class="my_div">
+    <h1 class="my_h1">About WeTravel</h1>
+    <p class="my_p">WeTravel helps you share travel information and plan new travels with your close friends.</p>
     {% if not user.is_authenticated %}
     <div>
-      <p><a>Sign up now!</a></p>
+      <p class="my_p"><a href="/wetravel/signup" class="my_a">Sign up now!</a></p>
     </div>
     {% endif %}
-  </div>
 </div>
+
 {% endblock %}

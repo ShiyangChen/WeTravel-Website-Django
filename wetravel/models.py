@@ -12,7 +12,8 @@ class Region(models.Model):
     city = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.city  + '/' + self.state + '/' + self.country
+        return self.city  + ',' + self.state + ',' + self.country
+
 
 class Place(models.Model):
     address  = models.CharField(max_length=200)
@@ -20,14 +21,14 @@ class Place(models.Model):
     region   = models.ForeignKey(Region, null=True)
 
     def __unicode__(self):
-        return self.address
+        return self.address + ',' + unicode(self.region)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     region = models.ForeignKey(Region, null=True)
     friends = models.ManyToManyField('self', related_name='friends')
-    to_visit = models.ManyToManyField(Place, related_name='places_to_visit')
-    visited = models.ManyToManyField(Place, related_name='places_visited')
+    to_visit = models.ForeignKey(Place, related_name='places_to_visit', null=True)
+    visited = models.ManyToManyField(Place, related_name='places_visited', null=True)
     requests = models.ManyToManyField('self', related_name='requests')
     avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
 
@@ -46,6 +47,8 @@ class Post(models.Model):
     restricted_members = models.ManyToManyField(UserProfile, related_name='restricted_members')
     is_visible = models.BooleanField(default=False)
     link = models.URLField(max_length=500)
+    def __unicode__(self):
+        return self.text
 
 class Group(models.Model):
     name = models.CharField(max_length=15)

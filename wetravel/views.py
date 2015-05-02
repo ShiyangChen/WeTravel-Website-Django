@@ -8,30 +8,116 @@ from PIL import Image as PImage
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 import json
+import random
 
 # Create your views here.
 
 def index(request):
-    user=request.user
-    posts=Post.objects.order_by("-id")
-    invi_posts=posts.filter(is_visible=True)
-    posts_list=list(posts)
-    for invi_post in invi_posts:
+    if request.user.is_authenticated():
 
-        for invi_friend in invi_post.restricted_members.all():
-            if invi_friend.user.username==user.username:
-                posts_list.remove(invi_post)
-            else:
-                continue
+        context_dict = {}
 
-    return render(request, 'wetravel/index.html',{'posts':posts_list})
+        #posts part
+        posts=Post.objects.order_by("-id")
+        invi_posts=posts.filter(is_visible=True)
+        posts_list=list(posts)
+        for invi_post in invi_posts:
+
+            for invi_friend in invi_post.restricted_members.all():
+                if invi_friend.user.username==request.user.username:
+                    posts_list.remove(invi_post)
+                else:
+                    continue
+
+         #recommendation part
+        candidates1 = friends_goto_same_place(request.user)
+        candidates2 = friends_been_there_before(request.user)
+        candidates3 = recommend_new_friend(request.user)
+
+        common_friends_all = []
+        num_common_friends_all = []
+
+        for recommended_friend in candidates3:
+            common_friends = get_common_friends(recommended_friend, request.user.userprofile)
+            num_common_friends = len(common_friends)
+            common_friends_all.append(common_friends)
+            num_common_friends_all.append(num_common_friends)
+
+
+        var1 = "common_friends_"
+        var2 = "num_common_friends_"
+        for i in range (len(common_friends_all)):
+            new_var1 = var1 + str(i+1)
+            new_var2 = var2 + str(i+1)
+            context_dict[new_var1] = common_friends_all[i]
+            context_dict[new_var2] = num_common_friends_all[i]
+
+        context_dict.update({'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
+        'posts':posts_list})
+
+
+    else:
+        context_dict = {}
+    return render(request, 'wetravel/index.html', context_dict)
+
+
+
+# recommend friends who share the same travelling wish:
+def friends_goto_same_place(user):
+    candidates = []
+    if user.userprofile:
+        for friend in user.userprofile.friends.all():
+            if friend and friend.to_visit and user.userprofile.to_visit:
+                if friend.to_visit.region == user.userprofile.to_visit.region:
+                    candidates.append(friend)
+    random.shuffle(candidates)
+    return candidates[:3]
+
+# recommend friends who have been to the place you want to go:
+def friends_been_there_before(user):
+    candidates = []
+    if user.userprofile:
+        for friend in user.userprofile.friends.all():
+            if friend.visited:
+                for visited_place in friend.visited.all():
+                    if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
+                        candidates.append(friend)
+                        break
+    random.shuffle(candidates)
+    return candidates[:3]
+
+# recommend new friends for you:
+def recommend_new_friend(user):
+    candidates = []
+    if user.userprofile:
+        friends = user.userprofile.friends.all();
+        for friend in friends:
+            if friend:
+                for slfriend in friend.friends.all():
+                    if slfriend and slfriend not in candidates and slfriend != user.userprofile and slfriend not in friends:
+                        for visited_place in slfriend.visited.all():
+                            if user.userprofile.to_visit and visited_place.region == user.userprofile.to_visit.region:
+                                candidates.append(slfriend)
+                                break
+                        if slfriend not in candidates:
+                            if slfriend.to_visit:
+                                if user.userprofile.to_visit and slfriend.to_visit.region == user.userprofile.to_visit.region:
+                                    candidates.append(slfriend)
+    random.shuffle(candidates)
+    return candidates[:3]
+
+def get_common_friends(user1, user2):
+    friends_user1 = user1.friends.all()
+    friends_user2 = user2.friends.all()
+    common_friends = list(friends_user1 & friends_user2)
+    random.shuffle(common_friends)
+    return common_friends
+
 
 def about(request):
     return render(request, 'wetravel/about.html')
 
 def signup(request):
-    signed_up = False
-
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
@@ -45,8 +131,11 @@ def signup(request):
             profile.user = user
             profile.save()
 
-            signed_up = True
+            user = authenticate(username=request.POST['username'],
+                                password=request.POST['password'])
+            login(request, user)
 
+            return HttpResponseRedirect('/wetravel/')
         else:
             print user_form.errors, profile_form.errors
 
@@ -56,7 +145,7 @@ def signup(request):
 
     return render(request,
             'wetravel/signup.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
+            {'user_form': user_form, 'profile_form': profile_form})
 
 
 
@@ -111,8 +200,39 @@ def friends(request):
 def requests(request):
     return render(request, 'wetravel/requests.html', {})
 
-def add_place(request):
+def process_request(request):
+    # import pdb; pdb.set_trace()
+    if 'accept' in request.POST:
+        userprofile = request.user.userprofile
+        requester_username = request.POST.get('requester_username')
+        requesterprofile = User.objects.get(username=requester_username).userprofile
+        userprofile.friends.add(requesterprofile)
+    userprofile.requests.remove(requesterprofile)
+    return HttpResponseRedirect('/wetravel/friends')
+
+
+def places(request):
+
     return render(request, 'wetravel/addplace.html', {})
+
+def add_to_visit(request):
+    if 'submit' in request.POST:
+        userprofile = request.user.userprofile
+        place = Place.objects.filter(address=request.POST.get('address'))
+        if place:
+            userprofile.to_visit = place[0]
+
+    return HttpResponseRedirect('/wetravel/places')
+
+def add_visited(request):
+    if 'submit1' in request.POST:
+        userprofile = request.user.userprofile
+        place = Place.objects.filter(address=request.POST.get('address1'))
+        if place:
+            userprofile.visited.add(place[0])
+
+    return HttpResponseRedirect('/wetravel/places')
+
 
 def show_profile(request):
     posts = Post.objects.filter(publisher=request.user.userprofile)
@@ -124,18 +244,18 @@ def create_post(request):
 
 @login_required
 def createpost(request):
-    if 'text_message'in request.GET:
+    if 'text_message' in request.GET:
         text_message=request.GET['text_message']
         cur_user=request.user.userprofile
 
         #login_user=UserProfile.objects.get(user=cur_user)
-    
+
         b=Post(text=text_message,publisher=cur_user)#login_user)
         b.save()
         return HttpResponseRedirect('/wetravel/')
         #posts=Post.objects.order_by("-id")
         #return render(request,'wetravel/index.html',{'posts':posts})
-        
+
     else:
         return HttpResponse('submitted a empty form')
 
@@ -168,7 +288,7 @@ def delete(request,param1):
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
-  
+
 @login_required
 def privacy_choose(request,param1):
     cur_user=request.user.userprofile
@@ -192,7 +312,7 @@ def privacy(request,param1):
     set_post=my_posts.get(id=param1)
     my_friends=cur_user.friends.all()
     if exc_inc=="exclude":
-        
+
         for friend_username in set_friends_username:
             for friend in my_friends:
                 if friend.user.username == friend_username :
@@ -217,14 +337,61 @@ def privacy(request,param1):
             set_post.save()
     return HttpResponseRedirect('/wetravel/profile/')
 
+def resize_and_crop(img_path, size, crop_type='middle'):
+    """
+    Resize and crop an image to fit the specified size.
 
-
-
-   # my_posts=Post.objects.filter(publisher=cur_user)
-   # my_posts=my_posts.order_by("-id")
-    #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
-
-
+    args:
+    img_path: path for the image to resize.
+    modified_path: path to store the modified image.
+    size: `(width, height)` tuple.
+    crop_type: can be 'top', 'middle' or 'bottom', depending on this
+    value, the image will cropped getting the 'top/left', 'middle' or
+    'bottom/right' of the image to fit the size.
+    raises:
+    Exception: if can not open the file in img_path of there is problems
+    to save the image.
+    ValueError: if an invalid `crop_type` is provided.
+    """
+    # If height is higher we resize vertically, if not we resize horizontally
+    img = PImage.open(img_path)
+    # Get current and desired ratio for the images
+    img_ratio = img.size[0] / float(img.size[1])
+    ratio = size[0] / float(size[1])
+    #The image is scaled/cropped vertically or horizontally depending on the ratio
+    if ratio > img_ratio:
+        img = img.resize((size[0], int(round(size[0] * img.size[1] / img.size[0]))),
+            PImage.ANTIALIAS)
+        # Crop in the top, middle or bottom
+        if crop_type == 'top':
+            box = (0, 0, img.size[0], size[1])
+        elif crop_type == 'middle':
+            box = (0, int(round((img.size[1] - size[1]) / 2)), img.size[0],
+                int(round((img.size[1] + size[1]) / 2)))
+        elif crop_type == 'bottom':
+            box = (0, img.size[1] - size[1], img.size[0], img.size[1])
+        else :
+            raise ValueError('ERROR: invalid value for crop_type')
+        img = img.crop(box)
+    elif ratio < img_ratio:
+        img = img.resize((int(round(size[1] * img.size[0] / img.size[1])), size[1]),
+            PImage.ANTIALIAS)
+        # Crop in the top, middle or bottom
+        if crop_type == 'top':
+            box = (0, 0, size[0], img.size[1])
+        elif crop_type == 'middle':
+            box = (int(round((img.size[0] - size[0]) / 2)), 0,
+                int(round((img.size[0] + size[0]) / 2)), img.size[1])
+        elif crop_type == 'bottom':
+            box = (img.size[0] - size[0], 0, img.size[0], img.size[1])
+        else :
+            raise ValueError('ERROR: invalid value for crop_type')
+        img = img.crop(box)
+    else :
+        img = img.resize((size[0], size[1]),
+            PImage.ANTIALIAS)
+    # If the scale is the same, we do not need to crop
+    img.save(img_path)
 @login_required
 def change_profile_image(request):
     user = request.user
@@ -233,16 +400,15 @@ def change_profile_image(request):
         form = ProfileImageForm(request.POST, request.FILES)
         if form.is_valid():
             old = p.avatar
-            if old:
-                old.delete()
+            #if old:
+                #old.delete()
             p.avatar = form.cleaned_data['image']
             p.save()
             user.save()
 
             if p.avatar:
-                img = PImage.open(p.avatar.path)
-                img.thumbnail((250,250), PImage.ANTIALIAS)
-                img.save(img.filename)
+                resize_and_crop(p.avatar.path, (900, 600))
+
         else:
             print form.errors
 
@@ -258,7 +424,7 @@ def change_password(request):
         user.set_password(password);
         user.save();
         response_data['result'] = 'Information updated successfully!'
-    
+
     else:
         response_data['result'] = 'Update failed'
 
@@ -266,7 +432,7 @@ def change_password(request):
 
 
 @login_required
-def change_address(request): 
+def change_address(request):
     user = request.user
     response_data = {}
     if request.method == 'POST':
@@ -287,7 +453,7 @@ def change_address(request):
         response_data['state'] = state;
         response_data['city'] = city;
         response_data['result'] = 'Information updated successfully!'
-    
+
     else:
         response_data['result'] = 'Update failed'
 

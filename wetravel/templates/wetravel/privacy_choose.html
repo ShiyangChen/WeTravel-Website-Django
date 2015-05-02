@@ -5,7 +5,6 @@
 
 <div class="jumbotron">
   <div class="container center">
-<body>
 	<form action="/wetravel/privacy/{{set_post.id}}/" method="post">
 	<h4>What to <strong>EXCLUDE</strong> or <strong>INCLUDE</strong></h4>
 	<input type="radio" name="ex_in" value="exclude" /> EXCLUDE
@@ -18,7 +17,7 @@
 
 
 	 	{% csrf_token %}
-	 	
+
 	 	{% for namelist in namelists %}
 	 	{{namelist}}
 	 	<input type="checkbox" name="set_friends" value={{namelist}}  />
@@ -28,9 +27,7 @@
 	 	<input type="submit" value="Submit" />
 	 </form>
 
-
-</body>
-  	</div>
+  </div>
 </div>
 
 

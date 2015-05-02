@@ -46,25 +46,25 @@
   <body class="homepage">
     <div id="header-wrapper">
         <div id="header" class="container">
-            <h1>We Travel</h1>
+            <h1><a href="/wetravel">We Travel</a></h1>
           <!-- Nav -->
             <nav id="nav">
               <ul>
-                <li><a class="icon fa-home" href="/wetravel"><span>Homepage</span></a></li>
+                <li><a class="icon fa-home" href="/wetravel"><span>Home</span></a></li>
                 <li><a class="icon fa-info" href="/wetravel/about"><span>About</span></a></li>
                 {% if user.is_authenticated %}
                 <li><a class="icon fa-user" href="/wetravel/profile" ><span>Profile</span></a></li>
                 <li><a class="icon fa-users" href="/wetravel/friends"><span>Friends</span></a></li>
-                <li><a class="icon fa-envelope" href="/wetravel/requests" ><span>Requests</span></a></li>
+                <li><a class="icon fa-users" href="/wetravel/places"><span>Places</span></a></li>
                 <li>
                   <a href="" class="icon fa-gear"><span>Account</span></a>
                   <ul>
                     <li><a href="/wetravel/settings"><span>Settings</span></a></li>
-                    <li><a href="/wetravel/logout"><span>Logout</span></a></li>
+                    <li><a href="/wetravel/logout"><span>Log out</span></a></li>
                   </ul>
                 </li>
                 {% else %}
-                <li><a class="icon fa-leaf" href="/wetravel/signup"><span>Sign Up</span></a></li>
+                <li><a class="icon fa-leaf" href="/wetravel/signup"><span>Sign up</span></a></li>
                 <li><a class="icon fa-sign-in" href="/wetravel/login"><span>Log in</a></span></li>
                 {% endif %}
               </ul>
@@ -82,7 +82,6 @@
     <!-- Footer -->
     <div id="footer-wrapper" class="container">
         <p>&copy; TAMU CSCE 671 WeTravel Group 2015</p>
-      </div>
     </div>
   </body>
 </html>

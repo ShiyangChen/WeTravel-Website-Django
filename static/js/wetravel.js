@@ -1,8 +1,46 @@
 $(document).ready(function(){
-		var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
+    //for slideshow in not logged in index page
+    $("#slideshow > div:gt(0)").hide();
 
-    //Change Profile Image
-    //---------------------------------------------------------------------
+      setInterval(function() { 
+        $('#slideshow > div:first')
+          .fadeOut(1000)
+          .next()
+          .fadeIn(1000)
+          .end()
+          .appendTo('#slideshow');
+      },  3000);
+
+
+
+
+    //---------------------------------------------------------------------------------
+    //for the purpose of showing common-friends for recommended friends
+    //modal when hover
+
+
+    var recommended = $('.recommend');
+    var overlay = $('.overlay');
+
+    recommended.each(function(index,rec){
+       // console.log(index);
+       // console.log(rec.src);
+      var mouseIn = function (i) {
+          return function() {
+            overlay[i].style.visibility = "visible";
+          };
+        }(index);
+      var mouseOut = function (i) {
+          return function() {
+            overlay[i].style.visibility = "hidden";
+          };
+        }(index);
+      $(rec).hover(mouseIn, mouseOut);
+    });
+    
+    //for setting page, to show dialog modal
+    //--------------------------------------------------------------------
+    var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
      profile_image_dialog = $('#dialog-profile-image-form').dialog({
       autoOpen: false,
       width: '500px',
@@ -77,6 +115,7 @@ $(document).ready(function(){
     });
 
 
+
     //Change Address Information
     //---------------------------------------------------------------------------
     address_dialog = $('#dialog-address-form').dialog({
@@ -128,7 +167,7 @@ $(document).ready(function(){
     });
 
    
-
+    //----------------------------------------------------------------------------------------------
     // This function gets cookie with a given name
     function getCookie(name) {
         var cookieValue = null;

@@ -118,12 +118,13 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('avatar', models.ImageField(upload_to=b'images/', null=True, verbose_name=b'Profile Pic', blank=True)),
                 ('friends', models.ManyToManyField(related_name='friends_rel_+', to='wetravel.UserProfile')),
                 ('region', models.ForeignKey(to='wetravel.Region', null=True)),
                 ('requests', models.ManyToManyField(related_name='requests_rel_+', to='wetravel.UserProfile')),
-                ('to_visit', models.ManyToManyField(related_name=b'places_to_visit', to='wetravel.Place')),
+                ('to_visit', models.ForeignKey(related_name='places_to_visit', to='wetravel.Place', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-                ('visited', models.ManyToManyField(related_name=b'places_visited', to='wetravel.Place')),
+                ('visited', models.ManyToManyField(related_name='places_visited', null=True, to='wetravel.Place')),
             ],
             options={
             },
@@ -138,31 +139,31 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='request',
             name='sent_for',
-            field=models.ManyToManyField(related_name=b'sent_for', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_for', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='request',
             name='sent_from',
-            field=models.ManyToManyField(related_name=b'sent_from', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_from', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='request',
             name='sent_to',
-            field=models.ManyToManyField(related_name=b'sent_to', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='sent_to', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='post',
             name='publisher',
-            field=models.ForeignKey(related_name=b'publisher', to='wetravel.UserProfile', null=True),
+            field=models.ForeignKey(related_name='publisher', to='wetravel.UserProfile', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='post',
             name='restricted_members',
-            field=models.ManyToManyField(related_name=b'restricted_members', to='wetravel.UserProfile'),
+            field=models.ManyToManyField(related_name='restricted_members', to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
