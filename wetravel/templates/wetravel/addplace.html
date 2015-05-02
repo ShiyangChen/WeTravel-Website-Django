@@ -3,28 +3,18 @@
 {% block content %}
 <h1 class="center">Where would you like to go</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <form id="place_form" method="post" action="/wetravel/add_place/">
+
+    <form id="place_form" method="post" action="/wetravel/add_to_visit">
       {% csrf_token %}
-      <div class="form-group">
-        <label>Country</label>
-        <input type="text" name="country" class="form-control" placeholder="Country">
-      </div>
-      <div class="form-group">
-        <label>State</label>
-        <input type="text" name="state" class="form-control" placeholder="State">
-      </div>
-      <div class="form-group">
-        <label>City</label>
-        <input type="text" name="city" class="form-control" placeholder="City">
-      </div>
-      <div class="form-group">
-        <label>Address</label>
-        <input type="text" name="address" class="form-control" placeholder="Address">
-      </div>
-      <button type="submit" name="submit" class="btn btn-primary btn-block">Add Place</button>
+
+        <input type="text" name="country" class="form-control" placeholder="Country"><br>
+        <input type="text" name="state" class="form-control" placeholder="State"><br>
+        <input type="text" name="city" class="form-control" placeholder="City"><br>
+        <input type="text" name="address" class="form-control" placeholder="Address"><br>
+
+      <input type="submit" name="submit" value="Add Place">
     </form>
-  </div>
-</div>
+    
+    <p>{{ user.userprofile.to_visit }}</p>
+
 {% endblock %}
