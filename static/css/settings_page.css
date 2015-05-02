@@ -192,19 +192,21 @@ div.overlay  {
 }
 
 .web-discription {
-	width: 25%;
+	width: 28%;
 	text-align: center;
-	padding: 80px 10px 40px 10px;
+	padding: 80px 10px 10px 10px;
 	box-sizing: border-box;
 }
 
-.web-discription h1 {
+
+.my_h1 {
 	color: #ED786A;
 	font-size: 30px;
 	margin-bottom: 20px;
 }
 
-.web-discription p {
+.my_p {
+
 	letter-spacing: 0.1px;
 	text-align: center;
 	font-size: 20px;
@@ -212,7 +214,7 @@ div.overlay  {
 
 }
 
-.web-discription a {
+.my_a {
 	background: #ed786a;
 	color: #fff !important;
 	border-radius: 4px;
@@ -222,6 +224,10 @@ div.overlay  {
 	padding-left: 5px;
 	padding-right: 5px;
 	
+}
+
+.my_div {
+
 }
 
 
