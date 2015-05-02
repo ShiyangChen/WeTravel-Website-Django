@@ -211,10 +211,28 @@ def process_request(request):
     return HttpResponseRedirect('/wetravel/friends')
 
 
+def places(request):
 
-
-def add_place(request):
     return render(request, 'wetravel/addplace.html', {})
+
+def add_to_visit(request):
+    if 'submit' in request.POST:
+        userprofile = request.user.userprofile
+        place = Place.objects.filter(address=request.POST.get('address'))
+        if place:
+            userprofile.to_visit = place[0]
+
+    return HttpResponseRedirect('/wetravel/places')
+
+def add_visited(request):
+    if 'submit1' in request.POST:
+        userprofile = request.user.userprofile
+        place = Place.objects.filter(address=request.POST.get('address1'))
+        if place:
+            userprofile.visited.add(place[0])
+
+    return HttpResponseRedirect('/wetravel/places')
+
 
 def show_profile(request):
     posts = Post.objects.filter(publisher=request.user.userprofile)
