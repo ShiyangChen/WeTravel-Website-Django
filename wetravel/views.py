@@ -224,6 +224,15 @@ def add_to_visit(request):
 
     return HttpResponseRedirect('/wetravel/places')
 
+def add_visited(request):
+    if 'submit1' in request.POST:
+        userprofile = request.user.userprofile
+        place = Place.objects.filter(address=request.POST.get('address1'))
+        if place:
+            userprofile.visited.add(place[0])
+
+    return HttpResponseRedirect('/wetravel/places')
+
 
 def show_profile(request):
     posts = Post.objects.filter(publisher=request.user.userprofile)
