@@ -1,6 +1,6 @@
 {% extends 'wetravel/base.html' %}
 {% load wetravel_extras %}
-{% block title %}Index{% endblock %}
+{% block title %}Settings{% endblock %}
 {% block content %}
 
 <div class="settings">
@@ -37,7 +37,7 @@
               <dd>{{ user.email }}</dd>
             </dl>
             <dl class="info">
-                <dt>Passwork:</dt>
+                <dt>Password:</dt>
                 <dd>********</dd>
             </dl>
         </div>
@@ -53,7 +53,7 @@
                 <label for="password2">Confirm Password:</label>
                 <input type="password" name="password2" id="password2" />
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-            </fieldset>   
+            </fieldset>
         </form>
     </div>
 
@@ -91,7 +91,7 @@
                 <input type="text" name="city" id="city" value= "{{ user.userprofile.region.city }}" />
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-            </fieldset>   
+            </fieldset>
         </form>
     </div>
 
@@ -124,6 +124,6 @@
         </div>
     </section>
 
-</div>	
+</div>
 
 {% endblock %}
