@@ -14,9 +14,22 @@ import random
 
 def index(request):
     if request.user.is_authenticated():
-        #user=request.user
 
-        #recommendation part
+        context_dict = {}
+
+        #posts part
+        posts=Post.objects.order_by("-id")
+        invi_posts=posts.filter(is_visible=True)
+        posts_list=list(posts)
+        for invi_post in invi_posts:
+
+            for invi_friend in invi_post.restricted_members.all():
+                if invi_friend.user.username==request.user.username:
+                    posts_list.remove(invi_post)
+                else:
+                    continue
+
+         #recommendation part
         candidates1 = friends_goto_same_place(request.user)
         candidates2 = friends_been_there_before(request.user)
         candidates3 = recommend_new_friend(request.user)
@@ -31,22 +44,17 @@ def index(request):
             num_common_friends_all.append(num_common_friends)
 
 
-        #posts part
-        posts=Post.objects.order_by("-id")
-        invi_posts=posts.filter(is_visible=True)
-        posts_list=list(posts)
-        for invi_post in invi_posts:
+        var1 = "common_friends_"
+        var2 = "num_common_friends_"
+        for i in range (len(common_friends_all)):
+            new_var1 = var1 + str(i)
+            new_var2 = var2 + str(i)
+            context_dict[new_var1] = common_friends_all[i]
+            context_dict[new_var2] = num_common_friends_all[i]
 
-            for invi_friend in invi_post.restricted_members.all():
-                if invi_friend.user.username==request.user.username:
-                    posts_list.remove(invi_post)
-                else:
-                    continue
+        context_dict.update({'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
+        'posts':posts_list})
 
-        context_dict = {'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
-        'common_friends_1' : common_friends_all[0], 'common_friends_2' : common_friends_all[1], 'common_friends_3' : common_friends_all[2], 
-        'num_common_friends_1' : num_common_friends_all[0], 'num_common_friends_2' : num_common_friends_all[1], 'num_common_friends_3' : num_common_friends_all[2], 
-        'posts':posts_list}
 
     else:
         context_dict = {}
