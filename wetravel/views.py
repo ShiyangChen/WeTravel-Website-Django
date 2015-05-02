@@ -118,8 +118,6 @@ def about(request):
     return render(request, 'wetravel/about.html')
 
 def signup(request):
-    signed_up = False
-
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
@@ -133,8 +131,11 @@ def signup(request):
             profile.user = user
             profile.save()
 
-            signed_up = True
+            user = authenticate(username=request.POST['username'],
+                                password=request.POST['password'])
+            login(request, user)
 
+            return HttpResponseRedirect('/wetravel/')
         else:
             print user_form.errors, profile_form.errors
 
@@ -144,7 +145,7 @@ def signup(request):
 
     return render(request,
             'wetravel/signup.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'signed_up': signed_up})
+            {'user_form': user_form, 'profile_form': profile_form})
 
 
 
@@ -199,6 +200,19 @@ def friends(request):
 def requests(request):
     return render(request, 'wetravel/requests.html', {})
 
+def process_request(request):
+    # import pdb; pdb.set_trace()
+    if 'accept' in request.POST:
+        userprofile = request.user.userprofile
+        requester_username = request.POST.get('requester_username')
+        requesterprofile = User.objects.get(username=requester_username).userprofile
+        userprofile.friends.add(requesterprofile)
+    userprofile.requests.remove(requesterprofile)
+    return HttpResponseRedirect('/wetravel/friends')
+
+
+
+
 def add_place(request):
     return render(request, 'wetravel/addplace.html', {})
 
@@ -212,18 +226,18 @@ def create_post(request):
 
 @login_required
 def createpost(request):
-    if 'text_message'in request.GET:
+    if 'text_message' in request.GET:
         text_message=request.GET['text_message']
         cur_user=request.user.userprofile
 
         #login_user=UserProfile.objects.get(user=cur_user)
-    
+
         b=Post(text=text_message,publisher=cur_user)#login_user)
         b.save()
         return HttpResponseRedirect('/wetravel/')
         #posts=Post.objects.order_by("-id")
         #return render(request,'wetravel/index.html',{'posts':posts})
-        
+
     else:
         return HttpResponse('submitted a empty form')
 
@@ -256,7 +270,7 @@ def delete(request,param1):
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
-  
+
 @login_required
 def privacy_choose(request,param1):
     cur_user=request.user.userprofile
@@ -280,7 +294,7 @@ def privacy(request,param1):
     set_post=my_posts.get(id=param1)
     my_friends=cur_user.friends.all()
     if exc_inc=="exclude":
-        
+
         for friend_username in set_friends_username:
             for friend in my_friends:
                 if friend.user.username == friend_username :
@@ -392,7 +406,7 @@ def change_password(request):
         user.set_password(password);
         user.save();
         response_data['result'] = 'Information updated successfully!'
-    
+
     else:
         response_data['result'] = 'Update failed'
 
@@ -400,7 +414,7 @@ def change_password(request):
 
 
 @login_required
-def change_address(request): 
+def change_address(request):
     user = request.user
     response_data = {}
     if request.method == 'POST':
@@ -421,7 +435,7 @@ def change_address(request):
         response_data['state'] = state;
         response_data['city'] = city;
         response_data['result'] = 'Information updated successfully!'
-    
+
     else:
         response_data['result'] = 'Update failed'
 
