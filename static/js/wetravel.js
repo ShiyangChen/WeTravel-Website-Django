@@ -4,7 +4,6 @@ $(document).ready(function(){
     //for the purpose of showing common-friends for recommended friends
     //modal when hover
 
-  
 
     var recommended = $('.recommend');
     var overlay = $('.overlay');
