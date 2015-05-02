@@ -45,30 +45,41 @@ def populate():
         users[i].save()
     # add friends relationship
     user_profiles[1].friends.add(user_profiles[2],user_profiles[3],user_profiles[4],user_profiles[5],user_profiles[6],user_profiles[7],user_profiles[13],user_profiles[14],user_profiles[15])
-    user_profiles[2].friends.add(user_profiles[8],user_profiles[11],user_profiles[19])
+    user_profiles[2].friends.add(user_profiles[8],user_profiles[11],user_profiles[19],user_profiles[20])
     user_profiles[3].friends.add(user_profiles[9],user_profiles[10],user_profiles[12],user_profiles[17])
-    user_profiles[4].friends.add(user_profiles[9],user_profiles[11],user_profiles[17])
+    user_profiles[4].friends.add(user_profiles[9],user_profiles[11],user_profiles[17],user_profiles[20])
     user_profiles[5].friends.add(user_profiles[3],user_profiles[11],user_profiles[10],user_profiles[18])
     user_profiles[6].friends.add(user_profiles[8],user_profiles[11],user_profiles[12],user_profiles[18])
-    user_profiles[7].friends.add(user_profiles[12],user_profiles[17],user_profiles[19])
+    user_profiles[7].friends.add(user_profiles[12],user_profiles[17],user_profiles[19],user_profiles[20])
     user_profiles[13].friends.add(user_profiles[9],user_profiles[18],user_profiles[19])
     user_profiles[14].friends.add(user_profiles[8],user_profiles[11],user_profiles[19])
     user_profiles[15].friends.add(user_profiles[8],user_profiles[11],user_profiles[20])
 
     #add to_visit
     user_profiles[1].to_visit = place1
-
-    #friends
     user_profiles[2].to_visit = place1
+    user_profiles[3].to_visit = place6
+    user_profiles[4].to_visit = place7
     user_profiles[5].to_visit = place2
-    user_profiles[13].to_visit = place3
-    user_profiles[15].to_visit = place1
-
-    #second-level friends
+    user_profiles[6].to_visit = place7
+    user_profiles[7].to_visit = place1
     user_profiles[8].to_visit = place1
+    user_profiles[9].to_visit = place5
+    user_profiles[10].to_visit = place5
     user_profiles[11].to_visit = place2
+    user_profiles[12].to_visit = place6
+    user_profiles[13].to_visit = place3
+    user_profiles[14].to_visit = place5
+    user_profiles[15].to_visit = place1
+    user_profiles[16].to_visit = place5
     user_profiles[17].to_visit = place3
+    user_profiles[18].to_visit = place7
+    user_profiles[19].to_visit = place2
     user_profiles[20].to_visit = place1
+   
+    
+    
+    
     
     #add visit
     user_profiles[1].visited.add(place4, place6)
@@ -107,7 +118,7 @@ def populate():
     user_profiles[9].avatar = "/images/9.jpeg"
     user_profiles[10].avatar = "/images/10.png"
     user_profiles[11].avatar = "/images/11.jpg"
-    user_profiles[12].avatar = "/images/12.jpg"
+    user_profiles[12].avatar = "/images/12.png"
     user_profiles[13].avatar = "/images/13.jpg"
     user_profiles[14].avatar = "/images/14.jpg"
     user_profiles[15].avatar = "/images/15.jpeg"

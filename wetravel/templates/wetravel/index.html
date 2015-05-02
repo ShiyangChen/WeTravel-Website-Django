@@ -114,9 +114,9 @@
                         {% for candidate3 in candidates3 %}
                             {% if candidate3 %}
                             <div class="group">
-                              <a class="user-head" href="#">
-                                <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
+                              <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
                                 src="{{ candidate3.avatar_image }}" height="95" weight="95"/>
+                              <a class="user-head" href="#">
                                 <span class="icon fa-plus-square-o"></span>
                                 <span class="user-name">{{candidate3.user.username}}</span>
                               </a>
@@ -129,76 +129,117 @@
                   </div><!-- end of panel content-->
               </div><!--end of panel -->
 
+              <div class="overlay">
+                
+                  <div class="common-friends">
+                    {% if common_friends_1 %}
+                        <p class="small-profile-image"><img border="0" alt="{{candidates3.0.user.username }}" 
+                                src="{{ candidates3.0.avatar_image }}" height="50" weight="50"/></br>
+                                <span>{{ candidates3.0.user.username }}</span></p>
+                        {% if candidates3.0.to_visit %}
+                          <p>Wants to go: </br><u>{{candidates3.0.to_visit}}</u></p>
+                        {% endif %}
+                        {% if candidates3.0.visited %}
+                        <p>Has been to:</p>
+                        {% for place in candidates3.0.visited.all %}
+                          <p><u>{{ place }}</u> </p>
+                        
+                        {% endfor %}
+                        {% endif %}
+                        <p class="recommend-friend-header">You and <b><u>{{ candidates3.0.user.username }}</u></b> have {{num_common_friends_1}} common friends!</p>
+                        <div class="recommend-friend-area">
+                          {% for common_friend in common_friends_1 %}
+                              {% if common_friend %}
+                              <div class="group">
+                                <a class="user-head" href="#">
+                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
+                                  <span class="user-name">{{common_friend.user.username}}</span>
+                                </a>
+                               </div>
+                              {% endif %}
+                            {% endfor %}
+                        </div> 
+                      {% endif %}
 
-              <div ="user-head-popup"> 
-                <div class="common-friends">
-                  {% if common_friends_1 %}
-                      <p class="recommend-friend-header">You have {{num_common_friends_1}} common friends!</p>
-                      <div class="recommend-friend-area">
-                        {% for common_friend in common_friends_1 %}
-                            {% if common_friend %}
-                            <div class="group">
-                              <a class="user-head" href="#">
-                                <img class="recommend" border="0" alt="{{common_friend.user.username}}" 
-                                src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
-                                <span class="icon fa-plus-square-o"></span>
-                                <span class="user-name">{{common_friend.user.username}}</span>
-                              </a>
-                             </div>
-                            {% endif %}
-                          {% endfor %}
-                      </div> 
-                    {% endif %}
+                  </div><!--end of "common-friends"-->
+                
+              </div>
+              
+              <div class="overlay">
+                
+                  <div class="common-friends">
+                    {% if common_friends_2 %}
+                    <p class="small-profile-image"><img border="0" alt="{{candidates3.1.user.username }}" 
+                                src="{{ candidates3.1.avatar_image }}" height="50" weight="50"/></br>
+                                <span>{{ candidates3.1.user.username }}</span></p>
+                        {% if candidates3.1.to_visit %}
+                          <p>Wants to go: </br><u>{{candidates3.1.to_visit}}</u></p>
+                        {% endif %}
+                        {% if candidates3.1.visited %}
+                        <p>Has been to:</p>
+                        {% for place in candidates3.1.visited.all %}
+                          <p><u>{{ place }}</u> </p>
+                        
+                        {% endfor %}
+                        {% endif %}
 
-                </div><!--end of "common-friends"-->
-              </div><!--end of "user-head-popup"-->
+                        <p class="recommend-friend-header">You and <b><u>{{ candidates3.1.user.username }}</u></b> have {{num_common_friends_2}} common friends!</p>
+                        <div class="recommend-friend-area">
+                          {% for common_friend in common_friends_2 %}
+                              {% if common_friend %}
+                              <div class="group">
+                                <a class="user-head" href="#">
+                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
+                                  <span class="user-name">{{common_friend.user.username}}</span>
+                                </a>
+                               </div>
+                              {% endif %}
+                            {% endfor %}
+                        </div> 
+                      {% endif %}
 
-               <div ="user-head-popup"> 
-                <div class="common-friends">
-                  {% if common_friends_2 %}
-                      <p class="recommend-friend-header">You have {{num_common_friends_2}} common friends!</p>
-                      <div class="recommend-friend-area">
-                        {% for common_friend in common_friends_2 %}
-                            {% if common_friend %}
-                            <div class="group">
-                              <a class="user-head" href="#">
-                                <img class="recommend" border="0" alt="{{common_friend.user.username}}" 
-                                src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
-                                <span class="icon fa-plus-square-o"></span>
-                                <span class="user-name">{{common_friend.user.username}}</span>
-                              </a>
-                             </div>
-                            {% endif %}
-                          {% endfor %}
-                      </div> 
-                    {% endif %}
+                  </div><!--end of "common-friends"-->
+               
+              </div>
+               
+              <div class="overlay">
+                  <div class="common-friends">
+                    {% if common_friends_3 %}
+                    <p class="small-profile-image"><img border="0" alt="{{candidates3.2.user.username }}" 
+                                src="{{ candidates3.2.avatar_image }}" height="50" weight="50"/></br>
+                                <span>{{ candidates3.2.user.username }}</span></p>
+                        {% if candidates3.2.to_visit %}
+                          <p>Wants to go: </br><u>{{candidates3.2.to_visit}}</u></p>
+                        {% endif %}
+                        {% if candidates3.2.visited %}
+                        <p>Has been to:</p>
+                        {% for place in candidates3.2.visited.all %}
+                          <p><u>{{ place }}</u> </p>
+                        
+                        {% endfor %}
+                        {% endif %}
+                        <p class="recommend-friend-header">You and <b><u>{{ candidates3.2.user.username }}</u></b> have {{num_common_friends_3}} common friends!</p>
+                        <div class="recommend-friend-area">
+                          {% for common_friend in common_friends_3 %}
+                              {% if common_friend %}
+                              <div class="group">
+                                <a class="user-head" href="#">
+                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
+                                  <span class="user-name">{{common_friend.user.username}}</span>
+                                </a>
+                               </div>
+                              {% endif %}
+                            {% endfor %}
+                        </div> 
+                      {% endif %}
 
-                </div><!--end of "common-friends"-->
-              </div><!--end of "user-head-popup"-->
-
-               <div ="user-head-popup"> 
-                <div class="common-friends">
-                  {% if common_friends_3 %}
-                      <p class="recommend-friend-header">You have {{num_common_friends_3}} common friends!</p>
-                      <div class="recommend-friend-area">
-                        {% for common_friend in common_friends_3 %}
-                            {% if common_friend %}
-                            <div class="group">
-                              <a class="user-head" href="#">
-                                <img class="recommend" border="0" alt="{{common_friend.user.username}}" 
-                                src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
-                                <span class="icon fa-plus-square-o"></span>
-                                <span class="user-name">{{common_friend.user.username}}</span>
-                              </a>
-                             </div>
-                            {% endif %}
-                          {% endfor %}
-                      </div> 
-                    {% endif %}
-
-                </div><!--end of "common-friends"-->
-              </div><!--end of "user-head-popup"-->
-
+                  </div><!--end of "common-friends"-->
+                
+              </div>
+              
 
 
           

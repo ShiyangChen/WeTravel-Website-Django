@@ -12,7 +12,7 @@ class Region(models.Model):
     city = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.city  + '/' + self.state + '/' + self.country
+        return self.city  + ',' + self.state + ',' + self.country
 
 
 class Place(models.Model):
@@ -21,7 +21,7 @@ class Place(models.Model):
     region   = models.ForeignKey(Region, null=True)
 
     def __unicode__(self):
-        return self.address + '' + unicode(self.region)
+        return self.address + ',' + unicode(self.region)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
