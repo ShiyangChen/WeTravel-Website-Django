@@ -5,8 +5,8 @@
 
   {% if user.is_authenticated %}
 <!-- Main -->
-      <div id="main-wrapper">
-        <div id="main" class="container">
+     
+        
           <div class="row">
 
             <!-- Content -->
@@ -240,30 +240,40 @@
                 
               </div>
               
-
-
           
             </div><!--end of sidebar -->
         </div><!--end of div row -->
-      </div><!--end of div container -->
-    </div> <!--end of div main-wrapper -->
+      
 
 
 
   {% else %}
-          <h1 id="logo"><a href="/wetravel">We Travel</a></h1>
-          <p>Let's go travelling</p>
+        <div id = "slideshow-wrapper">
+          <div id ="slideshow">
+            <div>
+              <img src="/static/images/pic1.jpg" >
+            </div>
+            <div>
+              <img src="/static/images/pic2.jpg" >
+            </div>
+            <div>
+              <img src="/static/images/pic3.jpg" >
+            </div>
+            <div>
+              <img src="/static/images/pic4.jpg" >
+            </div>
+             <div>
+              <img src="/static/images/pic5.jpg" >
+            </div>
+          </div>
 
-
-    <div id="features-wrapper">
-        <section id="features" class="container">
-          <header>
-            <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/signup" role="button">Sign up</a></p>
-           <p><a class="btn btn-primary btn-lg btn-block" href="/wetravel/login" role="button">Log in</a></p>
-          </header>
-        </section>
-      </div>
-
+          <div class="web-discription">
+              <h1>We Travel</h1>
+              <p>A Private Website For Planning Travelling Among Your <b>Friends!</b></p>
+              <p><a href="/wetravel/signup">Sign Up</a></br></br>
+              <a href="/wetravel/login">Log In</a></p>
+          </div>
+        </div>
 
 {% endif %}
 

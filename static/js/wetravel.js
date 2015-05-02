@@ -1,6 +1,20 @@
 $(document).ready(function(){
-		var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
+    //for slideshow in not logged in index page
+    $("#slideshow > div:gt(0)").hide();
 
+      setInterval(function() { 
+        $('#slideshow > div:first')
+          .fadeOut(1000)
+          .next()
+          .fadeIn(1000)
+          .end()
+          .appendTo('#slideshow');
+      },  3000);
+
+
+
+
+    //---------------------------------------------------------------------------------
     //for the purpose of showing common-friends for recommended friends
     //modal when hover
 
@@ -23,19 +37,10 @@ $(document).ready(function(){
         }(index);
       $(rec).hover(mouseIn, mouseOut);
     });
-    //var i = 0;
-    //for(var i = 0; i < recommended.length; i++) {
-      // recommended.get(i).on('hover',
-      //   function() {
-      //     overlay.get(i).style.visibility = "visible";
-
-      //   },
-      //   function() {
-      //     overlay.get(i).style.visibility = "hidden";
-      //   });
-   // }
-
-    //---------------------------------------------------------------------
+    
+    //for setting page, to show dialog modal
+    //--------------------------------------------------------------------
+    var profile_image_dialog, profile_image_form, account_dialog, account_form, address_dialog, address_form;
      profile_image_dialog = $('#dialog-profile-image-form').dialog({
       autoOpen: false,
       width: '500px',

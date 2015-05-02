@@ -400,14 +400,14 @@ def change_profile_image(request):
         form = ProfileImageForm(request.POST, request.FILES)
         if form.is_valid():
             old = p.avatar
-            if old:
-                old.delete()
+            #if old:
+                #old.delete()
             p.avatar = form.cleaned_data['image']
             p.save()
             user.save()
 
             if p.avatar:
-                resize_and_crop(p.avatar.path, (250, 250))
+                resize_and_crop(p.avatar.path, (900, 600))
 
         else:
             print form.errors
