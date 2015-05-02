@@ -227,8 +227,13 @@ div.overlay  {
 }
 
 .my_div {
-
+	min-height: 330px; 
+	width: 50%; 
+	margin: auto; 
+	padding: 20px;
 }
+
+
 
 
 
