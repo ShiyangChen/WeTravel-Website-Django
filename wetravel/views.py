@@ -380,7 +380,12 @@ def add_visited(request):
     if 'submit1' in request.POST:
         userprofile = request.user.userprofile
         place = Place.objects.filter(address=request.POST.get('address1'))
+        comment = request.POST.get('comment')
         if place:
+            if comment:
+                place_comment = PlaceComment(text=comment)
+                place_comment.place = place[0]
+                place_comment.save()
             userprofile.visited.add(place[0])
 
     return HttpResponseRedirect('/wetravel/places')

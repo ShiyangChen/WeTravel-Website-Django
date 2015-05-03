@@ -28,12 +28,16 @@
         <input type="text" name="state1" class="form-control" placeholder="State"><br>
         <input type="text" name="city1" class="form-control" placeholder="City"><br>
         <input type="text" name="address1" class="form-control" placeholder="Address"><br>
+        <input type="text" name="comment" class="form-control" placeholder="Comment"><br>
 
       <input type="submit" name="submit1" value="Add Place">
     </form>
     
     {% for visited in user.userprofile.visited.all %}
       <p>{{ visited }}</p>
+      {% for comment in visited.placecomment_set.all %}
+        <p>{{ comment.text }}</p>
+      {% endfor %}
     {% endfor %}
 
   </td>
