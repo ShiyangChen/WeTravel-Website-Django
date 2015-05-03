@@ -1,0 +1,191 @@
+{% extends 'wetravel/base.html' %}
+{% block content %}
+
+
+{% if error_message %}
+             <div id="message" align="left" style="color:red">
+                 *{{error_message}}
+                 </div>         
+              {% endif %}
+
+<div id="schedule_form">
+
+<form enctype="multipart/form-data" action="" method="post" id="travel_form" novalidate>
+{% csrf_token %}
+<div>
+  <fieldset>   
+        <div>
+                <div>
+                        <label for="id_name">Name:</label>
+                        
+                            <input id="id_name" maxlength="200" name="name" type="text" value="{{travel.name}}"/>
+                     
+                </div>
+            
+        </div>
+    
+        <div>
+                <div>
+                        <label  for="id_desc">Desc:</label>
+                        
+                            <input  id="id_desc" maxlength="500" name="desc" type="text" value="{{travel.desc}}"/>
+                    
+                </div>
+            
+        </div>
+    
+        <div >
+                            <div>
+                    
+                    
+                        <label for="id_start_time_0">Start time:</label>
+                        
+                            <p >Date: <input class="vDateField" id="id_start_time_0" name="start_time_0" size="10" type="text" value="{{travel.start_date}}"/><br />Time: <input class="vTimeField" id="id_start_time_1" name="start_time_1" size="8" type="text" value="{{travel.start_time}}"/></p>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div >
+            
+            
+                <div>
+                    
+                    
+                        <label  for="id_end_time_0">End time:</label>
+                        
+                            <p >Date: <input class="vDateField" id="id_end_time_0" name="end_time_0" size="10" type="text" value="{{travel.end_date}}"/><br />Time: <input class="vTimeField" id="id_end_time_1" name="end_time_1" size="8" type="text" value="{{travel.end_time}}"/></p>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div>
+            
+            
+                <div>
+                    
+                    
+                        <label  for="id_destination">Destination:</label>
+                        
+                            <select id="id_destination" name="destination">
+                             <option value="">--Select a destination--</option>
+                             
+                             {% for region in regions %}  
+                             {% if region == travel.destination %}
+                             <option value="{{ region }}" selected="selected">{{ region }}</option>
+                             {% endif %}
+                             {% if region != travel.destination %}
+                             <option value="{{ region }}">{{ region }}</option>
+                             {% endif %}
+                             
+                             {% endfor %}
+                             
+                            </select>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div >
+            
+            
+                <div>
+                    
+                    
+                        <label for="id_members">Members:</label>
+                        
+                            <select multiple="multiple" id="id_members" name="members">
+                             {% for member in travel.members.all %} 
+                             <option value="{{ member.user.username }}" selected="selected">{{ member.user.username }}</option>
+                             {% endfor %}
+                             
+                             {% for friend in this_friends.all %} 
+                             {% if friend not in travel.members.all %}                             
+                             <option value="{{ friend.user.username }}">{{ friend.user.username }}</option>                             
+                             {% endif %}                             
+                             {% endfor %}
+</select>
+                    
+                </div>
+            
+        </div>
+    
+        <div>
+            
+            
+                <div>
+                    
+                    
+                        <label for="id_groups">Groups:</label>
+                         
+                          
+                             
+                             
+                             <select multiple="multiple" id="id_groups" name="groups">
+                            {% for group in travel.groups.all %}                             
+                             <option value="{{ group.name }}" selected="selected">{{ group.name }}</option>                             
+                             {% endfor %}
+                             
+                            {% for user_group in this_groups %} 
+                            {% if user_group not in travel.groups.all %}
+                            <option value="{{ user_group.name }}">{{ user_group.name }}</option>                             
+                             {% endif %}
+                             {% endfor %}
+                            </select>
+                
+                           
+                    
+                </div>
+                
+            
+        </div>
+        
+    
+</fieldset>
+<div>
+<input type="submit" value="Save" name="_save" />
+
+
+<input type="submit" value="Save and add another" name="_addanother" />
+<input type="submit" value="Save and continue editing" name="_continue" />
+</div>
+
+
+
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+                $('form#travel_form :input:visible:enabled:first').focus()
+            });
+        })(django.jQuery);
+    </script>
+
+
+
+
+<script type="text/javascript">
+(function($) {
+    var field;
+
+
+})(django.jQuery);
+</script>
+
+
+</div>
+</form>
+    
+</div>  
+
+
+
+ 
+{% endblock %}
+

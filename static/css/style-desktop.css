@@ -12,7 +12,7 @@
 	{
 		line-height: 1.65em;
 		font-size: 13pt;
-		text-align: center;
+		text-align: left;
 	}
 
 	h2
@@ -106,7 +106,7 @@
 				:solid 0.1em gray;*/
 
 
-				text-align: center;
+				text-align: left;
 
 			}
 

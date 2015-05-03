@@ -21,6 +21,24 @@
     <link rel="stylesheet" href="/static/css/style-desktop.css" />
     <link rel="stylesheet" href="/static/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="/static/css/settings_page.css" />
+    
+   
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion({
+      collapsible: true,heightStyle: "content"
+    });
+    $("#accordion h3 a").click(function() {
+      window.location = $(this).attr('href');
+      return false;
+   });
+  });
+  </script>
+   
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -38,6 +56,24 @@
     <script src="/static/js/skel.min.js"></script>
     <script src="/static/js/skel-layers.min.js"></script>
     <script src="/static/js/init.js"></script>
+    
+<!--<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />-->
+<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" />
+
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "0";</script>
+<!--modified this-->
+<script type="text/javascript" src="/static/js/jsi18n.js"></script>
+    
+    <script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
 
 
     <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
