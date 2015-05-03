@@ -36,18 +36,14 @@
 
                       <form class ="my_form" action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
                         {% csrf_token %}
-                        <input type="text" name="comment" id="comment-text" value="write a comment:"></input>
+                        <label>Comment:</label>
+                        <input type="text" name="comment" id="comment-text"></input>
 
-                        <!--<textarea type="text" name="comment" id="comment-text">
-                        </textarea>-->
-                        <input type="submit" value="Reply"/>
                      </form>
                    </div><!-- end of comment-content -->
 
                   </div> <!-- end of post_content-->
 
-                  
-                   
 
                    
 

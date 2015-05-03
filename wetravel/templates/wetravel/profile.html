@@ -33,22 +33,59 @@
 
   <!-- Content -->
     <div id="content" class="8u">
-      <h2>See what our friends do recently</h2>
+      
       <ul class="actions">
             <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
       </ul>
-      {% for my_post in my_posts %}
-      <article class="box post">
 
-       <h3><li>{{ my_post.text }}</li></h3>
-      <ul><a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>
-       <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
-        <a href="../../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
-      </ul>
+      {% if target_user %}
+      {% else %}
+      {% endif %}
 
-      </article>
-     {% endfor %}
+      {% for post in my_posts %}
+      <div class="my_post with-flex ">
+          <div class="post_publisher">
+              <a href= "/wetravel/profile/{{post.publisher.id}}"><img border="0" alt="{{post.publisher.user.username }}" src="{{ post.publisher.avatar_image }}" height="60" weight="60"/></br></a>
+            </div>
+            <div class="post_content">  
+              <span class="user-name">{{ post.publisher.user.username }}</span>
+              <p>{{ post.text }}</p>
+
+              <ul>
+                <li><a  href="../../delete_confirm/{{post.id}}/" role="button">Delete</a></li>
+               <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
+                <li><a href="../../privacy_choose/{{post.id}}/",role="button">Setting</a></li>
+              </ul>
+
+              <div class="comment-content"> 
+                {% if comment_lists %}          
+                   {% for comment in comment_lists %}
+                   {% ifequal post.id  comment.to_post.id %}                    
+                   <p><span class="user-name">{{comment.login_user.username}}</span>:{{comment.text}}</p>
+                   {%endifequal%}
+                  {% endfor %}
+               {%endif%}
+
+                <form class ="my_form" action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
+                  {% csrf_token %}
+                  <label>Comment:</label>
+                  <input type="text" name="comment" id="comment-text"></input>
+
+               </form>
+             </div><!-- end of comment-content -->
+
+           </div> <!-- end of post_content-->
+      </div> <!--end of class my_post-->
+      {% endfor %}
+
+
+      
+     
+
+  
     </div> <!--end of 8u"-->
+
+
 
     <div id="sidebar" class="4u">
       <div class="panel">

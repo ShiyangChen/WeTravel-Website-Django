@@ -278,8 +278,11 @@ div.overlay  {
 
 /* for post */
 .my_post {
-	border-top: 2px solid rgb(199, 199, 199);
-	padding-top: 15px;	
+	border-top: 1px solid rgb(199, 199, 199);
+	padding-top: 10px;	
+	padding-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .my_post a {
@@ -298,8 +301,10 @@ div.overlay  {
 .post_content p {
 	letter-spacing: 0.1px;
 	text-align: left;
-	font-size: 20px;
+	font-size: 16px;
 	margin: 5px 1px 1px 1px;
+	font-family: sans-serif;
+	color: black;
 }
 
 .comment-content {
@@ -314,9 +319,20 @@ div.overlay  {
 }
 
 .my_post .user-name {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 400;
 	color: rgb(237, 120, 106);
+}
+
+.comment-content p {
+	font-size: 14px;
+	color: rgb(86, 84, 89);
+
+}
+
+.comment-content .user-name {
+	font-size: 14px;
+	color: rgb(237, 181, 106);
 }
 
 .my_post input[type="text"] {
@@ -326,11 +342,11 @@ div.overlay  {
 	background: white;
 	width: 98%;
 	margin: auto;
-	margin-top: 5px;
+	margin-bottom: 5px;
 	box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.1);
 	border-radius: 4px;
 	line-height: 1.25em;
-	padding: 0.75em 1em 0.75em 1em;
+	padding: 0.5em 0.75em 0.5em 0.75em;
 	-moz-transition: background-color 0.25s ease-in-out;
 	-webkit-transition: background-color 0.25s ease-in-out;
 	-o-transition: background-color 0.25s ease-in-out;
@@ -339,25 +355,26 @@ div.overlay  {
 
 }
 
-.my_post input[type="submit"] {
-	-webkit-appearance: none;
 
-	background: #ed786a;
-	color: #fff !important;
-	border-radius: 4px;
-	border: 0;
-	outline: 0;
-	font-size: 12px;
-	box-shadow: 0.125em 0.175em 0 0 rgba(0,0,0,0.125);
-	font-weight: 400;
-	-moz-transition: all 0.25s ease-in-out;
-	-webkit-transition: all 0.25s ease-in-out;
-	-o-transition: all 0.25s ease-in-out;
-	-ms-transition: all 0.25s ease-in-out;
-	transition: all 0.25s ease-in-out;
-	text-align: center;
-	padding: 1px;
-	letter-spacing: 1px;
+.my_post input[type="text"]:focus {
+	background: white;
+}
+
+.my_post label {
+	margin-bottom: 1px;
+	text-transform: lowercase;
+	font-weight: 200;
+	margin-left: 10px;
+}
+
+.my_post ul {
+	margin-bottom: 1.5em;
+}
+
+.my_post li {
+	float: right;
+	margin-right: 5px;
+	font-size: 14px;
 }
 
 

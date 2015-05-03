@@ -342,8 +342,10 @@ def profile(request,param1):
     target_user=UserProfile.objects.get(id=param1)
     my_posts=Post.objects.filter(publisher=target_user)
     my_posts=my_posts.order_by("-id")
+    comment_lists=Comment.objects.order_by("-id")
 
-    context_dict = {'my_posts':my_posts,'user':user }
+    context_dict = {'my_posts':my_posts,'user':user, 'comment_lists': comment_lists}
+
 
     if(cur_user.id != target_user.id):
         context_dict['target_user'] = target_user;
@@ -536,7 +538,8 @@ def comment_upload(request,param1):
         comment_post=Post.objects.get(id=param1)
         c=Comment(login_user=user,text=comment_info,to_post=comment_post)
         c.save()
-        return HttpResponseRedirect('/wetravel/')
+        #return HttpResponseRedirect('/wetravel/')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
 
         # print "it's a test"
