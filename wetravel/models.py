@@ -23,6 +23,13 @@ class Place(models.Model):
     def __unicode__(self):
         return self.address + ',' + unicode(self.region)
 
+class PlaceComment(models.Model):
+    place = models.ForeignKey(Place, null=True)
+    text = models.CharField(max_length=500)
+
+    def __unicode__(self):
+        return self.text
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     region = models.ForeignKey(Region, null=True)
