@@ -24,6 +24,16 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Comment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('text', models.TextField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Event',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -188,6 +198,18 @@ class Migration(migrations.Migration):
             model_name='event',
             name='place',
             field=models.ForeignKey(to='wetravel.Place', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='login_user',
+            field=models.OneToOneField(to='wetravel.UserProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='to_post',
+            field=models.ForeignKey(to='wetravel.Post', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

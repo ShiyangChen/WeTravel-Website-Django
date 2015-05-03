@@ -1,5 +1,5 @@
 from django import forms
-from wetravel.models import UserProfile
+from wetravel.models import *
 from django.contrib.auth.models import User
 
 class UserForm(forms.ModelForm):

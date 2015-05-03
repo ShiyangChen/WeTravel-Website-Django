@@ -3,8 +3,32 @@
 {% load wetravel_extras %}
 {% block title %}Profile{% endblock %}
 {% block content %}
+
+
+
+  <script type="text/javascript">
+  function rmPost({{my_post.id}}) {
+    var r=confirm("Press a button!");
+    //var a={{param}};
+    if (r==true)
+    {
+      window.location.href='/../wetravel/delete/{}'.format({{my_post.id}});
+      //window.location.href='/../wetravel/delete/{{param}}/';
+     
+    }
+    else
+    {
+      window.location.href='/../wetravel/profile/{{user.userprofile.id}}';
+      
+     //alert("You pressed Cancel!");
+     //window.location.href='/../wetravel/profile/{{param2}}';
+    }
+  }
+  </script>
+
+<body>
 <!-- Main -->
-      <div id="main-wrapper">
+  <div id="main-wrapper">
         <div id="main" class="container">
           <div class="row">
 
@@ -18,16 +42,18 @@
                 <article class="box post">
 
                  <h3><li>{{ my_post.text }}</li></h3>
-          <ul><a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
-            <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
-                 </ul>
+                <ul><!--<a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>-->
+                  <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>
+                  <a href="../../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+                </ul>
 
                 </article>
                {% endfor %}
               </div>
             </div>
        </div>
-      </div>
+  </div>
+</body>
 {% endblock %}
 
 

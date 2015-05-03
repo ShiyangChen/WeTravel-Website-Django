@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,9 +19,25 @@ def index(request):
         context_dict = {}
 
         #posts part
+        cur_user=request.user.userprofile
+        user_friends=cur_user.friends.all()
+      
+
         posts=Post.objects.order_by("-id")
+        posts_list=[]
+        userprofile_id=[]
+        for post in posts:
+            if (post.publisher==cur_user):
+                posts_list.append(post)
+               # userprofile_id.append(cur_user.id)
+            for friend in user_friends:
+
+                if (post.publisher==friend):
+                    posts_list.append(post)
+                    #userprofile_id.append(friend.id)
+
         invi_posts=posts.filter(is_visible=True)
-        posts_list=list(posts)
+        #posts_list=list(posts)
         for invi_post in invi_posts:
 
             for invi_friend in invi_post.restricted_members.all():
@@ -52,9 +69,15 @@ def index(request):
             context_dict[new_var1] = common_friends_all[i]
             context_dict[new_var2] = num_common_friends_all[i]
 
-        context_dict.update({'candidates1' : candidates1, 'candidates2' : candidates2, 'candidates3' : candidates3, 
-        'posts':posts_list})
+        comment_lists=Comment.objects.order_by("-id")
 
+        context_dict.update({
+            'candidates1': candidates1,
+            'candidates2': candidates2,
+            'candidates3': candidates3, 
+            'posts':posts_list,
+            'comment_lists':comment_lists
+        })
 
     else:
         context_dict = {}
@@ -246,24 +269,24 @@ def create_post(request):
 def createpost(request):
     if 'text_message' in request.GET:
         text_message=request.GET['text_message']
+      
         cur_user=request.user.userprofile
-
-        #login_user=UserProfile.objects.get(user=cur_user)
-
+    
         b=Post(text=text_message,publisher=cur_user)#login_user)
         b.save()
-        return HttpResponseRedirect('/wetravel/')
-        #posts=Post.objects.order_by("-id")
-        #return render(request,'wetravel/index.html',{'posts':posts})
+        set_post=Post.objects.get(text=text_message,publisher=cur_user)
+        return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(set_post.id))  ##
+        #return HttpResponseRedirect('/wetravel/')
 
     else:
         return HttpResponse('submitted a empty form')
 
 @login_required
-def profile(request):
+def profile(request,param1):
     user=request.user   #???
     cur_user=request.user.userprofile
-    my_posts=Post.objects.filter(publisher=cur_user)
+    check_user=UserProfile.objects.get(id=param1)
+    my_posts=Post.objects.filter(publisher=check_user)
     my_posts=my_posts.order_by("-id")
     return render(request,'wetravel/profile.html',{'my_posts':my_posts,'user':user})
 
@@ -272,7 +295,8 @@ def delete_confirm(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
     my_posts=my_posts.order_by("-id")
-    return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts})
+    param2=cur_user.id
+    return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts,'param2':param2})
 
 
 
@@ -284,7 +308,8 @@ def delete(request,param1):
     my_posts=my_posts.order_by("-id")
     del_post=my_posts.get(id=param1)
     del_post.delete()
-    return HttpResponseRedirect('/wetravel/profile/')
+    del_post.save()
+    return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
@@ -310,6 +335,8 @@ def privacy(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
     set_post=my_posts.get(id=param1)
+    set_post.is_visible=False   # initialize as false every time
+    set_post.save()
     my_friends=cur_user.friends.all()
     if exc_inc=="exclude":
 
@@ -321,7 +348,8 @@ def privacy(request,param1):
                     set_post.save()
                 else:
                     continue
-    else:
+    elif exc_inc=="include":
+
         restricted_members=my_friends
         restrict_list=list(restricted_members)
         for friend in my_friends:
@@ -335,7 +363,9 @@ def privacy(request,param1):
             set_post.restricted_members.add(restrict_friend)
             set_post.is_visible=True
             set_post.save()
-    return HttpResponseRedirect('/wetravel/profile/')
+    else:
+        return HttpResponseRedirect("/wetravel/")
+    return HttpResponseRedirect("/wetravel/profile/{}/".format(cur_user.id))
 
 def resize_and_crop(img_path, size, crop_type='middle'):
     """
@@ -458,4 +488,28 @@ def change_address(request):
         response_data['result'] = 'Update failed'
 
     return HttpResponse(json.dumps(response_data),content_type="application/json")
+
+
+def comment_upload(request,param1):
+    user=request.user
+    cur_user=user.userprofile
+
+    if request.method == 'POST':
+
+        comment_info=request.POST['comment']
+        #response_data = {}
+        #response_data['comment_value']=comment_info
+        #return HttpResponse(json.dumps(response_data),content_type="application/json")
+        comment_post=Post.objects.get(id=param1)
+        c=Comment(login_user=user,text=comment_info,to_post=comment_post)
+        c.save()
+        return HttpResponseRedirect('/wetravel/')
+        
+
+           # print "it's a test"                            #用于测试  
+        #print request.POST['comment']
+        #return HttpResponse("successfully")
+
+    else:  
+        return HttpResponse("<h1>test</h1>") 
 

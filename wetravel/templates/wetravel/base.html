@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/static/css/style-desktop.css" />
     <link rel="stylesheet" href="/static/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="/static/css/settings_page.css" />
+    <link rel="stylesheet" href="/static/css/jquery-ui.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,13 +32,18 @@
     <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.js"></script>
     <script src="/static/js/wetravel.js"></script>
+    <script src="/static/js/accordance.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
+
 
 
     <script src="/static/js/jquery.dropotron.min.js"></script>
     <script src="/static/js/skel.min.js"></script>
     <script src="/static/js/skel-layers.min.js"></script>
     <script src="/static/js/init.js"></script>
+    <script src="/static/js/main.js"></script>
 
 
     <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
@@ -53,7 +59,7 @@
                 <li><a class="icon fa-home" href="/wetravel"><span>Home</span></a></li>
                 <li><a class="icon fa-info" href="/wetravel/about"><span>About</span></a></li>
                 {% if user.is_authenticated %}
-                <li><a class="icon fa-user" href="/wetravel/profile" ><span>Profile</span></a></li>
+                <li><a class="icon fa-user" href="/wetravel/profile/{{user.userprofile.id}}" ><span>Profile</span></a></li>
                 <li><a class="icon fa-users" href="/wetravel/friends"><span>Friends</span></a></li>
                 <li><a class="icon fa-users" href="/wetravel/places"><span>Places</span></a></li>
                 <li>

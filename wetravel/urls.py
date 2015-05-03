@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^settings/', views.settings, name='settings'),
     url(r'^create-post/$', views.create_post, name='create_post'),
     url(r'^createpost/$', views.createpost, name='createpost'),
-    url(r'^profile/$',views.profile, name='profile'),
+    url(r'^profile/(\d+)/$',views.profile, name='profile'),
     url(r'^delete_confirm/(\d+)/$',views.delete_confirm),
     url(r'^delete/(\d+)/$',views.delete),
     url(r'^privacy_choose/(\d+)/$',views.privacy_choose),
@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^change_address/$', views.change_address, name='change_address'),
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^change_profile_image/$', views.change_profile_image, name='change_profile_image'),
+    url(r'^comment_upload/(\d+)/$',views.comment_upload,name='comment_upload'),
 )
 
 urlpatterns += staticfiles_urlpatterns()
