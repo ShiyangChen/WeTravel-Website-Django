@@ -6,7 +6,7 @@
 
 
 
-  <script type="text/javascript">
+  <!--<script type="text/javascript">
   function rmPost({{my_post.id}}) {
     var r=confirm("Press a button!");
     //var a={{param}};
@@ -24,7 +24,7 @@
      //window.location.href='/../wetravel/profile/{{param2}}';
     }
   }
-  </script>
+  </script>-->
 
 <body>
 <!-- Main -->
@@ -42,8 +42,8 @@
                 <article class="box post">
 
                  <h3><li>{{ my_post.text }}</li></h3>
-                <ul><!--<a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>-->
-                  <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>
+                <ul><a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>
+                 <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
                   <a href="../../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
                 </ul>
 

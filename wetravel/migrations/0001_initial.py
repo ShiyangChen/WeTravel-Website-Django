@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Accommodation',
+            name='Accomodation',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('check_in_time', models.DateTimeField()),
@@ -117,9 +117,14 @@ class Migration(migrations.Migration):
             name='Travel',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('start_time', models.DateTimeField()),
-                ('end_time', models.DateTimeField()),
+                ('name', models.CharField(max_length=200, null=True)),
+                ('desc', models.CharField(max_length=500, null=True)),
+                ('start_date', models.DateField(null=True)),
+                ('end_date', models.DateField(null=True)),
+                ('start_time', models.TimeField(null=True)),
+                ('end_time', models.TimeField(null=True)),
                 ('destination', models.ForeignKey(to='wetravel.Region', null=True)),
+                ('groups', models.ManyToManyField(to='wetravel.Group')),
             ],
             options={
             },
@@ -202,19 +207,25 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AddField(
+            model_name='event',
+            name='travel',
+            field=models.ForeignKey(to='wetravel.Travel', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
             model_name='comment',
             name='to_post',
             field=models.ForeignKey(to='wetravel.Post', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='accommodation',
+            model_name='accomodation',
             name='hotel',
             field=models.ForeignKey(to='wetravel.Hotel', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
-            model_name='accommodation',
+            model_name='accomodation',
             name='travel',
             field=models.ForeignKey(to='wetravel.Travel', null=True),
             preserve_default=True,

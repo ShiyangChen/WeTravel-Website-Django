@@ -3,18 +3,10 @@
 {% block title %}Index{% endblock %}
 {% block content %}
 
-
-
-<head>
-   <script src="/static/js/main.js"></script>
- </head>
-
   {% if user.is_authenticated %}
 <!-- Main -->
-
-      <div id="main-wrapper">           
-        <div id="main" class="container">
-
+     
+        
           <div class="row">
 
             <!-- Content -->
@@ -30,44 +22,8 @@
               {% for post in posts %}
                 <article class="box post">
 
-                  <h3><a  href="/wetravel/profile/{{post.publisher.id}}" role="button">{{post.publisher.user.username}}</a></h3>
+                  <h3><a  href="/wetravel/profile/" role="button">{{post.publisher.user.username}}</a></h3>
                    <h2>{{ post.text }}</h2>
-
-                   <form action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
-                    {% csrf_token %}
-                    <p><b>Write your own comment!</b></p>
-                    <textarea row=4 col=20 type="text" name="comment" id="comment-text"></textarea>
-
-                    <!--<textarea type="text" name="comment" id="comment-text">
-                    </textarea>-->
-
-                    <input type="submit" value="Submit"/>
-                   </form>
-                   
-
-                   {% if comment_lists %}
-                   <p><strong><b>See friends comments:</b></strong></p>
-                   
-                   {% for comment in comment_lists %}
-
-                   {% ifequal post.id  comment.to_post.id %}
-
-                 
-                   <p>{{comment.login_user.username}}:{{comment.text}}</p>
-
-                   {%endifequal%}
-
-                   {% endfor %}
-
-                 
-                    
-
-               
-
-                   {%else %}
-                   <p>No comment on your post.</p>
-
-                   {%endif%}
 
                 </article>
                {% endfor %}
@@ -76,6 +32,7 @@
                <p>No post on your homepage.</p>
                 {% endif %}
              </div>
+
 
             <div id="sidebar" class="4u">
               <div class="panel">
@@ -281,7 +238,7 @@
 
                   </div><!--end of "common-friends"-->
                 
-              </div><!--end of overlay -->
+              </div>
 
               <section>
                   <ul class="divided">
@@ -300,7 +257,8 @@
                               </article>
 
                     </li>
-                             
+                      
+                      
                 </ul>
               </section>
               

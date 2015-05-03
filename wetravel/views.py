@@ -435,11 +435,14 @@ def delete_confirm(request,param1):
 def delete(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
-    my_posts=my_posts.order_by("-id")
+ 
     del_post=my_posts.get(id=param1)
     del_post.delete()
-    del_post.save()
-    return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
+    my_posts=Post.objects.filter(publisher=cur_user)
+    my_posts=my_posts.order_by("-id")
+    
+    return render(request,'wetravel/profile.html',{'my_posts':my_posts})
+    #return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
@@ -636,7 +639,7 @@ def comment_upload(request,param1):
         return HttpResponseRedirect('/wetravel/')
         
 
-           # print "it's a test"                            #用于测试  
+        # print "it's a test"
         #print request.POST['comment']
         #return HttpResponse("successfully")
 
