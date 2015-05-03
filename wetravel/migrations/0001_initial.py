@@ -28,6 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.TextField()),
+                ('login_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -198,12 +199,6 @@ class Migration(migrations.Migration):
             model_name='event',
             name='place',
             field=models.ForeignKey(to='wetravel.Place', null=True),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='comment',
-            name='login_user',
-            field=models.OneToOneField(to='wetravel.UserProfile'),
             preserve_default=True,
         ),
         migrations.AddField(
