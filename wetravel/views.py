@@ -340,11 +340,29 @@ def profile(request,param1):
     cur_user=request.user.userprofile
 
     target_user=UserProfile.objects.get(id=param1)
+
+    posts=Post.objects.filter(publisher=target_user)
+    posts=posts.order_by("-id")
+    see_posts=list(posts)
+
+    for post in posts:
+        if post.is_visible==True:
+            invi_friend=post.restricted_members.all()
+
+            for friend in invi_friend:
+                if cur_user.id==friend.id:
+                    see_posts.remove(post)
+                else:
+                    continue
+
+        else:
+            continue
+
     my_posts=Post.objects.filter(publisher=target_user)
     my_posts=my_posts.order_by("-id")
     comment_lists=Comment.objects.order_by("-id")
 
-    context_dict = {'my_posts':my_posts,'user':user, 'comment_lists':comment_lists }
+    context_dict = {'my_posts':see_posts,'user':user, 'comment_lists':comment_lists }
 
 
     if(cur_user.id != target_user.id):
