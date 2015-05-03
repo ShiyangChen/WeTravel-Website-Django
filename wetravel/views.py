@@ -201,15 +201,15 @@ def create_post(request):
 def createpost(request):
     if 'text_message'in request.GET:
         text_message=request.GET['text_message']
+      
         cur_user=request.user.userprofile
-
-        #login_user=UserProfile.objects.get(user=cur_user)
     
         b=Post(text=text_message,publisher=cur_user)#login_user)
         b.save()
-        return HttpResponseRedirect('/wetravel/')
-        #posts=Post.objects.order_by("-id")
-        #return render(request,'wetravel/index.html',{'posts':posts})
+        set_post=Post.objects.get(text=text_message,publisher=cur_user)
+        return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(set_post.id))  ##
+        #return HttpResponseRedirect('/wetravel/')
+      
         
     else:
         return HttpResponse('submitted a empty form')
@@ -228,7 +228,8 @@ def delete_confirm(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
     my_posts=my_posts.order_by("-id")
-    return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts})
+    param2=cur_user.id
+    return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts,'param2':param2})
 
 
 
@@ -240,7 +241,8 @@ def delete(request,param1):
     my_posts=my_posts.order_by("-id")
     del_post=my_posts.get(id=param1)
     del_post.delete()
-    return HttpResponseRedirect('/wetravel/profile/')
+    del_post.save()
+    return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
@@ -266,6 +268,8 @@ def privacy(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
     set_post=my_posts.get(id=param1)
+    set_post.is_visible=False   # initialize as false every time
+    set_post.save()
     my_friends=cur_user.friends.all()
     if exc_inc=="exclude":
         
@@ -277,7 +281,8 @@ def privacy(request,param1):
                     set_post.save()
                 else:
                     continue
-    else:
+    elif exc_inc=="include":
+
         restricted_members=my_friends
         restrict_list=list(restricted_members)
         for friend in my_friends:
@@ -291,6 +296,8 @@ def privacy(request,param1):
             set_post.restricted_members.add(restrict_friend)
             set_post.is_visible=True
             set_post.save()
+    else:
+        return HttpResponseRedirect("/wetravel/")
     return HttpResponseRedirect("/wetravel/profile/{}/".format(cur_user.id))
 
 

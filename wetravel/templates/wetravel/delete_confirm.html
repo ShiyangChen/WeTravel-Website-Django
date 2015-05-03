@@ -16,7 +16,8 @@
                 <article class="box post">
                
                  <h3><li>{{ my_post.text }}</li></h3>
-          <ul><a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>
+          <ul><!--<a  href="../delete_confirm/{{my_post.id}}/" role="button"><small>        Delete</small></a>-->
+            <a  href="#" role="button"><small>        Delete</small></a>
             <a  href="../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
                  </ul>
 
@@ -28,6 +29,7 @@
       </div>
 
 	<script type="text/javascript">
+  //function delete{//
 	var r=confirm("Press a button!");
 	//var a={{param}};
 	if (r==true)
@@ -39,9 +41,9 @@
    else
   {
    alert("You pressed Cancel!");
-   window.location.href='/../wetravel/profile/';
+   window.location.href='/../wetravel/profile/{{param2}}';
   }
-
+//}
 </script>
 
 
