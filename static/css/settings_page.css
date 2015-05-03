@@ -265,6 +265,16 @@ div.overlay  {
 	font-weight: 500;
 }
 
+.with-flex {
+	display: flex;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+}
+
+.group2 {
+	width: 50%;
+	text-align: center;
+}
 
 
 

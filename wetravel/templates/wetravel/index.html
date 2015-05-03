@@ -93,7 +93,7 @@
                             {% for candidate1 in candidates1 %}
                             {% if candidate1 %}
                             <div class="group">
-                                <a class="user-head" href="#">
+                                <a class="user-head" href="/wetravel/profile/{{candidate1.id}}">
                                   <img border="0" alt="{{candidate1.user.username}}" 
                                   src="{{ candidate1.avatar_image }}" height="95" weight="95"/>
                                   <span class="user-name">{{candidate1.user.username}}</span>
@@ -118,7 +118,7 @@
                         {% for candidate2 in candidates2 %}
                             {% if candidate2 %}
                             <div class="group">
-                              <a class="user-head" href="#">
+                              <a class="user-head" href="/wetravel/profile/{{candidate2.id}}">
                                 <img border="0" alt="{{candidate2.user.username}}" 
                                 src="{{ candidate2.avatar_image }}" height="95" weight="95"/>
                                 <span class="user-name">{{candidate2.user.username}}</span>
@@ -159,7 +159,7 @@
                             <div class="group">
                               <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
                                 src="{{ candidate3.avatar_image }}" height="95" weight="95"/>
-                              <a class="user-head" href="#">
+                              <a class="user-head" >
                                 <span class="icon fa-plus-square-o"></span>
                                 <span class="user-name">{{candidate3.user.username}}</span>
                               </a>

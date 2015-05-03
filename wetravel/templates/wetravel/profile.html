@@ -26,34 +26,92 @@
   }
   </script>-->
 
-<body>
-<!-- Main -->
-  <div id="main-wrapper">
-        <div id="main" class="container">
-          <div class="row">
 
-            <!-- Content -->
-              <div id="content" class="8u">
-                <h2>See what our friends do recently</h2>
-                <ul class="actions">
-                      <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
-                </ul>
-                {% for my_post in my_posts %}
-                <article class="box post">
 
-                 <h3><li>{{ my_post.text }}</li></h3>
-                <ul><a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>
-                 <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
-                  <a href="../../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
-                </ul>
+  
+<div class="row">
 
-                </article>
-               {% endfor %}
+  <!-- Content -->
+    <div id="content" class="8u">
+      <h2>See what our friends do recently</h2>
+      <ul class="actions">
+            <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
+      </ul>
+      {% for my_post in my_posts %}
+      <article class="box post">
+
+       <h3><li>{{ my_post.text }}</li></h3>
+      <ul><a  href="../../delete_confirm/{{my_post.id}}/" role="button"><small> Delete</small></a>
+       <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
+        <a href="../../privacy_choose/{{my_post.id}}/",role="button"><small>Setting</small></a>
+      </ul>
+
+      </article>
+     {% endfor %}
+    </div> <!--end of 8u"-->
+
+    <div id="sidebar" class="4u">
+      <div class="panel">
+        {% if target_user %}
+          <div class="panel-head">
+              <h3 style="text-align:center">Common Friends With <br>
+                <span style="text-transform: lowercase">{{target_user.user.username}}</span> </h3>
+          </div>
+          <div class="panel-content">
+            {% if common_friends %}
+            <div class="with-flex">
+              {%  for common_friend in common_friends%}
+              <div class="group2">
+                  <a class="user-head" href="/wetravel/profile/{{common_friend.id}}">
+                    <img border="0" alt="{{common_friend.user.username}}" 
+                    src="{{ common_friend.avatar_image }}" height="120" weight="120"/>
+                    <span class="user-name">{{common_friend.user.username}}</span>
+                  </a>                                
               </div>
+              {% endfor %}
+             </div>
+            {% else %}
+            <div>
+              You have no common friends!
             </div>
-       </div>
-  </div>
-</body>
+            {% endif %}
+          </div><!--end of panel-content-->
+      {% else %}
+        <div class="panel-head">
+            <h3 style="text-align:center">Your Friends</h3>
+        </div>
+        <div class="panel-content">
+          {% if friends %}
+            <div class="with-flex">
+              {%  for friend in friends%}
+              <div class="group2">
+                  <a class="user-head" href="/wetravel/profile/{{friend.id}}">
+                    <img border="0" alt="{{friend.user.username}}" 
+                    src="{{ friend.avatar_image }}" height="120" weight="120"/>
+                    <span class="user-name">{{friend.user.username}}</span>
+                  </a>                                
+              </div>
+              {% endfor %}
+             </div>
+          {% else %}
+            <div>
+              You don't have friends right now.
+            </div>
+
+          {% endif %}
+
+        </div>
+
+
+      {% endif %}
+        
+
+      </div><!--end of panel-->
+    </div> <!--end of sidebar -->
+
+</div><!--end of row-->
+    
+
 {% endblock %}
 
 

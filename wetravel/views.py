@@ -13,6 +13,9 @@ import json
 
 import random
 
+#for scheduling
+#--------------#--------------#--------------#--------------#--------------
+
 def schedule_edit(request,travel_id):   
      
     error_message="" 
@@ -142,6 +145,9 @@ def schedule(request):
      #print this_user, this_userprofile, this_travels
     
      return render(request,'wetravel/schedule.html',{'travels':this_travels})
+
+# for main page
+#--------------#--------------#--------------#--------------#--------------#--------------#--------------
 
 def index(request):
     if request.user.is_authenticated():
@@ -301,7 +307,6 @@ def signup(request):
             {'user_form': user_form, 'profile_form': profile_form})
 
 
-
 def user_login(request):
 
     if request.method == 'POST':
@@ -329,10 +334,38 @@ def user_logout(request):
     return HttpResponseRedirect('/wetravel/')
 
 @login_required
+def profile(request,param1):
+
+    user=request.user   
+    cur_user=request.user.userprofile
+
+    target_user=UserProfile.objects.get(id=param1)
+    my_posts=Post.objects.filter(publisher=target_user)
+    my_posts=my_posts.order_by("-id")
+
+    context_dict = {'my_posts':my_posts,'user':user }
+
+    if(cur_user.id != target_user.id):
+        context_dict['target_user'] = target_user;
+        common_friends = get_common_friends(cur_user, target_user);
+        context_dict['common_friends'] = common_friends;
+
+    else:
+        friends = cur_user.friends.all();
+        context_dict['friends'] = friends;
+
+    return render(request,'wetravel/profile.html', context_dict)
+
+
+
+
+@login_required
 def settings(request):
     return render(request, 'wetravel/settings.html')
 
 
+# for friends request
+#---------------------------------------------------------------------------------------------
 
 def send_friend_request(request):
     if request.method == 'POST':
@@ -364,6 +397,9 @@ def process_request(request):
     return HttpResponseRedirect('/wetravel/friends')
 
 
+# for places
+#---------------------------------------------------------------------------------------------
+
 def places(request):
 
     return render(request, 'wetravel/addplace.html', {})
@@ -386,11 +422,8 @@ def add_visited(request):
 
     return HttpResponseRedirect('/wetravel/places')
 
-
-def show_profile(request):
-    posts = Post.objects.filter(publisher=request.user.userprofile)
-    return render(request, 'wetravel/profile.html', {'posts': posts})
-
+# for post
+#---------------------------------------------------------------------------------------------
 
 def create_post(request):
     return render(request, 'wetravel/create_post.html')
@@ -411,14 +444,6 @@ def createpost(request):
     else:
         return HttpResponse('submitted a empty form')
 
-@login_required
-def profile(request,param1):
-    user=request.user   #???
-    cur_user=request.user.userprofile
-    check_user=UserProfile.objects.get(id=param1)
-    my_posts=Post.objects.filter(publisher=check_user)
-    my_posts=my_posts.order_by("-id")
-    return render(request,'wetravel/profile.html',{'my_posts':my_posts,'user':user})
 
 @login_required
 def delete_confirm(request,param1):
@@ -427,8 +452,6 @@ def delete_confirm(request,param1):
     my_posts=my_posts.order_by("-id")
     param2=cur_user.id
     return render(request,'wetravel/delete_confirm.html',{'param':param1, 'my_posts':my_posts,'param2':param2})
-
-
 
 
 @login_required
@@ -500,6 +523,32 @@ def privacy(request,param1):
         return HttpResponseRedirect("/wetravel/")
     return HttpResponseRedirect("/wetravel/profile/{}/".format(cur_user.id))
 
+def comment_upload(request,param1):
+    user=request.user
+    cur_user=user.userprofile
+
+    if request.method == 'POST':
+
+        comment_info=request.POST['comment']
+        #response_data = {}
+        #response_data['comment_value']=comment_info
+        #return HttpResponse(json.dumps(response_data),content_type="application/json")
+        comment_post=Post.objects.get(id=param1)
+        c=Comment(login_user=user,text=comment_info,to_post=comment_post)
+        c.save()
+        return HttpResponseRedirect('/wetravel/')
+        
+
+        # print "it's a test"
+        #print request.POST['comment']
+        #return HttpResponse("successfully")
+
+    else:  
+        return HttpResponse("<h1>test</h1>") 
+
+
+# for settings page
+#---------------------------------------------------------------------------------------------
 def resize_and_crop(img_path, size, crop_type='middle'):
     """
     Resize and crop an image to fit the specified size.
@@ -555,6 +604,8 @@ def resize_and_crop(img_path, size, crop_type='middle'):
             PImage.ANTIALIAS)
     # If the scale is the same, we do not need to crop
     img.save(img_path)
+
+
 @login_required
 def change_profile_image(request):
     user = request.user
@@ -623,26 +674,4 @@ def change_address(request):
     return HttpResponse(json.dumps(response_data),content_type="application/json")
 
 
-def comment_upload(request,param1):
-    user=request.user
-    cur_user=user.userprofile
-
-    if request.method == 'POST':
-
-        comment_info=request.POST['comment']
-        #response_data = {}
-        #response_data['comment_value']=comment_info
-        #return HttpResponse(json.dumps(response_data),content_type="application/json")
-        comment_post=Post.objects.get(id=param1)
-        c=Comment(login_user=user,text=comment_info,to_post=comment_post)
-        c.save()
-        return HttpResponseRedirect('/wetravel/')
-        
-
-        # print "it's a test"
-        #print request.POST['comment']
-        #return HttpResponse("successfully")
-
-    else:  
-        return HttpResponse("<h1>test</h1>") 
 

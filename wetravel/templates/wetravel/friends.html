@@ -14,7 +14,7 @@
     </form>
     {% for friend in user.userprofile.friends.all %}
       <div class="friend">
-        <a class="user-head" href="#">
+        <a class="user-head" href="/wetravel/profile/{{friend.id}}">
           <img border="0" alt="{{friend.user.username}}" 
           src="{{ friend.avatar_image }}" height="150" weight="150"/><br>
         </a>
