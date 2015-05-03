@@ -52,18 +52,12 @@
                   </div> <!-- end of post_content-->
 
 
-                   {%else %}
-                   <p>No comment on your post.</p>
-
-                   {%endif%}
-
-
                 </div> <!--end of class my_post-->
                {% endfor %}
 
               {% else %}
                <p>No post on your homepage.</p>
-                {% endif %}
+              {% endif %}
              </div> <!-- end of 8u-->
 
             <div id="sidebar" class="4u">
@@ -149,14 +143,9 @@
                               <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
                                 src="{{ candidate3.avatar_image }}" height="95" weight="95"/>
 
-                              <a class="user-head" >
-                                <span class="icon fa-plus-square-o"></span>
-                                <span class="user-name">{{candidate3.user.username}}</span>
-                              </a>
-
                                 <form method="post" action="/wetravel/send_friend_request/">
                                   {% csrf_token %}
-                                  <a href="javascript:;" onclick="parentNode.submit();">
+                                  <a class="user-head" href="javascript:;" onclick="parentNode.submit();">
                                     <span class="icon fa-plus-square-o"></span>
                                     <span class="user-name">{{candidate3.user.username}}</span>
                                   </a>
@@ -288,27 +277,6 @@
                   </div><!--end of "common-friends"-->
                 
               </div><!--end of overlay -->
-
-              <div class="panel">
-                  <ul class="divided">
-                      <li>
-
-                          <!-- Highlight -->
-                              <article class="box highlight">
-                                  <header>
-                                      <h3><a href="#">Schedule a travel today!</a></h3>
-                                  </header>
-                                  <a href="#" class="image left"><img src="images/pic06.jpg" alt="" /></a>
-                                  <p>Schedule a travel among your friends and let them grow the group for you!</p>
-                                  <ul class="actions">
-                                      <li><a href="schedule" class="button icon fa-file">Learn More</a></li>
-                                  </ul>
-                              </article>
-
-                    </li>
-                             
-                </ul>
-              </div>
               
           
             </div><!--end of sidebar -->
