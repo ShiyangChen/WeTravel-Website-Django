@@ -105,6 +105,7 @@ dd {
 
 .group {
 	width: 33%;
+	text-align: center;
 }
 
 .user-head {
@@ -232,6 +233,36 @@ div.overlay  {
 	width: 50%; 
 	margin: auto; 
 	padding: 20px;
+}
+
+
+/* for friends page*/
+.friend {
+	position: relative;
+
+}
+
+.friend .user-head {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+
+.friend .friend-content {
+	margin-left: 180px;
+	min-height: 180px;
+}
+
+.friend p {
+	letter-spacing: 0.1px;
+	text-align: left;
+	font-size: 15px;
+	color: rgb(59, 96, 39);
+	margin: 5px;
+}
+
+.friend-content span {
+	font-weight: 500;
 }
 
 

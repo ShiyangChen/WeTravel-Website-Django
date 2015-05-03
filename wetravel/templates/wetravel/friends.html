@@ -1,22 +1,43 @@
 {% extends 'wetravel/base.html' %}
 {% block title %}Friends{% endblock %}
 {% block content %}
-<h1 class="center">Friends</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div >
     {% for request in user.userprofile.requests.all %}
       <p>{{ request.user.username }}</p>
     {% endfor %}
     <form id="send_friend_request_form" method="post" action="../send_friend_request/">
       {% csrf_token %}
-      Username: <input type="text" name="username" value="" size="50" />
+      Add Friends By Username: <input type="text" name="username" value="" size="50" style="width: 50%" />
       <br />
       <input type="submit" name="submit" value="Add friend" />
     </form>
     {% for friend in user.userprofile.friends.all %}
-      <p>{{ friend.user.username }}</p>
+      <div class="friend">
+        <a class="user-head" href="#">
+          <img border="0" alt="{{friend.user.username}}" 
+          src="{{ friend.avatar_image }}" height="150" weight="150"/><br>
+        </a>
+        <div class ="friend-content">
+          <p><span>username</span>: {{friend.user.username}}</p> 
+            {% if friend.to_visit%}
+            <p><span>Wants to go to:</span> <br>{{friend.to_visit}}</br></p>
+            {% endif %}
+            {% if friend.visited.all %}
+              <p><span>Has been to:</span>
+              {% for place in friend.visited.all %}
+                {% if place %}
+                </br>{{ place }}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </p>
+        </div>  
+        
+      </div>
+      <hr>
+
     {% endfor %}
-  </div>
+  
 </div>
 {% endblock %}

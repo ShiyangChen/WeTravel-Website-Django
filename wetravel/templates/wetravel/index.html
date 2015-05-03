@@ -183,9 +183,10 @@
                           <p>Wants to go: </br><u>{{candidates3.0.to_visit}}</u></p>
                         {% endif %}
                         {% if candidates3.0.visited %}
-                        <p>Has been to:</p>
+                        <p>Has been to:
                         {% for place in candidates3.0.visited.all %}
-                          <p><u>{{ place }}</u> </p>
+                          <br><u>{{ place }}</u> 
+                        </p>
                         
                         {% endfor %}
                         {% endif %}
@@ -220,9 +221,10 @@
                           <p>Wants to go: </br><u>{{candidates3.1.to_visit}}</u></p>
                         {% endif %}
                         {% if candidates3.1.visited %}
-                        <p>Has been to:</p>
+                        <p>Has been to:
                         {% for place in candidates3.1.visited.all %}
-                          <p><u>{{ place }}</u> </p>
+                          <br><u>{{ place }}</u> 
+                        </p>
                         
                         {% endfor %}
                         {% endif %}
@@ -257,9 +259,10 @@
                           <p>Wants to go: </br><u>{{candidates3.2.to_visit}}</u></p>
                         {% endif %}
                         {% if candidates3.2.visited %}
-                        <p>Has been to:</p>
+                        <p>Has been to:
                         {% for place in candidates3.2.visited.all %}
-                          <p><u>{{ place }}</u> </p>
+                          <br><u>{{ place }}</u> 
+                        </p>
                         
                         {% endfor %}
                         {% endif %}
