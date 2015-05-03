@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     friends = models.ManyToManyField('self', related_name='friends')
     to_visit = models.ForeignKey(Place, related_name='places_to_visit', null=True)
     visited = models.ManyToManyField(Place, related_name='places_visited', null=True)
-    requests = models.ManyToManyField('self', related_name='requests')
+    requests = models.ManyToManyField('self', related_name='requests1', symmetrical=False)
     avatar = models.ImageField("Profile Pic", upload_to="images/", blank=True, null=True)
 
     def avatar_image(self):

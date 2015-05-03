@@ -366,6 +366,7 @@ def settings(request):
     return render(request, 'wetravel/settings.html')
 
 
+
 # for friends request
 #---------------------------------------------------------------------------------------------
 

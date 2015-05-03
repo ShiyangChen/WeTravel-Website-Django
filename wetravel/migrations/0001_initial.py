@@ -137,7 +137,7 @@ class Migration(migrations.Migration):
                 ('avatar', models.ImageField(upload_to=b'images/', null=True, verbose_name=b'Profile Pic', blank=True)),
                 ('friends', models.ManyToManyField(related_name='friends_rel_+', to='wetravel.UserProfile')),
                 ('region', models.ForeignKey(to='wetravel.Region', null=True)),
-                ('requests', models.ManyToManyField(related_name='requests_rel_+', to='wetravel.UserProfile')),
+                ('requests', models.ManyToManyField(related_name='requests1', to='wetravel.UserProfile')),
                 ('to_visit', models.ForeignKey(related_name='places_to_visit', to='wetravel.Place', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
                 ('visited', models.ManyToManyField(related_name='places_visited', null=True, to='wetravel.Place')),

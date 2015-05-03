@@ -4,6 +4,7 @@
 {% block content %}
 
 
+
   {% if user.is_authenticated %}     
 
           <div class="row">
@@ -51,7 +52,11 @@
                   </div> <!-- end of post_content-->
 
 
-                   
+                   {%else %}
+                   <p>No comment on your post.</p>
+
+                   {%endif%}
+
 
                 </div> <!--end of class my_post-->
                {% endfor %}
@@ -143,10 +148,21 @@
                             <div class="group">
                               <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
                                 src="{{ candidate3.avatar_image }}" height="95" weight="95"/>
+
                               <a class="user-head" >
                                 <span class="icon fa-plus-square-o"></span>
                                 <span class="user-name">{{candidate3.user.username}}</span>
                               </a>
+
+                                <form method="post" action="/wetravel/send_friend_request/">
+                                  {% csrf_token %}
+                                  <a href="javascript:;" onclick="parentNode.submit();">
+                                    <span class="icon fa-plus-square-o"></span>
+                                    <span class="user-name">{{candidate3.user.username}}</span>
+                                  </a>
+                                  <input type="hidden" value="{{candidate3.user.username}}" name="username" />
+                                </form>
+
                              </div>
                             {% endif %}
                           {% endfor %}
