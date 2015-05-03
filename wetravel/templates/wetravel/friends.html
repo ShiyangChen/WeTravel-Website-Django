@@ -8,7 +8,7 @@
     {% for request in user.userprofile.requests.all %}
       <p>{{ request.user.username }}</p>
     {% endfor %}
-    <form id="send_friend_request_form" method="post" action="wetravel/send_friend_request/">
+    <form id="send_friend_request_form" method="post" action="../send_friend_request/">
       {% csrf_token %}
       Username: <input type="text" name="username" value="" size="50" />
       <br />

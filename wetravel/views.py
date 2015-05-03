@@ -186,10 +186,10 @@ def send_friend_request(request):
         target_username = request.POST.get('username')
         try:
             target_user = User.objects.get(username=target_username)
+            target_user.userprofile.requests.add(request.user.userprofile)
         except User.DoesNotExist:
             print "User {0} does not exist".format(target_username)
             return HttpResponse("User not found.")
-        target_user.userprofile.requests.add(request.user.userprofile)
         return HttpResponseRedirect('/wetravel/')
     else:
         return HttpResponseRedirect('/wetravel/friends/')
