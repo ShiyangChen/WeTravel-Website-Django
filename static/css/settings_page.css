@@ -112,7 +112,7 @@ dd {
 	border-bottom: none;
 }
 .user-name {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 700;
 }
 
@@ -274,6 +274,90 @@ div.overlay  {
 .group2 {
 	width: 50%;
 	text-align: center;
+}
+
+/* for post */
+.my_post {
+	border-top: 2px solid rgb(199, 199, 199);
+	padding-top: 15px;	
+}
+
+.my_post a {
+	float: left;
+}
+
+.post_publisher {
+	width: 12%;
+}
+
+.post_content {
+	width: 88%;
+
+}
+
+.post_content p {
+	letter-spacing: 0.1px;
+	text-align: left;
+	font-size: 20px;
+	margin: 5px 1px 1px 1px;
+}
+
+.comment-content {
+	border: 1px solid #dedede;
+	box-shadow: 0 1px 0 #dedede;
+	border-radius: 5px;
+	background-color: #f6f7f8;
+	box-sizing: border-box;
+	margin-top: 10px;
+	min-height: 90px;
+	position: relative;
+}
+
+.my_post .user-name {
+	font-size: 20px;
+	font-weight: 400;
+	color: rgb(237, 120, 106);
+}
+
+.my_post input[type="text"] {
+	-webkit-appearance: none;
+	display: block;
+	border: 0;
+	background: white;
+	width: 98%;
+	margin: auto;
+	margin-top: 5px;
+	box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.1);
+	border-radius: 4px;
+	line-height: 1.25em;
+	padding: 0.75em 1em 0.75em 1em;
+	-moz-transition: background-color 0.25s ease-in-out;
+	-webkit-transition: background-color 0.25s ease-in-out;
+	-o-transition: background-color 0.25s ease-in-out;
+	-ms-transition: background-color 0.25s ease-in-out;
+	transition: background-color 0.25s ease-in-out;
+
+}
+
+.my_post input[type="submit"] {
+	-webkit-appearance: none;
+
+	background: #ed786a;
+	color: #fff !important;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+	font-size: 12px;
+	box-shadow: 0.125em 0.175em 0 0 rgba(0,0,0,0.125);
+	font-weight: 400;
+	-moz-transition: all 0.25s ease-in-out;
+	-webkit-transition: all 0.25s ease-in-out;
+	-o-transition: all 0.25s ease-in-out;
+	-ms-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
+	text-align: center;
+	padding: 1px;
+	letter-spacing: 1px;
 }
 
 

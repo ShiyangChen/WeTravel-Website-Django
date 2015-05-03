@@ -55,8 +55,9 @@
         {% if target_user %}
           <div class="panel-head">
               <h3 style="text-align:center">Common Friends With <br>
-                <span style="text-transform: lowercase">{{target_user.user.username}}</span> </h3>
+                <span style="text-transform: lowercase">{{target_user.user.username}}</span> </h3><br>
           </div>
+
           <div class="panel-content">
             {% if common_friends %}
             <div class="with-flex">
@@ -78,7 +79,7 @@
           </div><!--end of panel-content-->
       {% else %}
         <div class="panel-head">
-            <h3 style="text-align:center">Your Friends</h3>
+            <h3 style="text-align:center">Your Friends</h3><br>
         </div>
         <div class="panel-content">
           {% if friends %}

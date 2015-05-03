@@ -4,78 +4,60 @@
 {% block content %}
 
 
-
-<head>
-   <script src="/static/js/main.js"></script>
- </head>
-
-  {% if user.is_authenticated %}
-<!-- Main -->
-
-      <div id="main-wrapper">           
-        <div id="main" class="container">
+  {% if user.is_authenticated %}     
 
           <div class="row">
 
             <!-- Content -->
               <div id="content" class="8u">
-                <h2>See what our friends are doing recently</h2>
-                <ul class="actions">
-                      <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
-                </ul>
+                
+                <a href="/wetravel/create-post/" class="button icon fa-file">Post</a>
 
                 <!-- Post -->
                 {% if posts %}
 
               {% for post in posts %}
-                <article class="box post">
+                <div class="my_post with-flex ">
+                  <div class="post_publisher">
+                    <a href= "/wetravel/profile/{{post.publisher.id}}"><img border="0" alt="{{post.publisher.user.username }}" src="{{ post.publisher.avatar_image }}" height="60" weight="60"/></br></a>
+                  </div>
+                  <div class="post_content">  
+                    <span class="user-name">{{ post.publisher.user.username }}</span>
+                    <p>{{ post.text }}</p>
 
-                  <h3><a  href="/wetravel/profile/{{post.publisher.id}}" role="button">{{post.publisher.user.username}}</a></h3>
-                   <h2>{{ post.text }}</h2>
+                    <div class="comment-content"> 
+                      {% if comment_lists %}          
+                         {% for comment in comment_lists %}
+                         {% ifequal post.id  comment.to_post.id %}                    
+                         <p><span class="user-name">{{comment.login_user.username}}</span>:{{comment.text}}</p>
+                         {%endifequal%}
+                        {% endfor %}
+                     {%endif%}
 
-                   <form action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
-                    {% csrf_token %}
-                    <p><b>Write your own comment!</b></p>
-                    <textarea row=4 col=20 type="text" name="comment" id="comment-text"></textarea>
+                      <form class ="my_form" action="/wetravel/comment_upload/{{post.id}}/" method="POST" id="comment-form">
+                        {% csrf_token %}
+                        <input type="text" name="comment" id="comment-text" value="write a comment:"></input>
 
-                    <!--<textarea type="text" name="comment" id="comment-text">
-                    </textarea>-->
+                        <!--<textarea type="text" name="comment" id="comment-text">
+                        </textarea>-->
+                        <input type="submit" value="Reply"/>
+                     </form>
+                   </div><!-- end of comment-content -->
 
-                    <input type="submit" value="Submit"/>
-                   </form>
+                  </div> <!-- end of post_content-->
+
+                  
                    
 
-                   {% if comment_lists %}
-                   <p><strong><b>See friends comments:</b></strong></p>
                    
-                   {% for comment in comment_lists %}
 
-                   {% ifequal post.id  comment.to_post.id %}
-
-                 
-                   <p>{{comment.login_user.username}}:{{comment.text}}</p>
-
-                   {%endifequal%}
-
-                   {% endfor %}
-
-                 
-                    
-
-               
-
-                   {%else %}
-                   <p>No comment on your post.</p>
-
-                   {%endif%}
-
-                </article>
+                </div> <!--end of class my_post-->
                {% endfor %}
 
               {% else %}
                <p>No post on your homepage.</p>
                 {% endif %}
-             </div>
+             </div> <!-- end of 8u-->
 
             <div id="sidebar" class="4u">
               <div class="panel">
@@ -171,6 +153,9 @@
                     {% endif %}
                   </div><!-- end of panel content-->
               </div><!--end of panel -->
+
+              <br>
+              <br>
 
               <div class="overlay">
                 
@@ -286,7 +271,7 @@
                 
               </div><!--end of overlay -->
 
-              <section>
+              <div class="panel">
                   <ul class="divided">
                       <li>
 
@@ -305,7 +290,7 @@
                     </li>
                              
                 </ul>
-              </section>
+              </div>
               
           
             </div><!--end of sidebar -->
