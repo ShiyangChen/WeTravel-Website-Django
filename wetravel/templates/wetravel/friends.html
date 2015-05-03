@@ -2,59 +2,65 @@
 {% block title %}Friends{% endblock %}
 {% block content %}
 
-<<<<<<< HEAD
-<div >
-    {% for request in user.userprofile.requests.all %}
-      <p>{{ request.user.username }}</p>
-=======
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <h3>Requests</h3>
-    {% for requester in user.userprofile.requests.all %}
-      <p>
-        <form method="post" action="/wetravel/process_request/">
-          {% csrf_token %}
-          <input type="hidden" value="{{ requester.user.username }}" name="requester_username" />
-          {{ requester.user.username }}
-          <input type="submit" name="accept" value="Accept" />
-          <input type="submit" name="decline" value="Decline" />
-        </form>
-      </p>
-    {% endfor %}
 
+<div class="">
+  <div class="requests">
+    {% if user.userprofile.requests.all %}
+      <h3>Requests</h3>
+      {% for requester in user.userprofile.requests.all %}
+        <p>{{ request.user.username }}</p>
+        <p>
+          <form method="post" action="/wetravel/process_request/">
+            {% csrf_token %}
+            <input type="hidden" value="{{ requester.user.username }}" name="requester_username" />
+            {{ requester.user.username }}
+            <input type="submit" name="accept" value="Accept" />
+            <input type="submit" name="decline" value="Decline" />
+          </form>
+        </p>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="add_friends">
     <form id="send_friend_request_form" method="post" action="../send_friend_request/">
       {% csrf_token %}
-      Search user: <input type="text" name="username" value="" size="50" />
+      Search user: <input type="text" name="username" value="" size="50" style="width: 50%"/>
       <br />
       <input type="submit" name="submit" value="Add friend" />
     </form>
-    <h3>Friends</h3>
-    {% for friend in user.userprofile.friends.all %}
-      <div class="friend">
-        <a class="user-head" href="/wetravel/profile/{{friend.id}}">
-          <img border="0" alt="{{friend.user.username}}" 
-          src="{{ friend.avatar_image }}" height="150" weight="150"/><br>
-        </a>
-        <div class ="friend-content">
-          <p><span>username</span>: {{friend.user.username}}</p> 
-            {% if friend.to_visit%}
-            <p><span>Wants to go to:</span> <br>{{friend.to_visit}}</br></p>
-            {% endif %}
-            {% if friend.visited.all %}
-              <p><span>Has been to:</span>
-              {% for place in friend.visited.all %}
-                {% if place %}
-                </br>{{ place }}
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-          </p>
-        </div>  
-        
-      </div>
-      <hr>
+  </div>
 
-    {% endfor %}
+  <div>
+      <br>
+      <h3>Friends</h3>
+      {% for friend in user.userprofile.friends.all %}
+        <div class="friend">
+          <a class="user-head" href="/wetravel/profile/{{friend.id}}">
+            <img border="0" alt="{{friend.user.username}}" 
+            src="{{ friend.avatar_image }}" height="150" weight="150"/><br>
+          </a>
+          <div class ="friend-content">
+            <p><span>username</span>: {{friend.user.username}}</p> 
+              {% if friend.to_visit%}
+              <p><span>Wants to go to:</span> <br>{{friend.to_visit}}</br></p>
+              {% endif %}
+              {% if friend.visited.all %}
+                <p><span>Has been to:</span>
+                {% for place in friend.visited.all %}
+                  {% if place %}
+                  </br>{{ place }}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </p>
+          </div>  
+          
+        </div> <!--end of class friend -->
+        <hr>
+      {% endfor %}
+  </div>
   
-</div>
+</div> <!--end of class row-->
+
 {% endblock %}
