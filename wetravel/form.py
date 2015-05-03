@@ -17,3 +17,8 @@ class UserProfileForm(forms.ModelForm):
 class ProfileImageForm(forms.Form):
     """Image upload form"""
     image = forms.ImageField()
+
+class PostForm(forms.Form):
+	text = forms.CharField()
+	post_image = forms.FileField()
+

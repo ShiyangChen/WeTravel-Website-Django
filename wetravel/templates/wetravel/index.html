@@ -23,7 +23,13 @@
                   </div>
                   <div class="post_content">  
                     <span class="user-name">{{ post.publisher.user.username }}</span>
-                    <p>{{ post.text }}</p>
+                    <p>{{ post.text }} 
+                      {% if post.get_post_image %}
+                      <img border="0" alt="Post Pics" src="{{ post.get_post_image }}"/>
+                      {% endif %}
+                    </p>
+                    
+                   
 
                     <div class="comment-content"> 
                       {% if comment_lists %}          

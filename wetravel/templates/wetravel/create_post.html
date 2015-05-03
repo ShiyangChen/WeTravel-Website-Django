@@ -2,9 +2,20 @@
 {% block title %}Post{% endblock %}
 {% block content %}
 
-    <form action="/wetravel/createpost" method="get">
-        <input type="text" name="text_message">
+<div class="my_div">
+   <h1 class="my_h1">Create A Post</h1>
+
+
+
+    <form action="/wetravel/createpost/" method="POST" enctype="multipart/form-data">
+    	{% csrf_token %}
+    	{{ post_form.as_p }}
+    	<!--<label>Add Text</label>
+        <input type="text" name="text_message"><br>
+        <label>Add Pictures</label>
+        <input type="file" class="" name="post_image2" /><br><br>-->
         <input type="submit" value="Submit">
     </form>
+</div>
 
 {% endblock %}

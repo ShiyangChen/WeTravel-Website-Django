@@ -344,7 +344,7 @@ def profile(request,param1):
     my_posts=my_posts.order_by("-id")
     comment_lists=Comment.objects.order_by("-id")
 
-    context_dict = {'my_posts':my_posts,'user':user, 'comment_lists': comment_lists}
+    context_dict = {'my_posts':my_posts,'user':user, 'comment_lists':comment_lists }
 
 
     if(cur_user.id != target_user.id):
@@ -432,19 +432,38 @@ def create_post(request):
 
 @login_required
 def createpost(request):
-    if 'text_message' in request.GET:
-        text_message=request.GET['text_message']
+    if request.method == 'POST':
+
+        
       
         cur_user=request.user.userprofile
     
-        b=Post(text=text_message,publisher=cur_user)#login_user)
-        b.save()
-        set_post=Post.objects.get(text=text_message,publisher=cur_user)
-        return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(set_post.id))  ##
+        
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid:
+            text_message=request.POST['text']
+            b=Post(text=text_message,publisher=cur_user)#login_user)
+            b.post_image = request.FILES['post_image']
+            b.save()
+
+            if b.post_image:
+                resize_and_crop(b.post_image.path,(450, 300))
+
+            set_post=Post.objects.get(text=text_message,publisher=cur_user)
+            return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(set_post.id))  ##
         #return HttpResponseRedirect('/wetravel/')
+        else:
+            context_dict = {}
+            post_form = PostForm()
+            context_dict['post_form'] = post_form
+            return render(request, 'wetravel/create_post.html', context_dict)
 
     else:
-        return HttpResponse('submitted a empty form')
+        context_dict = {}
+        post_form = PostForm()
+        context_dict['post_form'] = post_form
+        return render(request, 'wetravel/create_post.html', context_dict)
+        
 
 
 @login_required

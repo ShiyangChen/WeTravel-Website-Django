@@ -33,15 +33,58 @@
 
   <!-- Content -->
     <div id="content" class="8u">
-      
-      <ul class="actions">
-            <li><a href="/wetravel/create-post/" class="button icon fa-file">Post</a></li>
-      </ul>
 
       {% if target_user %}
-      {% else %}
+      <h2 class="my_h2">Your friend <span style="text-transform:lowercase">{{ target_user.user.username }}</span>'s page</h2>
+      <div class="profile-header with-flex">
+        
+        <div class="group">
+            <a class="user-head" href="/wetravel/profile/{{target_user.id}}">
+              <img style="padding-top:20px" border="0" alt="{{target_user.user.username}}" 
+              src="{{ target_user.avatar_image }}" height="120" weight="120"/><br>
+              <span class="user-name">{{target_user.user.username}}</span>
+            </a>                                
+        </div>
+        <div>
+        {% if target_user.to_visit %}
+          <p>Wants to go: </br><u>{{ target_user.to_visit }}</u></p>
+          {% endif %}
+          {% if target_user.visited %}
+          <p>Has been to:
+          {% for place in target_user.visited.all %}
+            <br><u>{{ place }}</u> 
+          {% endfor %}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}       
+        <h2 class="my_h2">Your Profile Page</h2>
+          <div class="profile-header with-flex">
+            <div class="group">
+                <a class="user-head" href="/wetravel/profile/{{user.id}}">
+                  <img style="padding-top:20px" border="0" alt="{{.user.username}}" 
+                  src="{{ user.userprofile.avatar_image }}" height="120" weight="120"/><br>
+                  <span class="user-name">{{user.username}}</span>
+                </a>                                
+            </div>
+            <div class="profile-content">
+            {% if user.userprofile.to_visit %}
+              <p>Wants to go: </br><u>{{ user.userprofile.to_visit }}</u></p>
+              {% endif %}
+              {% if user.userprofile.visited %}
+              <p>Has been to:
+              {% for place in user.userprofile.visited.all %}
+                <br><u>{{ place }}</u> 
+              {% endfor %}
+              </p>
+              {% endif %}
+              <a href="/wetravel/create-post/" class="post_a icon fa-file">Post</a>
+            </div>
+            
+          </div>
       {% endif %}
-
+      <br>
       {% for post in my_posts %}
       <div class="my_post with-flex ">
           <div class="post_publisher">
@@ -50,12 +93,13 @@
             <div class="post_content">  
               <span class="user-name">{{ post.publisher.user.username }}</span>
               <p>{{ post.text }}</p>
-
+              {% if not target_user %}
               <ul>
                 <li><a  href="../../delete_confirm/{{post.id}}/" role="button">Delete</a></li>
                <!-- <a href="javascript:rmPost()"  onclick="rmPost({{my_post.id}})" role="button"><small>        Delete</small></a>-->
                 <li><a href="../../privacy_choose/{{post.id}}/",role="button">Setting</a></li>
               </ul>
+              {% endif %}
 
               <div class="comment-content"> 
                 {% if comment_lists %}          

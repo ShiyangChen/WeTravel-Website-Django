@@ -46,7 +46,13 @@ class Post(models.Model):
     publisher = models.ForeignKey(UserProfile, related_name='publisher', null=True)
     restricted_members = models.ManyToManyField(UserProfile, related_name='restricted_members')
     is_visible = models.BooleanField(default=False)
+    post_image = models.ImageField("Post Pic", upload_to="images/", blank=True, null=True)
     link = models.URLField(max_length=500)
+
+    def get_post_image(self):
+        if self.post_image:
+            return (settings.MEDIA_URL + self.post_image.name)
+
     def __unicode__(self):
         return self.text
 

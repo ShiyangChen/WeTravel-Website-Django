@@ -283,6 +283,7 @@ div.overlay  {
 	padding-bottom: 10px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	clear: left;
 }
 
 .my_post a {
@@ -375,6 +376,42 @@ div.overlay  {
 	float: right;
 	margin-right: 5px;
 	font-size: 14px;
+}
+
+.my_h2 {
+	text-align: center;
+	color: rgb(237, 120, 106);
+	letter-spacing: 1px;
+	margin: 1px 1px 6px 1px;
+	font-size: 26px;
+}
+
+.profile-header {
+	border: 1px solid #dedede;
+	box-shadow: 0 1px 0 #dedede;
+	border-radius: 5px;
+	padding-top: 8px;
+	padding-bottom: 4px;
+
+}
+
+.profile-content {
+	position: relative;
+}
+
+.post_a {
+	background: #ed786a;
+	color: #fff !important;
+	border-radius: 4px;
+	font-size: 1em;
+	font-weight: 600;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+	position: absolute;
+	left: 350px;
+	top: 1px;
+
 }
 
 
