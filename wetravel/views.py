@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,11 +6,142 @@ from wetravel.form import *
 from wetravel.models import *
 from PIL import Image as PImage
 from django.core.files.uploadedfile import SimpleUploadedFile
+from datetime import datetime
+import time
 
 import json
+
 import random
 
-# Create your views here.
+def schedule_edit(request,travel_id):   
+     
+    error_message="" 
+    travel=get_object_or_404(Travel,id=travel_id)
+
+
+    this_user=request.user     
+    this_userprofile=get_object_or_404(UserProfile,user=this_user)  
+    regions=get_list_or_404(Region)
+    this_friends=this_userprofile.friends #check
+    #this_groups=get_list_or_404(Group,members=this_userprofile)
+    this_groups=Group.objects.filter(members=this_userprofile)    
+           
+    if request.method == 'POST':
+        name1=request.POST.get('name')
+        desc1=request.POST.get('desc')
+        start_date1=request.POST.get('start_time_0')
+        start_time1=request.POST.get('start_time_1')
+        end_date1=request.POST.get('end_time_0')
+        end_time1=request.POST.get('end_time_1')
+        destination1=request.POST.get('destination')        
+        members1=request.POST.getlist('members')
+        groups1=request.POST.getlist('groups')
+        
+        if(name1=="" and destination1==""):            
+            error_message="Enter the mandatory fields"
+        elif(members1==None and groups1==None):
+            error_message="Enter the mandatory fields. You must enter atleast one of members or groups."
+    
+        if error_message=="":
+            # save here
+            travel.name=name1
+            travel.desc =desc1
+            
+            try:
+                start_day=datetime.strptime(start_date1,'%b %d, %Y')
+            except ValueError:    
+                start_day=datetime.strptime(start_date1,'%Y-%m-%d')
+                
+            #print start_day, start_day.strftime('%Y-%m-%d')              
+            travel.start_date=start_day.strftime('%Y-%m-%d')           
+            
+            if len(start_time1.split(" "))==1:               
+               start_time=time.strptime(start_time1,'%H:%M:%S') 
+            else:
+                parts=start_time1.split(" ")
+                
+                timeperiod="AM"
+                if parts[1]=="p.m.":
+                    timeperiod="PM"
+                
+                parts2=parts[0].split(":")
+                if(len(parts2)==1):
+                    start_time=time.strptime(parts[0]+" "+timeperiod,'%I %p')
+                else:
+                    start_time=time.strptime(parts[0]+" "+timeperiod,'%I:%M %p')
+            
+                
+            #print start_time, time.strftime('%H:%M:%S',start_time)
+            travel.start_time=time.strftime('%H:%M:%S',start_time) 
+            
+            
+            try:
+                end_day=datetime.strptime(end_date1,'%b %d, %Y')
+            except ValueError:    
+                end_day=datetime.strptime(end_date1,'%Y-%m-%d')            
+            
+            travel.end_date=end_day.strftime('%Y-%m-%d')
+            
+            
+            
+            if len(end_time1.split(" "))==1:
+               end_time=time.strptime(end_time1,'%H:%M:%S') 
+            else:
+                parts=end_time1.split(" ")
+                timeperiod="AM"
+                if parts[1]=="p.m.":
+                    timeperiod="PM"
+                
+                parts2=parts[0].split(":")
+                if(len(parts2)==1):
+                    end_time=time.strptime(parts[0]+" "+timeperiod,'%I %p')
+                else:
+                    end_time=time.strptime(parts[0]+" "+timeperiod,'%I:%M %p')
+                
+            #print end_time, time.strftime('%H:%M:%S',end_time)
+            travel.end_time=time.strftime('%H:%M:%S',end_time) 
+            
+            parts=destination1.split("/")
+            
+            regions =Region.objects.filter(city=parts[0],state=parts[1],country=parts[2])
+            if(regions!=None and len(regions)>0):
+                travel.destination=regions[0]
+                      
+            
+            travel.members.clear()            
+            for member1 in members1:  
+                #print member1              
+                newuser=User.objects.get(username=member1)
+                if newuser!=None:
+                    newuserp=UserProfile.objects.filter(user=newuser)
+                    if newuserp!=None and len(newuserp)>0:
+                        #print newuserp[0]
+                        travel.members.add(newuserp[0])
+            
+            travel.groups.clear()
+            for group1 in groups1:
+                newgroup=Group.objects.filter(name=group1)
+                if newgroup!=None and len(newgroup)>0:
+                    #print newgroup[0]
+                    travel.groups.add(newgroup[0])
+            
+            travel.save()
+            return HttpResponseRedirect("/wetravel/schedule")
+        
+        
+    
+     
+    return render(request,'wetravel/schedule_edit.html',{'travel':travel,'regions':regions, 'this_friends':this_friends,'this_groups':this_groups,'error_message':error_message})
+    
+@login_required
+def schedule(request):
+     this_user=request.user     
+     this_userprofile=get_object_or_404(UserProfile,user=this_user)     
+     #this_travels=get_list_or_404(Travel,members=this_userprofile)
+     this_travels=Travel.objects.filter(members=this_userprofile)    
+     #print this_user, this_userprofile, this_travels
+    
+     return render(request,'wetravel/schedule.html',{'travels':this_travels})
 
 def index(request):
     if request.user.is_authenticated():

@@ -1,0 +1,30 @@
+{% extends 'wetravel/base.html' %}
+{% block content %}
+
+{% if travels %}
+<div id="accordion" class="info">
+        
+        
+        {% for travel in travels %} 
+                             <h3>{{travel.name}}<a class="edit" href="/wetravel/schedule_edit/{{travel.id}}">Edit</a></h3>   
+                                                       
+                             <div>
+                             <p>
+                             {{travel.desc}}                             
+                             </p>                             
+                             </div>
+                             
+                             
+                             
+        {% endfor %} 
+        
+</div>
+{% else %}
+<div>
+Plan a travel today!!
+</div>
+{% endif %} 
+
+
+{% endblock %}
+

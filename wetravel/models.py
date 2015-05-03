@@ -55,10 +55,15 @@ class Group(models.Model):
     members = models.ManyToManyField(UserProfile)
 
 class Travel(models.Model):
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    name = models.CharField(max_length=200,null=True)
+    desc = models.CharField(max_length=500,null=True)
+    start_date=models.DateField(null=True)
+    end_date=models.DateField(null=True)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     destination = models.ForeignKey(Region, null=True)
     members = models.ManyToManyField(UserProfile)
+    groups=models.ManyToManyField(Group)
 
 class Hotel(models.Model):
     name = models.CharField(max_length=50)
@@ -70,8 +75,9 @@ class Event(models.Model):
     time = models.DateTimeField()
     note = models.TextField()
     place = models.ForeignKey(Place, null=True)
+    travel = models.ForeignKey(Travel, null=True)
 
-class Accommodation(models.Model):
+class Accomodation(models.Model):
     check_in_time = models.DateTimeField()
     check_out_time = models.DateTimeField()
     hotel = models.ForeignKey(Hotel, null=True)

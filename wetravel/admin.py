@@ -5,3 +5,5 @@ from wetravel.models import *
 
 admin.site.register([UserProfile, Group])
 admin.site.register([Region, Place, Post,Comment])
+admin.site.register([Travel,Hotel,Accomodation])
+
