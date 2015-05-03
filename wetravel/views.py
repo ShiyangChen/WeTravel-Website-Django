@@ -333,7 +333,6 @@ def settings(request):
     return render(request, 'wetravel/settings.html')
 
 
-
 def send_friend_request(request):
     if request.method == 'POST':
         target_username = request.POST.get('username')

@@ -1,19 +1,29 @@
 {% extends 'wetravel/base.html' %}
 {% block title %}Friends{% endblock %}
 {% block content %}
-<h1 class="center">Friends</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    {% for request in user.userprofile.requests.all %}
-      <p>{{ request.user.username }}</p>
+    <h3>Requests</h3>
+    {% for requester in user.userprofile.requests.all %}
+      <p>
+        <form method="post" action="/wetravel/process_request/">
+          {% csrf_token %}
+          <input type="hidden" value="{{ requester.user.username }}" name="requester_username" />
+          {{ requester.user.username }}
+          <input type="submit" name="accept" value="Accept" />
+          <input type="submit" name="decline" value="Decline" />
+        </form>
+      </p>
     {% endfor %}
+
     <form id="send_friend_request_form" method="post" action="../send_friend_request/">
       {% csrf_token %}
-      Username: <input type="text" name="username" value="" size="50" />
+      Search user: <input type="text" name="username" value="" size="50" />
       <br />
       <input type="submit" name="submit" value="Add friend" />
     </form>
+    <h3>Friends</h3>
     {% for friend in user.userprofile.friends.all %}
       <p>{{ friend.user.username }}</p>
     {% endfor %}
