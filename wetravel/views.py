@@ -343,11 +343,27 @@ def profile(request,param1):
     requesters = cur_user.requests.all()
 
     if target_user in friends or target_user in requesters or target_user.id == cur_user.id:
-        my_posts=Post.objects.filter(publisher=target_user)
-        my_posts=my_posts.order_by("-id")
+        
+        posts=Post.objects.filter(publisher=target_user)
+        posts=posts.order_by("-id")
+        see_posts=list(posts)
+
+        for post in posts:
+            if post.is_visible==True:
+                invi_friend=post.restricted_members.all()
+
+                for friend in invi_friend:
+                    if cur_user.id==friend.id:
+                        see_posts.remove(post)
+                    else:
+                        continue
+
+            else:
+                continue
+
         comment_lists=Comment.objects.order_by("-id")
 
-        context_dict = {'my_posts':my_posts,'user':user, 'comment_lists':comment_lists }
+        context_dict = {'my_posts':see_posts,'user':user, 'comment_lists':comment_lists }
 
 
         if(cur_user.id != target_user.id):
@@ -364,7 +380,6 @@ def profile(request,param1):
     
     else:
         return HttpResponse("You do not have access to this page.")
-
 
 
 
