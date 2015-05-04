@@ -4,30 +4,6 @@
 {% block title %}Profile{% endblock %}
 {% block content %}
 
-
-
-  <!--<script type="text/javascript">
-  function rmPost({{my_post.id}}) {
-    var r=confirm("Press a button!");
-    //var a={{param}};
-    if (r==true)
-    {
-      window.location.href='/../wetravel/delete/{}'.format({{my_post.id}});
-      //window.location.href='/../wetravel/delete/{{param}}/';
-     
-    }
-    else
-    {
-      window.location.href='/../wetravel/profile/{{user.userprofile.id}}';
-      
-     //alert("You pressed Cancel!");
-     //window.location.href='/../wetravel/profile/{{param2}}';
-    }
-  }
-  </script>-->
-
-
-
   
 <div class="row">
 
@@ -35,7 +11,11 @@
     <div id="content" class="8u">
 
       {% if target_user %}
-      <h2 class="my_h2">Your friend <span style="text-transform:lowercase">{{ target_user.user.username }}</span>'s page</h2>
+        {% if requester %}
+          <h2 class="my_h2" style="text-transform: lowercase"><span>{{ target_user.user.username }}</span> Wants to add you as friend</h2>
+        {% else %}
+          <h2 class="my_h2">Your friend <span style="text-transform:lowercase">{{ target_user.user.username }}</span>'s page</h2>
+      {% endif %}
       <div class="profile-header with-flex">
         
         <div class="group">

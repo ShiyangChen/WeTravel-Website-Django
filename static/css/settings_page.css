@@ -414,6 +414,18 @@ div.overlay  {
 
 }
 
+.requests input[type="submit"] {
+	padding: 0.25em 0.25em 0.25em 0.25em;
+	font-size: 12px;
+	letter-spacing: 0.5px;
+
+}
+
+.requests {
+	text-align: center;
+	width: 20%;
+}
+
 
 
 

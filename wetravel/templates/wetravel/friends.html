@@ -3,33 +3,38 @@
 {% block content %}
 
 
-<div class="">
-  <div class="requests">
+<div>
+  
     {% if user.userprofile.requests.all %}
       <h3>Requests</h3>
+      <div class="with-flex">
       {% for requester in user.userprofile.requests.all %}
-        <p>{{ request.user.username }}</p>
-        <p>
+        <div class="requests">
           <form method="post" action="/wetravel/process_request/">
             {% csrf_token %}
             <input type="hidden" value="{{ requester.user.username }}" name="requester_username" />
-            {{ requester.user.username }}
-            <input type="submit" name="accept" value="Accept" />
-            <input type="submit" name="decline" value="Decline" />
+            <a class="user-head" href="/wetravel/profile/{{requester.id}}"><img border="0" alt="{{requester.user.username }}" src="{{ requester.avatar_image }}" height="80" weight="80"/></a><br>
+            <span class="user-name">{{ requester.user.username }}</span><br>
+            <input  type="submit" name="accept" value="Accept" />
+            <input  type="submit" name="decline" value="Decline" />
           </form>
-        </p>
+        </div>
       {% endfor %}
+      </div>
     {% endif %}
-  </div>
+  
+  <hr>
 
   <div class="add_friends">
     <form id="send_friend_request_form" method="post" action="../send_friend_request/">
       {% csrf_token %}
-      Search user: <input type="text" name="username" value="" size="50" style="width: 50%"/>
+      Add friends by username: <input type="text" name="username" value="" size="50" style="width: 50%"/>
       <br />
       <input type="submit" name="submit" value="Add friend" />
     </form>
   </div>
+  <br>
+  <hr>
 
   <div>
       <br>

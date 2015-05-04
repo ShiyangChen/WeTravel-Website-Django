@@ -338,25 +338,32 @@ def profile(request,param1):
 
     user=request.user   
     cur_user=request.user.userprofile
-
     target_user=UserProfile.objects.get(id=param1)
-    my_posts=Post.objects.filter(publisher=target_user)
-    my_posts=my_posts.order_by("-id")
-    comment_lists=Comment.objects.order_by("-id")
+    friends = cur_user.friends.all()
+    requesters = cur_user.requests.all()
 
-    context_dict = {'my_posts':my_posts,'user':user, 'comment_lists':comment_lists }
+    if target_user in friends or target_user in requesters or target_user.id == cur_user.id:
+        my_posts=Post.objects.filter(publisher=target_user)
+        my_posts=my_posts.order_by("-id")
+        comment_lists=Comment.objects.order_by("-id")
+
+        context_dict = {'my_posts':my_posts,'user':user, 'comment_lists':comment_lists }
 
 
-    if(cur_user.id != target_user.id):
-        context_dict['target_user'] = target_user;
-        common_friends = get_common_friends(cur_user, target_user);
-        context_dict['common_friends'] = common_friends;
+        if(cur_user.id != target_user.id):
+            context_dict['target_user'] = target_user;
+            common_friends = get_common_friends(cur_user, target_user);
+            context_dict['common_friends'] = common_friends;
+            if target_user not in friends:
+                context_dict['requester'] = target_user
 
+        else:
+            context_dict['friends'] = friends;
+
+        return render(request,'wetravel/profile.html', context_dict)
+    
     else:
-        friends = cur_user.friends.all();
-        context_dict['friends'] = friends;
-
-    return render(request,'wetravel/profile.html', context_dict)
+        return HttpResponse("You do not have access to this page.")
 
 
 
@@ -449,7 +456,8 @@ def createpost(request):
         if form.is_valid:
             text_message=request.POST['text']
             b=Post(text=text_message,publisher=cur_user)#login_user)
-            b.post_image = request.FILES['post_image']
+            if 'post_image' in request.FILES:
+                b.post_image = request.FILES['post_image']
             b.save()
 
             if b.post_image:

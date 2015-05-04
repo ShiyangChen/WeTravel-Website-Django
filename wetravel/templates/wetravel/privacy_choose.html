@@ -3,8 +3,7 @@
 {% block content %}
 
 
-<div class="jumbotron">
-  <div class="container center">
+<div class="my_div">
 	<form action="/wetravel/privacy/{{set_post.id}}/" method="post">
 	<h4>What to <strong>EXCLUDE</strong> or <strong>INCLUDE</strong></h4>
 	<input type="radio" name="ex_in" value="exclude" /> EXCLUDE
@@ -24,10 +23,11 @@
 	 	<br>
 
 	 	{% endfor%}
+
+	 	<br>
 	 	<input type="submit" value="Submit" />
 	 </form>
 
-  </div>
 </div>
 
 
