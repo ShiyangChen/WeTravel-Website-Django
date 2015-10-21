@@ -5,13 +5,13 @@
 
 
 
-  {% if user.is_authenticated %}     
+  {% if user.is_authenticated %}
 
           <div class="row">
 
             <!-- Content -->
               <div id="content" class="8u">
-                
+
                 <a href="/wetravel/create-post/" class="button icon fa-file">Post</a>
 
                 <!-- Post -->
@@ -22,20 +22,20 @@
                   <div class="post_publisher">
                     <a href= "/wetravel/profile/{{post.publisher.id}}"><img border="0" alt="{{post.publisher.user.username }}" src="{{ post.publisher.avatar_image }}" height="60" weight="60"/></br></a>
                   </div>
-                  <div class="post_content">  
+                  <div class="post_content">
                     <span class="user-name">{{ post.publisher.user.username }}</span>
-                    <p>{{ post.text }} 
+                    <p>{{ post.text }}
                       {% if post.get_post_image %}
                       <img border="0" alt="Post Pics" src="{{ post.get_post_image }}"/>
                       {% endif %}
                     </p>
-                    
-                   
 
-                    <div class="comment-content"> 
-                      {% if comment_lists %}          
+
+
+                    <div class="comment-content">
+                      {% if comment_lists %}
                          {% for comment in comment_lists %}
-                         {% ifequal post.id  comment.to_post.id %}                    
+                         {% ifequal post.id  comment.to_post.id %}
                          <p><span class="user-name">{{comment.login_user.username}}</span>:{{comment.text}}</p>
                          {%endifequal%}
                         {% endfor %}
@@ -77,15 +77,15 @@
                             {% if candidate1 %}
                             <div class="group">
                                 <a class="user-head" href="/wetravel/profile/{{candidate1.id}}">
-                                  <img border="0" alt="{{candidate1.user.username}}" 
+                                  <img border="0" alt="{{candidate1.user.username}}"
                                   src="{{ candidate1.avatar_image }}" height="95" weight="95"/>
                                   <span class="user-name">{{candidate1.user.username}}</span>
-                                </a>                                
+                                </a>
                             </div>
                             {% endif %}
                             {% endfor %}
-                         
-                        
+
+
                       </div>
                     <hr>
                     {% endif %}
@@ -94,7 +94,7 @@
 
 
                   <div>
-                    {% if candidates2 %}                      
+                    {% if candidates2 %}
                         <p class="recommend-friend-header">They went to {{ user.userprofile.to_visit.region.city }} before!</p>
 
                       <div class="recommend-friend-area">
@@ -102,29 +102,29 @@
                             {% if candidate2 %}
                             <div class="group">
                               <a class="user-head" href="/wetravel/profile/{{candidate2.id}}">
-                                <img border="0" alt="{{candidate2.user.username}}" 
+                                <img border="0" alt="{{candidate2.user.username}}"
                                 src="{{ candidate2.avatar_image }}" height="95" weight="95"/>
                                 <span class="user-name">{{candidate2.user.username}}</span>
                               </a>
-                                
+
                              </div>
                             {% endif %}
                           {% endfor %}
                       </div>
-                      
+
                     {% endif %}
                   </div>
 
                   <div id = "link-to-all-friends">
-                      <a href="#">See All friends</a>
+                      <a href="/wetravel/friends">See All friends</a>
                   </div>
 
-                  
+
 
                 </div> <!-- end of panel content-->
               </div><!--end of panel -->
               <br>
-              
+
 
               <div class="panel">
 
@@ -140,7 +140,7 @@
                         {% for candidate3 in candidates3 %}
                             {% if candidate3 %}
                             <div class="group">
-                              <img class="recommend" border="0" alt="{{candidate3.user.username}}" 
+                              <img class="recommend" border="0" alt="{{candidate3.user.username}}"
                                 src="{{ candidate3.avatar_image }}" height="95" weight="95"/>
 
                                 <form method="post" action="/wetravel/send_friend_request/">
@@ -156,7 +156,7 @@
                             {% endif %}
                           {% endfor %}
                       </div>
-                      
+
                     {% endif %}
                   </div><!-- end of panel content-->
               </div><!--end of panel -->
@@ -165,10 +165,10 @@
               <br>
 
               <div class="overlay">
-                
+
                   <div class="common-friends">
                     {% if common_friends_1 %}
-                        <p class="small-profile-image"><img border="0" alt="{{candidates3.0.user.username }}" 
+                        <p class="small-profile-image"><img border="0" alt="{{candidates3.0.user.username }}"
                                 src="{{ candidates3.0.avatar_image }}" height="50" weight="50"/></br>
                                 <span>{{ candidates3.0.user.username }}</span></p>
                         {% if candidates3.0.to_visit %}
@@ -177,9 +177,9 @@
                         {% if candidates3.0.visited %}
                         <p>Has been to:
                         {% for place in candidates3.0.visited.all %}
-                          <br><u>{{ place }}</u> 
+                          <br><u>{{ place }}</u>
                         </p>
-                        
+
                         {% endfor %}
                         {% endif %}
                         <p class="recommend-friend-header">You and <b><u>{{ candidates3.0.user.username }}</u></b> have {{num_common_friends_1}} common friends!</p>
@@ -188,25 +188,25 @@
                               {% if common_friend %}
                               <div class="group">
                                 <a class="user-head" href="#">
-                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  <img  border="0" alt="{{common_friend.user.username}}"
                                   src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
                                   <span class="user-name">{{common_friend.user.username}}</span>
                                 </a>
                                </div>
                               {% endif %}
                             {% endfor %}
-                        </div> 
+                        </div>
                       {% endif %}
 
                   </div><!--end of "common-friends"-->
-                
+
               </div>
-              
+
               <div class="overlay">
-                
+
                   <div class="common-friends">
                     {% if common_friends_2 %}
-                    <p class="small-profile-image"><img border="0" alt="{{candidates3.1.user.username }}" 
+                    <p class="small-profile-image"><img border="0" alt="{{candidates3.1.user.username }}"
                                 src="{{ candidates3.1.avatar_image }}" height="50" weight="50"/></br>
                                 <span>{{ candidates3.1.user.username }}</span></p>
                         {% if candidates3.1.to_visit %}
@@ -215,9 +215,9 @@
                         {% if candidates3.1.visited %}
                         <p>Has been to:
                         {% for place in candidates3.1.visited.all %}
-                          <br><u>{{ place }}</u> 
+                          <br><u>{{ place }}</u>
                         </p>
-                        
+
                         {% endfor %}
                         {% endif %}
 
@@ -227,24 +227,24 @@
                               {% if common_friend %}
                               <div class="group">
                                 <a class="user-head" href="#">
-                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  <img  border="0" alt="{{common_friend.user.username}}"
                                   src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
                                   <span class="user-name">{{common_friend.user.username}}</span>
                                 </a>
                                </div>
                               {% endif %}
                             {% endfor %}
-                        </div> 
+                        </div>
                       {% endif %}
 
                   </div><!--end of "common-friends"-->
-               
+
               </div>
-               
+
               <div class="overlay">
                   <div class="common-friends">
                     {% if common_friends_3 %}
-                    <p class="small-profile-image"><img border="0" alt="{{candidates3.2.user.username }}" 
+                    <p class="small-profile-image"><img border="0" alt="{{candidates3.2.user.username }}"
                                 src="{{ candidates3.2.avatar_image }}" height="50" weight="50"/></br>
                                 <span>{{ candidates3.2.user.username }}</span></p>
                         {% if candidates3.2.to_visit %}
@@ -253,9 +253,9 @@
                         {% if candidates3.2.visited %}
                         <p>Has been to:
                         {% for place in candidates3.2.visited.all %}
-                          <br><u>{{ place }}</u> 
+                          <br><u>{{ place }}</u>
                         </p>
-                        
+
                         {% endfor %}
                         {% endif %}
                         <p class="recommend-friend-header">You and <b><u>{{ candidates3.2.user.username }}</u></b> have {{num_common_friends_3}} common friends!</p>
@@ -264,24 +264,24 @@
                               {% if common_friend %}
                               <div class="group">
                                 <a class="user-head" href="#">
-                                  <img  border="0" alt="{{common_friend.user.username}}" 
+                                  <img  border="0" alt="{{common_friend.user.username}}"
                                   src="{{ common_friend.avatar_image }}" height="95" weight="95"/>
                                   <span class="user-name">{{common_friend.user.username}}</span>
                                 </a>
                                </div>
                               {% endif %}
                             {% endfor %}
-                        </div> 
+                        </div>
                       {% endif %}
 
                   </div><!--end of "common-friends"-->
-                
+
               </div><!--end of overlay -->
-              
-          
+
+
             </div><!--end of sidebar -->
         </div><!--end of div row -->
-      
+
 
 
 
@@ -316,4 +316,3 @@
 {% endif %}
 
 {% endblock %}
-

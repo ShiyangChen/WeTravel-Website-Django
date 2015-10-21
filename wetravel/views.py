@@ -8,7 +8,7 @@ from PIL import Image as PImage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from datetime import datetime
 import time
-
+import pdb
 import json
 
 import random
@@ -16,19 +16,19 @@ import random
 #for scheduling
 #--------------#--------------#--------------#--------------#--------------
 
-def schedule_edit(request,travel_id):   
-     
-    error_message="" 
+def schedule_edit(request,travel_id):
+
+    error_message=""
     travel=get_object_or_404(Travel,id=travel_id)
 
 
-    this_user=request.user     
-    this_userprofile=get_object_or_404(UserProfile,user=this_user)  
+    this_user=request.user
+    this_userprofile=get_object_or_404(UserProfile,user=this_user)
     regions=get_list_or_404(Region)
     this_friends=this_userprofile.friends #check
     #this_groups=get_list_or_404(Group,members=this_userprofile)
-    this_groups=Group.objects.filter(members=this_userprofile)    
-           
+    this_groups=Group.objects.filter(members=this_userprofile)
+
     if request.method == 'POST':
         name1=request.POST.get('name')
         desc1=request.POST.get('desc')
@@ -36,114 +36,114 @@ def schedule_edit(request,travel_id):
         start_time1=request.POST.get('start_time_1')
         end_date1=request.POST.get('end_time_0')
         end_time1=request.POST.get('end_time_1')
-        destination1=request.POST.get('destination')        
+        destination1=request.POST.get('destination')
         members1=request.POST.getlist('members')
         groups1=request.POST.getlist('groups')
-        
-        if(name1=="" and destination1==""):            
+
+        if(name1=="" and destination1==""):
             error_message="Enter the mandatory fields"
         elif(members1==None and groups1==None):
             error_message="Enter the mandatory fields. You must enter atleast one of members or groups."
-    
+
         if error_message=="":
             # save here
             travel.name=name1
             travel.desc =desc1
-            
+
             try:
                 start_day=datetime.strptime(start_date1,'%b %d, %Y')
-            except ValueError:    
+            except ValueError:
                 start_day=datetime.strptime(start_date1,'%Y-%m-%d')
-                
-            #print start_day, start_day.strftime('%Y-%m-%d')              
-            travel.start_date=start_day.strftime('%Y-%m-%d')           
-            
-            if len(start_time1.split(" "))==1:               
-               start_time=time.strptime(start_time1,'%H:%M:%S') 
+
+            #print start_day, start_day.strftime('%Y-%m-%d')
+            travel.start_date=start_day.strftime('%Y-%m-%d')
+
+            if len(start_time1.split(" "))==1:
+               start_time=time.strptime(start_time1,'%H:%M:%S')
             else:
                 parts=start_time1.split(" ")
-                
+
                 timeperiod="AM"
                 if parts[1]=="p.m.":
                     timeperiod="PM"
-                
+
                 parts2=parts[0].split(":")
                 if(len(parts2)==1):
                     start_time=time.strptime(parts[0]+" "+timeperiod,'%I %p')
                 else:
                     start_time=time.strptime(parts[0]+" "+timeperiod,'%I:%M %p')
-            
-                
+
+
             #print start_time, time.strftime('%H:%M:%S',start_time)
-            travel.start_time=time.strftime('%H:%M:%S',start_time) 
-            
-            
+            travel.start_time=time.strftime('%H:%M:%S',start_time)
+
+
             try:
                 end_day=datetime.strptime(end_date1,'%b %d, %Y')
-            except ValueError:    
-                end_day=datetime.strptime(end_date1,'%Y-%m-%d')            
-            
+            except ValueError:
+                end_day=datetime.strptime(end_date1,'%Y-%m-%d')
+
             travel.end_date=end_day.strftime('%Y-%m-%d')
-            
-            
-            
+
+
+
             if len(end_time1.split(" "))==1:
-               end_time=time.strptime(end_time1,'%H:%M:%S') 
+               end_time=time.strptime(end_time1,'%H:%M:%S')
             else:
                 parts=end_time1.split(" ")
                 timeperiod="AM"
                 if parts[1]=="p.m.":
                     timeperiod="PM"
-                
+
                 parts2=parts[0].split(":")
                 if(len(parts2)==1):
                     end_time=time.strptime(parts[0]+" "+timeperiod,'%I %p')
                 else:
                     end_time=time.strptime(parts[0]+" "+timeperiod,'%I:%M %p')
-                
+
             #print end_time, time.strftime('%H:%M:%S',end_time)
-            travel.end_time=time.strftime('%H:%M:%S',end_time) 
-            
+            travel.end_time=time.strftime('%H:%M:%S',end_time)
+
             parts=destination1.split("/")
-            
+
             regions =Region.objects.filter(city=parts[0],state=parts[1],country=parts[2])
             if(regions!=None and len(regions)>0):
                 travel.destination=regions[0]
-                      
-            
-            travel.members.clear()            
-            for member1 in members1:  
-                #print member1              
+
+
+            travel.members.clear()
+            for member1 in members1:
+                #print member1
                 newuser=User.objects.get(username=member1)
                 if newuser!=None:
                     newuserp=UserProfile.objects.filter(user=newuser)
                     if newuserp!=None and len(newuserp)>0:
                         #print newuserp[0]
                         travel.members.add(newuserp[0])
-            
+
             travel.groups.clear()
             for group1 in groups1:
                 newgroup=Group.objects.filter(name=group1)
                 if newgroup!=None and len(newgroup)>0:
                     #print newgroup[0]
                     travel.groups.add(newgroup[0])
-            
+
             travel.save()
             return HttpResponseRedirect("/wetravel/schedule")
-        
-        
-    
-     
+
+
+
+
     return render(request,'wetravel/schedule_edit.html',{'travel':travel,'regions':regions, 'this_friends':this_friends,'this_groups':this_groups,'error_message':error_message})
-    
+
 @login_required
 def schedule(request):
-     this_user=request.user     
-     this_userprofile=get_object_or_404(UserProfile,user=this_user)     
+     this_user=request.user
+     this_userprofile=get_object_or_404(UserProfile,user=this_user)
      #this_travels=get_list_or_404(Travel,members=this_userprofile)
-     this_travels=Travel.objects.filter(members=this_userprofile)    
+     this_travels=Travel.objects.filter(members=this_userprofile)
      #print this_user, this_userprofile, this_travels
-    
+
      return render(request,'wetravel/schedule.html',{'travels':this_travels})
 
 # for main page
@@ -157,7 +157,7 @@ def index(request):
         #posts part
         cur_user=request.user.userprofile
         user_friends=cur_user.friends.all()
-      
+
 
         posts=Post.objects.order_by("-id")
         posts_list=[]
@@ -210,7 +210,7 @@ def index(request):
         context_dict.update({
             'candidates1': candidates1,
             'candidates2': candidates2,
-            'candidates3': candidates3, 
+            'candidates3': candidates3,
             'posts':posts_list,
             'comment_lists':comment_lists
         })
@@ -301,7 +301,7 @@ def signup(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-
+    #pdb.set_trace()
     return render(request,
             'wetravel/signup.html',
             {'user_form': user_form, 'profile_form': profile_form})
@@ -336,14 +336,14 @@ def user_logout(request):
 @login_required
 def profile(request,param1):
 
-    user=request.user   
+    user=request.user
     cur_user=request.user.userprofile
     target_user=UserProfile.objects.get(id=param1)
     friends = cur_user.friends.all()
     requesters = cur_user.requests.all()
 
     if target_user in friends or target_user in requesters or target_user.id == cur_user.id:
-        
+
         posts=Post.objects.filter(publisher=target_user)
         posts=posts.order_by("-id")
         see_posts=list(posts)
@@ -377,7 +377,7 @@ def profile(request,param1):
             context_dict['friends'] = friends;
 
         return render(request,'wetravel/profile.html', context_dict)
-    
+
     else:
         return HttpResponse("You do not have access to this page.")
 
@@ -462,24 +462,25 @@ def create_post(request):
 def createpost(request):
     if request.method == 'POST':
 
-        
-      
+
+
         cur_user=request.user.userprofile
-    
-        
+
+
         form = PostForm(request.POST, request.FILES)
         if form.is_valid:
             text_message=request.POST['text']
             b=Post(text=text_message,publisher=cur_user)#login_user)
             if 'post_image' in request.FILES:
                 b.post_image = request.FILES['post_image']
-            b.save()
 
+            b.save()
+            #pdb.set_trace()
             if b.post_image:
                 resize_and_crop(b.post_image.path,(450, 300))
-
-            set_post=Post.objects.get(text=text_message,publisher=cur_user)
-            return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(set_post.id))  ##
+            #b.save()
+            #set_post=Post.objects.get(text=text_message,publisher=cur_user)
+            return HttpResponseRedirect('/wetravel/privacy_choose/{}/'.format(b.id))  ##
         #return HttpResponseRedirect('/wetravel/')
         else:
             context_dict = {}
@@ -492,7 +493,7 @@ def createpost(request):
         post_form = PostForm()
         context_dict['post_form'] = post_form
         return render(request, 'wetravel/create_post.html', context_dict)
-        
+
 
 
 @login_required
@@ -508,14 +509,14 @@ def delete_confirm(request,param1):
 def delete(request,param1):
     cur_user=request.user.userprofile
     my_posts=Post.objects.filter(publisher=cur_user)
- 
+
     del_post=my_posts.get(id=param1)
     del_post.delete()
     my_posts=Post.objects.filter(publisher=cur_user)
     my_posts=my_posts.order_by("-id")
-    
-    return render(request,'wetravel/profile.html',{'my_posts':my_posts})
-    #return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
+
+    #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
+    return HttpResponseRedirect('/wetravel/profile/{}'.format(cur_user.id))
     #my_posts=Post.objects.filter(publisher=cur_user)
     #my_posts=my_posts.order_by("-id")
     #return render(request,'wetravel/profile.html',{'my_posts':my_posts})
@@ -588,14 +589,14 @@ def comment_upload(request,param1):
         c.save()
         #return HttpResponseRedirect('/wetravel/')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        
+
 
         # print "it's a test"
         #print request.POST['comment']
         #return HttpResponse("successfully")
 
-    else:  
-        return HttpResponse("<h1>test</h1>") 
+    else:
+        return HttpResponse("<h1>test</h1>")
 
 
 # for settings page
@@ -721,8 +722,5 @@ def change_address(request):
 
     else:
         response_data['result'] = 'Update failed'
-
+    pdb.set_trace()
     return HttpResponse(json.dumps(response_data),content_type="application/json")
-
-
-

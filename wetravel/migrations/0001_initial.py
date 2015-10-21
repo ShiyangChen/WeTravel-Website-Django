@@ -95,6 +95,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.TextField()),
                 ('is_visible', models.BooleanField(default=False)),
+                ('post_image', models.ImageField(upload_to=b'images/', null=True, verbose_name=b'Post Pic', blank=True)),
                 ('link', models.URLField(max_length=500)),
             ],
             options={
